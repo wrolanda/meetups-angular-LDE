@@ -1,0 +1,11 @@
+<div>
+    <form (ngSubmit)="onLogin()">
+        <div>email</div>
+        <input type="email" name="email" [(ngModel)]="login"/>
+        <div>password</div>
+        <input type="password" name="password" [(ngModel)]="password"/>
+        <br><br>
+        <button type="submit">Sign in</button>
+    </form>
+        <a routerLink="/howCreateAcc" routerLinkActive="active" ariaCurrentWhenActive="page">How to create account?</a>
+</div>

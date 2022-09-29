@@ -1,0 +1,10 @@
+<div class="navbar_wrapper">
+    <h1>NAVBAR</h1>
+    <a *ngIf="!isAuth" routerLink="/auth" routerLinkActive="active">auth</a>
+    <a *ngIf="isAuth" routerLink="/meetups" routerLinkActive="active">meetups</a>
+    <a *ngIf="isAuth" routerLink="/myMeetups" routerLinkActive="active">my meetups</a>
+    <a *ngIf="isAdmin" routerLink="/userList" routerLinkActive="active">users</a>
+    <div class="navbar_buttons">
+        <button *ngIf="isAuth" (click)="logout()">logout</button>
+    </div>
+</div>

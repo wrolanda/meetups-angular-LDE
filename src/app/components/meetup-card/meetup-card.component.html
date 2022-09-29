@@ -1,0 +1,23 @@
+<div>
+    <br>
+    <br>
+    <div>Meetup card {{card.id}}</div>
+    <br>
+    <div>name: {{card.name}}</div>
+    <div>subscribers:{{card.users.length}}</div>
+    <div>time: {{card.time | date: 'd.MM.yy, HH:mm'}}</div>
+    <br>
+    <div>description: {{card.description}}</div>
+    <br>
+    <div>createdBy: {{card.owner.fio}}</div>
+    <div>location: {{card.location}}</div>
+    <br>
+    <button>записаться</button>
+    <button>Подробнее</button>
+    <br>
+    <div>target_audience: {{card.target_audience}}</div>
+    <div>need_to_know: {{card.need_to_know}}</div>
+    <div>will_happen: {{card.will_happen}}</div>
+    <div>duration: {{card.duration}}</div>
+    <br>
+</div>
