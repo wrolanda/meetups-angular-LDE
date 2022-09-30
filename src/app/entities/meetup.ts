@@ -9,11 +9,15 @@ export interface Meetup {
     need_to_know: string,
     will_happen: string,
     reason_to_come: string,
-    time: string, //pipe ng
+    time: string,
     duration: number,
+    owner: User,
+    users: Array<User>,
+
+    createdAt: string,
     createdBy: number,
-    owner: User;
-    users: Array<User>;
+    updatedAt: string;
+
 }
 
 export class Meetup {

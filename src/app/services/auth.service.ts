@@ -7,9 +7,7 @@ import { Router } from '@angular/router';
 
 const ADMIN = "ADMIN";
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AuthService {
 
   constructor(private http: HttpClient,
@@ -40,10 +38,12 @@ export class AuthService {
     const token = this.token;
     if (token) {
       const jwtObj = this.parseJwt(token);
-      if (jwtObj.roles[0].id === 1 && jwtObj.roles[0].name === ADMIN) {
-        return true;
-      } else {
-        return false;
+      // const jwtObj2 = this.user;
+      for (let i = 0; i < jwtObj.roles.length; i++) {
+        if (jwtObj.roles[i].id === 1 && jwtObj.roles[i].name === ADMIN) {
+          return true;
+        }
+      return false;
       }
     }
     return false;

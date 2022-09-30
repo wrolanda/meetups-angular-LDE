@@ -11,6 +11,7 @@ import { MyMeetupsPageComponent } from './pages/my-meetups-page/my-meetups-page.
 import { UserListPageComponent } from './pages/user-list-page/user-list-page.component';
 
 const routes: Routes = [
+  {path: '', redirectTo: "auth", pathMatch: 'full'},
   {path: 'auth', component: AuthPageComponent, canActivate: [AuthReverseGuard]},
   {path: 'meetups', component: MeetupsPageComponent, canActivate: [AuthGuard]},
   {path: 'myMeetups', component: MyMeetupsPageComponent, canActivate: [AuthGuard]},

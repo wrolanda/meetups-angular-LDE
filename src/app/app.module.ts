@@ -18,6 +18,11 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { UserListPageComponent } from './pages/user-list-page/user-list-page.component';
+import { MeetupCreateComponent } from './components/meetup-create/meetup-create.component';
+import { UsersListComponent } from './components/users-list/users-list.component';
+import { UserCardComponent } from './components/user-card/user-card.component';
+import { AuthService } from './services/auth.service';
+import { UsersService } from './services/users.service';
 
 @NgModule({
   declarations: [
@@ -32,6 +37,9 @@ import { UserListPageComponent } from './pages/user-list-page/user-list-page.com
     HowCreateAccPageComponent,
     CreateMeetupPageComponent,
     UserListPageComponent,
+    MeetupCreateComponent,
+    UsersListComponent,
+    UserCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +50,8 @@ import { UserListPageComponent } from './pages/user-list-page/user-list-page.com
   ],
   providers: [
     MeetupsService,
+    AuthService,
+    UsersService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],

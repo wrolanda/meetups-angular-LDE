@@ -4,15 +4,11 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable()
-export class MeetupsService {
+export class UsersService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  ngOnInit() {}
-
-  getMeetups(): Observable<object> {
-    return this.http.get(`${environment.backendOrigin}/meetup`);
+  getUsers(): Observable<object> {
+    return this.http.get(`${environment.backendOrigin}/user`);
   }
-
-
 }

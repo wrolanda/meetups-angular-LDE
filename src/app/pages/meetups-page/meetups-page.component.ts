@@ -17,13 +17,14 @@ export class MeetupsPageComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.subscription = this.MeetupsService.getMeetups().subscribe(data => this.arrayMeetups = data as Array<Meetup>)
+    this.subscription = this.MeetupsService.getMeetups().
+    subscribe(data => {
+      this.arrayMeetups = data as Array<Meetup>;
+      console.log(data);
+    })
   }
   
   ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-      console.log("destroy");
-    }
+      this.subscription?.unsubscribe();
   }
 }

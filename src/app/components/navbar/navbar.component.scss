@@ -1,10 +1,46 @@
-.navbar_wrapper {
-background-color: rgb(40, 231, 148);
-text-align: center;
-}
 a {
     padding: 20px;
 }
 .navbar_buttons {
     text-align: right;
+}
+
+.navbar_wrapper {
+    background-color: #333;
+    overflow: hidden;
+    position: inherit;
+    width: 100%;
+}
+
+/* Style the links inside the navigation bar */
+.navbar_wrapper a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.navbar_wrapper button {
+    float: right;
+    display: block;
+    color: #333;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+/* Change the color of links on hover */
+.navbar a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+/* Add a color to the active/current link */
+.navbar a.active {
+    background-color: #4CAF50;
+    color: white;
 }

@@ -11,16 +11,20 @@ import { MeetupsService } from 'src/app/services/meetups.service';
 export class MyMeetupsPageComponent implements OnInit {
 
   arrayMeetups: Array<Meetup> = [];
-  constructor(public MeetupsService: MeetupsService,
+  constructor(
+    private MeetupsService: MeetupsService,
     private authService: AuthService) {}
 
   ngOnInit(): void {
     this.MeetupsService.getMeetups().subscribe((data) => {
-      this.arrayMeetups = data as Array<Meetup>;
-      console.log(this.arrayMeetups);
-      
+      this.arrayMeetups = data as Array<Meetup>;      
     })
   }
+
+  // public get meetupsFilter2() {
+  //   return this.meetupsPage.arrayMeetups.filter(
+  //     (meetup) => meetup.owner.id === this.userId);; 
+  // }
 
   public get meetupsFilter() {
     return this.arrayMeetups.filter(
@@ -31,7 +35,6 @@ export class MyMeetupsPageComponent implements OnInit {
     const token = this.authService.token;
     if (token) {
       const jwtObj = this.authService.parseJwt(token);
-      console.log(jwtObj.id)
       return jwtObj.id;
     }
   return false;

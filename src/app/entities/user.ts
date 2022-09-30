@@ -1,20 +1,31 @@
+import { Role } from "./role";
+
 export interface User {
-  id: number,
+  createdAt: string,
   email: string,
-  password: string,
   fio: string,
+  id: number,
+  password: string,
+  roles: Array<Role>,
+  updatedAt: string,
 }
 
 export class User {
   constructor(
-    id: number,
+    createdAt: string,
     email: string,
-    password: string,
     fio: string,
+    id: number,
+    password: string,
+    roles: Array<Role>,
+    updatedAt: string,
   ) {
-    this.id = id;
+    this.createdAt = createdAt;
     this.email = email;
-    this.password = password;
     this.fio = fio;
+    this.id = id;
+    this.password = password;
+    this.roles = roles;
+    this.updatedAt = updatedAt;
   }
 }

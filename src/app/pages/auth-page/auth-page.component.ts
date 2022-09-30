@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { LogPas } from 'src/app/shared/interfaces/LogPas';
 
@@ -9,6 +10,7 @@ import { LogPas } from 'src/app/shared/interfaces/LogPas';
 })
 export class AuthPageComponent implements OnInit {
 
+  subscription!: Subscription;
 
   constructor(
     private authService: AuthService,
@@ -18,7 +20,11 @@ export class AuthPageComponent implements OnInit {
   }
 
   login(LogPas: LogPas) {
-    this.authService.login(LogPas.email, LogPas.password).subscribe(console.log);
+    this.subscription = this.authService.login(LogPas.email, LogPas.password).subscribe(console.log);
+  }
+
+  ngOnDestroy() {
+    this.subscription?.remove;
   }
 
 }
