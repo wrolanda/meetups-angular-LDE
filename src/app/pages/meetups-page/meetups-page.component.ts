@@ -38,6 +38,10 @@ export class MeetupsPageComponent implements OnInit, OnDestroy {
     (subscribeMeetupObj.idMeetup, subscribeMeetupObj.idUser)
     .subscribe(console.log);
   }
+
+  delMeetup(id: number) {
+    this.subscription = this.MeetupsService.delMeetup(id).subscribe(console.log);
+  }
   
   ngOnChanges() {
     

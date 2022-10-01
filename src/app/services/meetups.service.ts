@@ -58,4 +58,9 @@ export class MeetupsService {
     return this.http
     .delete(`${environment.backendOrigin}/meetup`, option);
   }
+
+  delMeetup(id: number) {
+    return this.http
+    .delete(`${environment.backendOrigin}/meetup/${id}`);
+  }
 }

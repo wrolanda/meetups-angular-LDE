@@ -1,2 +1,5 @@
 <p>my-meetups-page works!</p>
-<app-meetups [arrayMeetups]="meetupsFilter"></app-meetups>
+<app-meetups 
+[arrayMeetups]="meetupsFilter"
+(addEventDel)="delMeetup($event)"
+></app-meetups>

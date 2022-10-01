@@ -57,6 +57,7 @@ import { MaterialModule } from './material/material.module';
     MeetupsService,
     AuthService,
     UsersService,
+    MeetupsPageComponent,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],

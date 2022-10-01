@@ -17,6 +17,9 @@
     *ngIf="!isOwnMeetup && isSub"
     (click)="unsubscribeMeetup()">отписаться</button>
     <button mat-raised-button *ngIf="isOwnMeetup">редактировать</button>
+    <button mat-raised-button 
+    *ngIf="isOwnMeetup || isAdmin"
+    (click)="delMeetup()">удалить</button>
     <button mat-raised-button>Подробнее</button>
     <br>
     <div>target_audience: {{card.target_audience}}</div>

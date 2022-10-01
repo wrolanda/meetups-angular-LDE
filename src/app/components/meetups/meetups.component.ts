@@ -15,6 +15,8 @@ export class MeetupsComponent implements OnInit {
   public addEvent = new EventEmitter();
   @Output()  
   public addEventUnsub = new EventEmitter();
+  @Output()
+  public addEventDel = new EventEmitter();
   
   constructor() { }
 

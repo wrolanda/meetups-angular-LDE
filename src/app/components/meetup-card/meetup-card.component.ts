@@ -16,6 +16,8 @@ export class MeetupCardComponent implements OnInit {
   public addEventCard = new EventEmitter();
   @Output()
   public addEventUnsub = new EventEmitter();
+  @Output()
+  public addEventDel = new EventEmitter();
 
   constructor(private authService: AuthService) { }
 
@@ -34,6 +36,10 @@ export class MeetupCardComponent implements OnInit {
     return false;
   }
 
+  get isAdmin() {
+    return this.authService.isAdmin;
+  }
+
   subscribeMeetup() { 
     const subscribeMeetupObj = {
       idMeetup: this.card.id,
@@ -48,5 +54,9 @@ export class MeetupCardComponent implements OnInit {
       idUser:  this.authService.user?.id,
      }
     this.addEventUnsub.emit(subscribeMeetupObj);
+  }
+
+  delMeetup() {
+    this.addEventDel.emit(this.card.id);
   }
 }
