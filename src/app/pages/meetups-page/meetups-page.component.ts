@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, ComponentFactoryResolver, OnDestroy, OnInit } from '@angular/core';
+import { Subscription, throwIfEmpty } from 'rxjs';
 import { Meetup } from 'src/app/entities/meetup';
 import { MeetupsService } from 'src/app/services/meetups.service';
 
@@ -19,12 +19,32 @@ export class MeetupsPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.MeetupsService.getMeetups().
     subscribe(data => {
-      this.arrayMeetups = data as Array<Meetup>;
-      console.log(data);
+      let sortData = data as Array<Meetup>;
+      sortData = sortData.sort((meetup1, meetup2) => 
+      Date.parse(meetup2.createdAt) - Date.parse(meetup1.createdAt));
+      console.log(sortData);
+      this.arrayMeetups = sortData;
     })
   }
+
+  subscribeMeetup(subscribeMeetupObj: {idMeetup: number, idUser: number}) {
+    this.subscription = this.MeetupsService.subscribeMeetup
+    (subscribeMeetupObj.idMeetup, subscribeMeetupObj.idUser)
+    .subscribe(console.log);
+  }
+
+  unsubscribeMeetup(subscribeMeetupObj: {idMeetup: number, idUser: number}) {
+    this.subscription = this.MeetupsService.unsubscribeMeetup
+    (subscribeMeetupObj.idMeetup, subscribeMeetupObj.idUser)
+    .subscribe(console.log);
+  }
   
+  ngOnChanges() {
+    
+  }
+
   ngOnDestroy(): void {
       this.subscription?.unsubscribe();
   }
+
 }

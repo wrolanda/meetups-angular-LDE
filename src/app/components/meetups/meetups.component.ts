@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Meetup } from 'src/app/entities/meetup';
 
 @Component({
@@ -10,6 +10,12 @@ export class MeetupsComponent implements OnInit {
 
   @Input()
   arrayMeetups!: Array<Meetup>;
+
+  @Output()
+  public addEvent = new EventEmitter();
+  @Output()  
+  public addEventUnsub = new EventEmitter();
+  
   constructor() { }
 
   ngOnInit(): void {

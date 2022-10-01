@@ -38,7 +38,6 @@ export class AuthService {
     const token = this.token;
     if (token) {
       const jwtObj = this.parseJwt(token);
-      // const jwtObj2 = this.user;
       for (let i = 0; i < jwtObj.roles.length; i++) {
         if (jwtObj.roles[i].id === 1 && jwtObj.roles[i].name === ADMIN) {
           return true;

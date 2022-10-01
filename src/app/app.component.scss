@@ -4,6 +4,7 @@
     position: fixed;
     bottom: 0;
     width: 100%;
+    margin-top: 60px;
 }
 
 /* Style the links inside the navigation bar */
@@ -27,4 +28,8 @@
 .foobar a.active {
     background-color: #4CAF50;
     color: white;
+}
+
+.navbar {
+    padding-bottom: 60px;
 }

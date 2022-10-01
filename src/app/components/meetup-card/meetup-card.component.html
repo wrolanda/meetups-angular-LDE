@@ -1,6 +1,4 @@
 <div>
-    <br>
-    <br>
     <div>Meetup card {{card.id}}</div>
     <br>
     <div>name: {{card.name}}</div>
@@ -12,12 +10,20 @@
     <div>createdBy: {{card.owner.fio}}</div>
     <div>location: {{card.location}}</div>
     <br>
-    <button>записаться</button>
-    <button>Подробнее</button>
+    <button mat-raised-button 
+    *ngIf="!isOwnMeetup && !isSub"
+    (click)="subscribeMeetup()">записаться</button>
+    <button mat-raised-button 
+    *ngIf="!isOwnMeetup && isSub"
+    (click)="unsubscribeMeetup()">отписаться</button>
+    <button mat-raised-button *ngIf="isOwnMeetup">редактировать</button>
+    <button mat-raised-button>Подробнее</button>
     <br>
     <div>target_audience: {{card.target_audience}}</div>
     <div>need_to_know: {{card.need_to_know}}</div>
     <div>will_happen: {{card.will_happen}}</div>
     <div>duration: {{card.duration}}</div>
+    <br>
+    <br>
     <br>
 </div>

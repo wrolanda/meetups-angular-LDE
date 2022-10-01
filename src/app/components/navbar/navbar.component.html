@@ -1,12 +1,18 @@
 <div class="navbar_wrapper">
     <div class="navbar">
-        <a *ngIf="!isAuth" routerLink="/auth" routerLinkActive="active">auth</a>
-        <a *ngIf="isAuth" routerLink="/meetups" routerLinkActive="active">meetups</a>
+        <div>
+            <a *ngIf="!isAuth" routerLink="/auth" routerLinkActive="active">auth</a>
+        </div>
+        <div>
+            <a *ngIf="isAuth" routerLink="/meetups" routerLinkActive="active">meetups</a>
+        </div>
+        <div>
         <a *ngIf="isAuth" routerLink="/myMeetups" routerLinkActive="active">my meetups</a>
+        </div>
         <a *ngIf="isAdmin" routerLink="/userList" routerLinkActive="active">users</a>
     </div>
     <div class="navbar_buttons">
-        <button *ngIf="isAuth" (click)="logout()">logout</button>
+        <button mat-button *ngIf="isAuth" (click)="logout()">logout</button>
     </div>
     <div>
        

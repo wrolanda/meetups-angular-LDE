@@ -3,9 +3,11 @@
     <input type="text" name="name" autofocus
     [(ngModel)]="name" />
     <label>Дата:</label>
-    <input type="date" name="date" [(ngModel)]="date"/>
-    <label>Время:</label>
-    <input type="time" name="time" [(ngModel)]="time"/>
+    <input type="date" min="Date.today()" name="date" [(ngModel)]="date"/>
+    <label>Время начала:</label>
+    <input type="time" name="startTime" [(ngModel)]="startTime"/>
+    <label>Время окончания:</label>
+    <input type="time" name="endTime" [(ngModel)]="endTime"/>
     <label>Место:</label>
     <input type="text" name="location" [(ngModel)]="location"/>
     <label>Описание:</label>

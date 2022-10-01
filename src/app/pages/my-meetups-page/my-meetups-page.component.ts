@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Meetup } from 'src/app/entities/meetup';
 import { AuthService } from 'src/app/services/auth.service';
 import { MeetupsService } from 'src/app/services/meetups.service';
@@ -10,14 +11,20 @@ import { MeetupsService } from 'src/app/services/meetups.service';
 })
 export class MyMeetupsPageComponent implements OnInit {
 
+  subscription!: Subscription;
   arrayMeetups: Array<Meetup> = [];
   constructor(
     private MeetupsService: MeetupsService,
     private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.MeetupsService.getMeetups().subscribe((data) => {
-      this.arrayMeetups = data as Array<Meetup>;      
+    this.subscription = this.MeetupsService.getMeetups().
+    subscribe(data => {
+      let sortData = data as Array<Meetup>;
+      sortData = sortData.sort((meetup1, meetup2) => 
+      Date.parse(meetup2.createdAt) - Date.parse(meetup1.createdAt));
+      console.log(sortData);
+      this.arrayMeetups = sortData;  
     })
   }
 
@@ -39,4 +46,8 @@ export class MyMeetupsPageComponent implements OnInit {
     }
   return false;
   }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+}
 }

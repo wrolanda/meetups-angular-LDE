@@ -10,15 +10,16 @@ import { MeetupsComponent } from '../meetups/meetups.component';
   styleUrls: ['./meetup-create.component.scss'],
 })
 export class MeetupCreateComponent implements OnInit {
-  public name: string = '';
-  public description: string = '';
-  public location: string = '';
-  public target_audience: string = '';
-  public need_to_know: string = '';
-  public will_happen: string = '';
-  public reason_to_come: string = '';
-  public time: any;
-  public date: any;
+  public name: string = 'название';
+  public description: string = 'описание';
+  public location: string = 'переговорка 20';
+  public target_audience: string = 'клоуны';
+  public need_to_know: string = 'нужно знать';
+  public will_happen: string = 'что-то произойдет';
+  public reason_to_come: string = 'причина жить';
+  public startTime: string = '17:00';
+  public endTime: string = '18:00';
+  public date: string = "2022-09-30";
   public duration: number = 0;
   public owner!: User;
 
@@ -33,15 +34,18 @@ export class MeetupCreateComponent implements OnInit {
     if (
       this.name &&
       this.description &&
-      this.time &&
+      this.startTime &&
+      this.endTime &&
       this.date &&
-      this.duration &&
       this.location &&
       this.target_audience &&
       this.need_to_know &&
       this.will_happen &&
       this.reason_to_come
     ) {
+      const durat = this.durationCalculation(
+        this.date + " " + this.startTime, 
+        this.date + " " + this.endTime);
       const meetupObj = new Meetup(
         Date.now(),
         this.name,
@@ -51,16 +55,19 @@ export class MeetupCreateComponent implements OnInit {
         this.need_to_know,
         this.will_happen,
         this.reason_to_come,
-        this.time,
-        this.duration,
+        this.date + " " + this.startTime,
+        durat,
         this.authService.user!.id,
         this.authService.user!,
         []
       );
-      // this.addEvent.emit(meetupObj);
-      console.log(meetupObj);
+      this.addEvent.emit(meetupObj);
     } else {
       alert('заполните пожалуйста все поля');
     }
+  }
+
+  durationCalculation(date1: string, date2: string): number {
+    return (Date.parse(date2) - Date.parse(date1)) / 1000 / 60;
   }
 }

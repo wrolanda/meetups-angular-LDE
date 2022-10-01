@@ -23,6 +23,9 @@ import { UsersListComponent } from './components/users-list/users-list.component
 import { UserCardComponent } from './components/user-card/user-card.component';
 import { AuthService } from './services/auth.service';
 import { UsersService } from './services/users.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material/material.module';
+
 
 @NgModule({
   declarations: [
@@ -47,6 +50,8 @@ import { UsersService } from './services/users.service';
     FormsModule,
     HttpClientModule,
     RouterModule,
+    BrowserAnimationsModule,
+    MaterialModule,
   ],
   providers: [
     MeetupsService,
