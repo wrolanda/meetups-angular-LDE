@@ -1,16 +1,28 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, tap } from 'rxjs';
+import { filter, mergeMap, Observable, Subject, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 @Injectable()
 export class MeetupsService {
-  constructor(private http: HttpClient, private router: Router) {}
+  
+  meetups: Observable<any> = this.http.get(
+    `${environment.backendOrigin}/meetup`
+  );
+  subject = new Subject();
 
+  constructor(private http: HttpClient, private router: Router) {
+    setInterval(() => this.refreshMeetups(), 10000);
+  }
+  
   ngOnInit() {}
 
-  getMeetups(): Observable<object> {
-    return this.http.get(`${environment.backendOrigin}/meetup`);
+  getMeetups() {
+    return this.subject.pipe();
+  }
+
+  refreshMeetups() {
+    this.meetups.subscribe((res) => this.subject.next(res));
   }
 
   createMeetup(
@@ -43,7 +55,17 @@ export class MeetupsService {
       );
   }
 
-  subscribeMeetup(idMeetup: number, idUser: number) {
+  nameUniqueValid(newName: string) {
+    this.getMeetups().pipe(
+      mergeMap((items: any) => items.name),
+      filter((names: any) => names.includes(newName)),
+      tap((resName) => {
+        console.log (resName ? false : true);
+      })
+    )
+  }
+
+  subscribeMeetup(idMeetup: number, idUser: number): Observable<object> {
     return this.http.put(`${environment.backendOrigin}/meetup`, {
       idMeetup,
       idUser,

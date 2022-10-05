@@ -1,8 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Meetup } from 'src/app/entities/meetup';
-import { User } from 'src/app/entities/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { MeetupsService } from 'src/app/services/meetups.service';
 
 @Component({
   selector: 'app-meetup-create',
@@ -37,13 +37,18 @@ export class MeetupCreateComponent implements OnInit {
   // public duration: number = 0;
   // public owner!: User;
 
-  constructor(private authService: AuthService, private fb: FormBuilder) {}
+  constructor(
+    private authService: AuthService, 
+    private fb: FormBuilder,
+    private meetupsService: MeetupsService,
+    ) {}
 
   @Output()
   public addEvent = new EventEmitter();
 
   ngOnInit(): void {
     this.InitCreateMeetupForm();
+    console.log(this.meetupsService.nameUniqueValid("название"));
   }
 
   InitCreateMeetupForm() {
@@ -61,44 +66,6 @@ export class MeetupCreateComponent implements OnInit {
       duration: [0],
     });
   }
-
-  // onCreateMeetup() {
-  //   if (
-  //     this.name &&
-  //     this.description &&
-  //     this.startTime &&
-  //     this.endTime &&
-  //     this.date &&
-  //     this.location &&
-  //     this.target_audience &&
-  //     this.need_to_know &&
-  //     this.will_happen &&
-  //     this.reason_to_come
-  //   ) {
-  //     const durat = this.durationCalculation(
-  //       this.date + ' ' + this.startTime,
-  //       this.date + ' ' + this.endTime
-  //     );
-  //     const meetupObj = new Meetup(
-  //       Date.now(),
-  //       this.name,
-  //       this.description,
-  //       this.location,
-  //       this.target_audience,
-  //       this.need_to_know,
-  //       this.will_happen,
-  //       this.reason_to_come,
-  //       this.date + ' ' + this.startTime,
-  //       durat,
-  //       this.authService.user!.id,
-  //       this.authService.user!,
-  //       []
-  //     );
-  //     this.addEvent.emit(meetupObj);
-  //   } else {
-  //     alert('заполните пожалуйста все поля');
-  //   }
-  // }
 
   onCreateMeetup2() {
     if (
@@ -138,6 +105,8 @@ export class MeetupCreateComponent implements OnInit {
         []
         );
         this.addEvent.emit(meetupObj);
+    } else {
+      alert("заполните все поля");
     }
   }
 

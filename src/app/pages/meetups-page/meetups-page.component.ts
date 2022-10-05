@@ -9,11 +9,17 @@ import { MeetupsService } from 'src/app/services/meetups.service';
   styleUrls: ['./meetups-page.component.scss'],
 })
 export class MeetupsPageComponent implements OnInit, OnDestroy {
+
   arrayMeetups: Array<Meetup> = [];
   subscription!: Subscription;
+
   constructor(public MeetupsService: MeetupsService) {}
 
   ngOnInit(): void {
+      this.getMeetups();
+  }
+
+  getMeetups() {
     this.subscription = this.MeetupsService.getMeetups().subscribe((data) => {
       this.arrayMeetups = this.sortMeetups(data as Array<Meetup>);
     });
@@ -31,6 +37,7 @@ export class MeetupsPageComponent implements OnInit, OnDestroy {
       subscribeMeetupObj.idMeetup,
       subscribeMeetupObj.idUser
     ).subscribe(console.log);
+
   }
 
   unsubscribeMeetup(subscribeMeetupObj: { idMeetup: number; idUser: number }) {
