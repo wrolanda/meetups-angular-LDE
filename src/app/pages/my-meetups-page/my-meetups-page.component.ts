@@ -24,22 +24,10 @@ export class MyMeetupsPageComponent implements OnInit {
   ngOnInit(): void {
     this.subscription = this.MeetupsService.getMeetups().
     subscribe(data => {
-      let sortData = data as Array<Meetup>;
-      sortData = sortData.sort((meetup1, meetup2) => 
-      Date.parse(meetup2.createdAt) - Date.parse(meetup1.createdAt));
-      console.log(sortData);
-      this.arrayMeetups = sortData;  
+      this.arrayMeetups = this.meetupPage
+      .sortMeetups(data as Array<Meetup>)
+      .filter((meetup) => meetup.owner.id === this.userId);
     })
-  }
-
-  // public get meetupsFilter2() {
-  //   return this.meetupsPage.arrayMeetups.filter(
-  //     (meetup) => meetup.owner.id === this.userId);; 
-  // }
-
-  public get meetupsFilter() {
-    return this.arrayMeetups.filter(
-      (meetup) => meetup.owner.id === this.userId);
   }
 
   public get userId() {

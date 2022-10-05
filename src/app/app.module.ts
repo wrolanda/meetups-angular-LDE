@@ -13,7 +13,7 @@ import { MeetupsPageComponent } from './pages/meetups-page/meetups-page.componen
 import { MyMeetupsPageComponent } from './pages/my-meetups-page/my-meetups-page.component';
 import { HowCreateAccPageComponent } from './pages/how-create-acc-page/how-create-acc-page.component';
 import { CreateMeetupPageComponent } from './pages/create-meetup-page/create-meetup-page.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
@@ -52,6 +52,7 @@ import { MaterialModule } from './material/material.module';
     RouterModule,
     BrowserAnimationsModule,
     MaterialModule,
+    ReactiveFormsModule,
   ],
   providers: [
     MeetupsService,

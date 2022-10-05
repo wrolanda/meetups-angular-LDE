@@ -2,9 +2,11 @@
   <div class="navbar">
     <app-navbar></app-navbar>
   </div>
-  <router-outlet></router-outlet>
+  <div class="dynamicComp">
+    <router-outlet></router-outlet>
+  </div>
   <div class="foobar">
-    <a routerLink="/createMeetup">create meetup</a>
-    <a routerLink="/createMeetup">create user</a>
+    <a routerLink="/createMeetup" routerLinkActive="active">create meetup</a>
+    <a routerLink="/createuser" routerLinkActive="active">create user</a>
   </div>
 </div>

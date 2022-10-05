@@ -1,5 +1,5 @@
-import { Component, ComponentFactoryResolver, OnDestroy, OnInit } from '@angular/core';
-import { Subscription, throwIfEmpty } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Meetup } from 'src/app/entities/meetup';
 import { MeetupsService } from 'src/app/services/meetups.service';
 
@@ -9,46 +9,46 @@ import { MeetupsService } from 'src/app/services/meetups.service';
   styleUrls: ['./meetups-page.component.scss'],
 })
 export class MeetupsPageComponent implements OnInit, OnDestroy {
-
   arrayMeetups: Array<Meetup> = [];
   subscription!: Subscription;
-  constructor(
-    public MeetupsService: MeetupsService
-  ) {}
+  constructor(public MeetupsService: MeetupsService) {}
 
   ngOnInit(): void {
-    this.subscription = this.MeetupsService.getMeetups().
-    subscribe(data => {
-      let sortData = data as Array<Meetup>;
-      sortData = sortData.sort((meetup1, meetup2) => 
-      Date.parse(meetup2.createdAt) - Date.parse(meetup1.createdAt));
-      console.log(sortData);
-      this.arrayMeetups = sortData;
-    })
+    this.subscription = this.MeetupsService.getMeetups().subscribe((data) => {
+      this.arrayMeetups = this.sortMeetups(data as Array<Meetup>);
+    });
   }
 
-  subscribeMeetup(subscribeMeetupObj: {idMeetup: number, idUser: number}) {
-    this.subscription = this.MeetupsService.subscribeMeetup
-    (subscribeMeetupObj.idMeetup, subscribeMeetupObj.idUser)
-    .subscribe(console.log);
+  sortMeetups(data: Array<Meetup>) {
+    return [...data].sort(
+      (meetup1, meetup2) =>
+        Date.parse(meetup2.createdAt) - Date.parse(meetup1.createdAt)
+    );
   }
 
-  unsubscribeMeetup(subscribeMeetupObj: {idMeetup: number, idUser: number}) {
-    this.subscription = this.MeetupsService.unsubscribeMeetup
-    (subscribeMeetupObj.idMeetup, subscribeMeetupObj.idUser)
-    .subscribe(console.log);
+  subscribeMeetup(subscribeMeetupObj: { idMeetup: number; idUser: number }) {
+    this.subscription = this.MeetupsService.subscribeMeetup(
+      subscribeMeetupObj.idMeetup,
+      subscribeMeetupObj.idUser
+    ).subscribe(console.log);
+  }
+
+  unsubscribeMeetup(subscribeMeetupObj: { idMeetup: number; idUser: number }) {
+    this.subscription = this.MeetupsService.unsubscribeMeetup(
+      subscribeMeetupObj.idMeetup,
+      subscribeMeetupObj.idUser
+    ).subscribe(console.log);
   }
 
   delMeetup(id: number) {
-    this.subscription = this.MeetupsService.delMeetup(id).subscribe(console.log);
+    this.subscription = this.MeetupsService.delMeetup(id).subscribe(
+      console.log
+    );
   }
-  
-  ngOnChanges() {
-    
-  }
+
+  ngOnChanges() {}
 
   ngOnDestroy(): void {
-      this.subscription?.unsubscribe();
+    this.subscription?.unsubscribe();
   }
-
 }

@@ -1,11 +1,11 @@
 <div>
-    <form (ngSubmit)="onLogin()">
+    <form [formGroup]="authReactiveForm" (ngSubmit)="onLogin()">
         <div>email</div>
-        <input type="email" name="email" [(ngModel)]="login"/>
+        <input type="email" name="email" placeholder="example@example.com" formControlName="login" />
         <div>password</div>
-        <input type="password" name="password" [(ngModel)]="password"/>
+        <input type="password" name="password" formControlName="password" />
         <br><br>
         <button mat-raised-button type="submit">Sign in</button>
     </form>
-        <a routerLink="/howCreateAcc" routerLinkActive="active" ariaCurrentWhenActive="page">How to create account?</a>
+    <a routerLink="/howCreateAcc" routerLinkActive="active" ariaCurrentWhenActive="page">How to create account?</a>
 </div>

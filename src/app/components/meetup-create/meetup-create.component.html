@@ -1,25 +1,25 @@
-<form (ngSubmit)="onCreateMeetup()">
+<form [formGroup]="MeetupCreateReactiveForm" (ngSubmit)="onCreateMeetup2()">
     <label>Название:</label>
     <input type="text" name="name" autofocus
-    [(ngModel)]="name" />
+    formControlName="name" />
     <label>Дата:</label>
-    <input type="date" min="Date.today()" name="date" [(ngModel)]="date"/>
+    <input type="date" min="Date.today()" name="date" formControlName="date"/>
     <label>Время начала:</label>
-    <input type="time" name="startTime" [(ngModel)]="startTime"/>
+    <input type="time" name="startTime" formControlName="startTime"/>
     <label>Время окончания:</label>
-    <input type="time" name="endTime" [(ngModel)]="endTime"/>
+    <input type="time" name="endTime" formControlName="endTime"/>
     <label>Место:</label>
-    <input type="text" name="location" [(ngModel)]="location"/>
+    <input type="text" name="location" formControlName="location"/>
     <label>Описание:</label>
-    <input type="text" name="description" [(ngModel)]="description"/>
+    <input type="text" name="description" formControlName="description"/>
     <label>Целевая аудитория</label>
-    <input type="text" name="target_audience" [(ngModel)]="target_audience"/>
+    <input type="text" name="target_audience" formControlName="target_audience"/>
     <label>need_to_know</label>
-    <input type="text" name="need_to_know" [(ngModel)]="need_to_know"/>
+    <input type="text" name="need_to_know" formControlName="need_to_know"/>
     <label>will_happen</label>
-    <input type="text" name="will_happen" [(ngModel)]="will_happen"/>
+    <input type="text" name="will_happen" formControlName="will_happen"/>
     <label>reason_to_come</label>
-    <input type="text" name="reason_to_come" [(ngModel)]="reason_to_come" />
+    <input type="text" name="reason_to_come" formControlName="reason_to_come" />
 
     <button type="submit">Создать</button>
 </form>

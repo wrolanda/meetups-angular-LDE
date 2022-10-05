@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LogPas } from 'src/app/shared/interfaces/LogPas';
 
 @Component({
@@ -7,22 +8,37 @@ import { LogPas } from 'src/app/shared/interfaces/LogPas';
   styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent implements OnInit {
+  authReactiveForm!: FormGroup <{
+    login: FormControl<string | null>,
+    password: FormControl<string | null>,
+  }>
+
   @Output()
   public addEvent = new EventEmitter();
 
-  public login: string = '';
-  public password: string = '';
+  constructor(
+    private fb: FormBuilder,
+    ) {}
 
-  constructor() {}
+  ngOnInit(): void {
+    this.initAuthForm();
+  }
 
-  ngOnInit(): void {}
+  initAuthForm() {
+    this.authReactiveForm = this.fb.group({
+      login: ['', [Validators.email, Validators.required]],
+	    password: ['', [Validators.required]],
+    })
+    
+  }
 
   onLogin() {
-    if (this.login && this.password) {
-      const logPas = new LogPas(this.login, this.password);
-      this.addEvent.emit(logPas);
-    } else {
-      alert('login and password are required fields!');
+    if (this.authReactiveForm.value.login && 
+      this.authReactiveForm.value.password) {
+        const logPas = new LogPas(
+          this.authReactiveForm.value.login,
+          this.authReactiveForm.value.password);
+        this.addEvent.emit(logPas);
     }
   }
 }

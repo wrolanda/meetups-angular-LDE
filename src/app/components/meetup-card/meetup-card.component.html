@@ -10,6 +10,10 @@
     <div>createdBy: {{card.owner.fio}}</div>
     <div>location: {{card.location}}</div>
     <br>
+    <div>target_audience: {{card.target_audience}}</div>
+    <div>need_to_know: {{card.need_to_know}}</div>
+    <div>will_happen: {{card.will_happen}}</div>
+    <div>duration: {{card.duration}}</div>
     <button mat-raised-button 
     *ngIf="!isOwnMeetup && !isSub"
     (click)="subscribeMeetup()">записаться</button>
@@ -21,11 +25,6 @@
     *ngIf="isOwnMeetup || isAdmin"
     (click)="delMeetup()">удалить</button>
     <button mat-raised-button>Подробнее</button>
-    <br>
-    <div>target_audience: {{card.target_audience}}</div>
-    <div>need_to_know: {{card.need_to_know}}</div>
-    <div>will_happen: {{card.will_happen}}</div>
-    <div>duration: {{card.duration}}</div>
     <br>
     <br>
     <br>

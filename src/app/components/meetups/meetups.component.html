@@ -1,6 +1,6 @@
 <div>
     <app-meetup-card 
-    *ngFor="let card of arrayMeetups" 
+    *ngFor="let card of arrayMeetups"
     [card]="card"
     (addEventCard)="this.addEvent.emit($event)"
     (addEventUnsub)="this.addEventUnsub.emit($event)"

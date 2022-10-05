@@ -39,7 +39,6 @@ export class MeetupsService {
       .pipe(
         tap((res) => {
           this.router.navigate(['meetups']);
-          console.log(res);
         })
       );
   }
