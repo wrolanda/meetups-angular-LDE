@@ -1,61 +1,37 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, distinctUntilChanged, filter, mergeMap, Observable, Subject, tap } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Meetup } from '../entities/meetup';
+import { deepEqual } from '../shared/interfaces/mathFuncs/mathFuncs';
+
 @Injectable()
 export class MeetupsService implements OnDestroy {
   
-  meetups: Observable<any> = this.http.get(
-    `${environment.backendOrigin}/meetup`
-  );
-
   dataMeetups: Array<Meetup> = [];
   interval: any;
-
-  subject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  subject = new BehaviorSubject<any>([]);
 
   constructor(private http: HttpClient, private router: Router) {
     this.refreshMeetups();
     this.interval = setInterval(() => this.refreshMeetups(), 10000);
   }
-  
- 
-  /*getMeetups() {
-    return this.subject.pipe(distinctUntilChanged((a, b) => this.deepEqual(a,b)),
-    tap((res) => console.log(res)));
-  }*/
+
+  getMeetups(): Observable<any> {
+    return this.http.get(
+      `${environment.backendOrigin}/meetup`
+    );
+  } 
 
   refreshMeetups() {
-    this.meetups.subscribe((res) => this.subject.next(res));
+    this.getMeetups().subscribe((res) => this.subject.next(res));
   }
 
   getSubject() {
-    return this.subject.pipe(distinctUntilChanged((a, b) => this.deepEqual(a,b)),
+    return this.subject.pipe(distinctUntilChanged((a, b) => deepEqual(a,b)),
     tap((res) => console.log(res)));
   }
-
- private deepEqual(a: any, b: any) {
-    if (a === b) {
-      return true;
-    }
-    if (a === null || b === null ||typeof a !== 'object' || typeof b !== 'object') {
-      return false;
-    }
-    const aKeys = Object.keys(a);
-    const bKeys = Object.keys(b);
-    if (aKeys.length !== bKeys.length) {
-      return false;
-    }
-    for (let i = 0; i < aKeys.length; i += 1) {
-      const key = aKeys[i];
-      if (!bKeys.includes(key) || !this.deepEqual(a[key], b[key])) {
-        return false;
-      }
-    }
-    return true;
-  };
 
   createMeetup(
     name: string,
@@ -81,7 +57,7 @@ export class MeetupsService implements OnDestroy {
         reason_to_come,
       })
       .pipe(
-        tap((res) => {
+        tap(() => {
           this.router.navigate(['meetups']);
         })
       );

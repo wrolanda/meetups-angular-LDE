@@ -6,7 +6,7 @@ import { LogPas } from 'src/app/shared/interfaces/LogPas';
 @Component({
   selector: 'app-auth-page',
   templateUrl: './auth-page.component.html',
-  styleUrls: ['./auth-page.component.scss']
+  styleUrls: ['./auth-page.component.scss'],
 })
 export class AuthPageComponent implements OnInit {
 

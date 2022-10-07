@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { MeetupCardComponent } from './components/meetup-card/meetup-card.component';
 import { MeetupsComponent } from './components/meetups/meetups.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { MeetupsService } from './services/meetups.service';
 import { AuthPageComponent } from './pages/auth-page/auth-page.component';
 import { AuthComponent } from './components/auth/auth.component';
 import { MeetupsPageComponent } from './pages/meetups-page/meetups-page.component';
@@ -22,7 +21,6 @@ import { MeetupCreateComponent } from './components/meetup-create/meetup-create.
 import { UsersListComponent } from './components/users-list/users-list.component';
 import { UserCardComponent } from './components/user-card/user-card.component';
 import { AuthService } from './services/auth.service';
-import { UsersService } from './services/users.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { CreateNewUserComponent } from './components/create-new-user/create-new-user.component';
@@ -57,9 +55,7 @@ import { CreateNewUserComponent } from './components/create-new-user/create-new-
     ReactiveFormsModule,
   ],
   providers: [
-    MeetupsService,
     AuthService,
-    UsersService,
     MeetupsPageComponent,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],

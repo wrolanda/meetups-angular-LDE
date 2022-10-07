@@ -1,14 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Subject, Subscription, takeUntil, tap } from 'rxjs';
+import { Subject, Subscription, takeUntil, tap } from 'rxjs';
 import { Meetup } from 'src/app/entities/meetup';
 import { MeetupsService } from 'src/app/services/meetups.service';
+import { sortList } from 'src/app/shared/interfaces/mathFuncs/mathFuncs';
 
 @Component({
   selector: 'app-meetups-page',
   templateUrl: './meetups-page.component.html',
   styleUrls: ['./meetups-page.component.scss'],
+  providers: [MeetupsService],
 })
 export class MeetupsPageComponent implements OnInit, OnDestroy {
+  
   arrayMeetups: Array<Meetup> = [];
   subscription!: Subscription;
   notifier = new Subject<void>();
@@ -24,15 +27,8 @@ export class MeetupsPageComponent implements OnInit, OnDestroy {
       takeUntil(this.notifier),
       tap(() => console.log('aaaaaaaa'))
     ).subscribe((data) => {
-      this.arrayMeetups = this.sortMeetups(data as Array<Meetup>);
+      this.arrayMeetups = sortList(data as Array<Meetup>);
     });
-  }
-
-  sortMeetups(data: Array<Meetup>) {
-    return [...data].sort(
-      (meetup1, meetup2) =>
-        Date.parse(meetup2.createdAt) - Date.parse(meetup1.createdAt)
-    );
   }
 
   subscribeMeetup(subscribeMeetupObj: { idMeetup: number; idUser: number }) {
@@ -61,6 +57,5 @@ export class MeetupsPageComponent implements OnInit, OnDestroy {
     this.subscription?.unsubscribe();
     this.notifier.next();
     this.notifier.complete();
-    this.MeetupsService.ngOnDestroy();
   }
 }

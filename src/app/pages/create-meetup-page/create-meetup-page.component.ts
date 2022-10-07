@@ -6,7 +6,8 @@ import { MeetupsService } from 'src/app/services/meetups.service';
 @Component({
   selector: 'app-create-meetup-page',
   templateUrl: './create-meetup-page.component.html',
-  styleUrls: ['./create-meetup-page.component.scss']
+  styleUrls: ['./create-meetup-page.component.scss'],
+  providers: [MeetupsService],
 })
 export class CreateMeetupPageComponent implements OnInit {
 
