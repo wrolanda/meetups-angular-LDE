@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subject, Subscription, takeUntil, tap } from 'rxjs';
 import { Meetup } from 'src/app/entities/meetup';
 import { MeetupsService } from 'src/app/services/meetups.service';
 
@@ -9,18 +9,21 @@ import { MeetupsService } from 'src/app/services/meetups.service';
   styleUrls: ['./meetups-page.component.scss'],
 })
 export class MeetupsPageComponent implements OnInit, OnDestroy {
-
   arrayMeetups: Array<Meetup> = [];
   subscription!: Subscription;
+  notifier = new Subject<void>();
 
-  constructor(public MeetupsService: MeetupsService) {}
+  constructor(private MeetupsService: MeetupsService) {}
 
   ngOnInit(): void {
-      this.getMeetups();
+    this.getMeetups();
   }
 
   getMeetups() {
-    this.subscription = this.MeetupsService.getMeetups().subscribe((data) => {
+    this.subscription = this.MeetupsService.getSubject().pipe(
+      takeUntil(this.notifier),
+      tap(() => console.log('aaaaaaaa'))
+    ).subscribe((data) => {
       this.arrayMeetups = this.sortMeetups(data as Array<Meetup>);
     });
   }
@@ -37,7 +40,6 @@ export class MeetupsPageComponent implements OnInit, OnDestroy {
       subscribeMeetupObj.idMeetup,
       subscribeMeetupObj.idUser
     ).subscribe(console.log);
-
   }
 
   unsubscribeMeetup(subscribeMeetupObj: { idMeetup: number; idUser: number }) {
@@ -57,5 +59,8 @@ export class MeetupsPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
+    this.notifier.next();
+    this.notifier.complete();
+    this.MeetupsService.ngOnDestroy();
   }
 }

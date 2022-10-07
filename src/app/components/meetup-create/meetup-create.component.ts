@@ -48,7 +48,6 @@ export class MeetupCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.InitCreateMeetupForm();
-    console.log(this.meetupsService.nameUniqueValid("название"));
   }
 
   InitCreateMeetupForm() {

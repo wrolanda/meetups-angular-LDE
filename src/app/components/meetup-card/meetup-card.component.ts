@@ -10,6 +10,9 @@ import { AuthService } from 'src/app/services/auth.service';
 export class MeetupCardComponent implements OnInit {
 
   @Input()
+  isMore = false;
+
+  @Input()
   card!: Meetup;
 
   @Output()
@@ -22,6 +25,10 @@ export class MeetupCardComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {}
+
+  isMoreToogle() {
+    this.isMore = !this.isMore;
+  }
 
   get isOwnMeetup() {
     return this.authService.user?.id === this.card.owner.id;
@@ -45,6 +52,10 @@ export class MeetupCardComponent implements OnInit {
       idMeetup: this.card.id,
       idUser:  this.authService.user?.id,
      }
+    // // метод где мы меняем только ту карту, в которой поменяли данные
+    // this.meetupsService.subscribeMeetup(subscribeMeetupObj.idMeetup, subscribeMeetupObj.idUser).subscribe((data) => {
+    //   this.card.users = data.users;
+    // })
     this.addEventCard.emit(subscribeMeetupObj);
   }
 

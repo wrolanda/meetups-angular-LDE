@@ -10,7 +10,7 @@ import { LogPas } from 'src/app/shared/interfaces/LogPas';
 })
 export class AuthPageComponent implements OnInit {
 
-  subscription!: Subscription;
+  subscription?: Subscription;
 
   constructor(
     private authService: AuthService,

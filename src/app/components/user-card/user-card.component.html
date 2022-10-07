@@ -1,7 +1,7 @@
 <div class="user-card_wrapper">
-    <input value="{{user.email}}" disabled/>
-    <input type="password" value="{{user.password}}" disabled/>
-    <input value="{{user.roles[0].name.toLowerCase()}} " disabled/>
+    <input [value]="user.email" disabled/>
+    <input type="password" [value]="user.password" disabled/>
+    <input [value]="user.roles[0].name.toLowerCase()" disabled/>
     <button>change</button>
     <button>delete</button>
 </div>

@@ -22,12 +22,12 @@ export class MyMeetupsPageComponent implements OnInit {
     {}
 
   ngOnInit(): void {
-    this.subscription = this.MeetupsService.getMeetups().
+    /*this.subscription = this.MeetupsService.getMeetups().
     subscribe(data => {
       this.arrayMeetups = this.meetupPage
       .sortMeetups(data as Array<Meetup>)
       .filter((meetup) => meetup.owner.id === this.userId);
-    })
+    })*/
   }
 
   public get userId() {
@@ -45,5 +45,6 @@ export class MyMeetupsPageComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
+
 }
 }

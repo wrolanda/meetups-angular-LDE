@@ -1,13 +1,13 @@
-import { Role } from "./role";
+import { Role } from './role';
 
 export interface User {
-  createdAt: string,
-  email: string,
-  fio: string,
-  id: number,
-  password: string,
-  roles: Array<Role>,
-  updatedAt: string,
+  createdAt: string;
+  email: string;
+  fio: string;
+  id: number;
+  password: string;
+  roles: Array<Role>;
+  updatedAt: string;
 }
 
 export class User {
@@ -18,7 +18,7 @@ export class User {
     id: number,
     password: string,
     roles: Array<Role>,
-    updatedAt: string,
+    updatedAt: string
   ) {
     this.createdAt = createdAt;
     this.email = email;
@@ -28,4 +28,22 @@ export class User {
     this.roles = roles;
     this.updatedAt = updatedAt;
   }
+}
+
+export interface UserCreate {
+  email: string, 
+  password: string, 
+  fio: string,
+}
+
+export class UserCreate {
+  constructor(
+    email: string, 
+    password: string, 
+    fio: string
+  ) {
+    this.email = email;
+    this.password = password;
+    this.fio = fio;
+    }
 }

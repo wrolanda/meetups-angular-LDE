@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CreateNewUserComponent } from './components/create-new-user/create-new-user.component';
 import { AdminGuard } from './guards/admin.guard';
 import { AuthReverseGuard } from './guards/auth-reverse.guard';
 import { AuthGuard } from './guards/auth.guard';
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path: 'howCreateAcc', component: HowCreateAccPageComponent, canActivate: [AuthGuard]},
   {path: 'createMeetup', component: CreateMeetupPageComponent, canActivate: [AuthGuard]},
   {path: 'userList', component: UserListPageComponent, canActivate: [AuthGuard, AdminGuard]},
+  {path: 'createUser', component: CreateNewUserComponent, canActivate: [AuthGuard, AdminGuard]},
 ];
 
 @NgModule({
