@@ -23,4 +23,8 @@ export class UsersService {
     .pipe();
   }
 
+  delUser(id: number) {
+    return this.http
+    .delete(`${environment.backendOrigin}/user/${id}`);
+  }
 }
