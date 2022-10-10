@@ -40,7 +40,6 @@ export class MeetupCreateComponent implements OnInit {
   constructor(
     private authService: AuthService, 
     private fb: FormBuilder,
-    private meetupsService: MeetupsService,
     ) {}
 
   @Output()

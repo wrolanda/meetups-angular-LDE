@@ -13,7 +13,6 @@ import { MeetupsPageComponent } from '../meetups-page/meetups-page.component';
   providers: [MeetupsService],
 })
 export class MyMeetupsPageComponent implements OnInit {
-
   subscription!: Subscription;
   arrayMeetups: Array<Meetup> = [];
   notifier = new Subject<void>();
@@ -21,23 +20,24 @@ export class MyMeetupsPageComponent implements OnInit {
   constructor(
     private MeetupsService: MeetupsService,
     private authService: AuthService,
-    private meetupPage: MeetupsPageComponent
-    ) 
-    {}
+    private meetupsPage: MeetupsPageComponent
+  ) {}
 
   ngOnInit(): void {
     this.getMyMeetups();
   }
 
   getMyMeetups() {
-    this.MeetupsService.getSubject().pipe(
-      map((data) => data.filter(
-        (meetup: Meetup) => meetup.owner.id === this.userId)
-      ),
-      takeUntil(this.notifier),
-      ).subscribe((data) => {
+    this.MeetupsService.getSubject()
+      .pipe(
+        map((data) =>
+          data.filter((meetup: Meetup) => meetup.owner.id === this.userId)
+        ),
+        takeUntil(this.notifier)
+      )
+      .subscribe((data) => {
         this.arrayMeetups = sortList(data as Array<Meetup>);
-      })
+      });
   }
 
   // this.subscription = this.MeetupsService.getSubject().
@@ -53,15 +53,16 @@ export class MyMeetupsPageComponent implements OnInit {
       const jwtObj = this.authService.parseJwt(token);
       return jwtObj.id;
     }
-  return false;
+    return false;
   }
 
   delMeetup(id: number) {
-    this.meetupPage.delMeetup(id);
+    this.meetupsPage.delMeetup(id);
   }
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
-
-}
+    this.notifier.next();
+    this.notifier.complete();
+  }
 }

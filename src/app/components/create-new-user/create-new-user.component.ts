@@ -8,6 +8,7 @@ import { UsersService } from 'src/app/services/users.service';
   selector: 'app-create-new-user',
   templateUrl: './create-new-user.component.html',
   styleUrls: ['./create-new-user.component.scss'],
+  providers: [UsersService],
 })
 export class CreateNewUserComponent implements OnInit {
   createUserForm!: FormGroup;

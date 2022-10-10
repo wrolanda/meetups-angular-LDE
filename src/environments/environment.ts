@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  backendOrigin: '/api',
+  backendOrigin: 'https://api.fit-meetups.ru',
 };
 
 /*

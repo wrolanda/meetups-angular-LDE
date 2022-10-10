@@ -6,6 +6,7 @@ import { AuthReverseGuard } from './guards/auth-reverse.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { AuthPageComponent } from './pages/auth-page/auth-page.component';
 import { CreateMeetupPageComponent } from './pages/create-meetup-page/create-meetup-page.component';
+import { EditMeetupPageComponent } from './pages/edit-meetup-page/edit-meetup-page.component';
 import { HowCreateAccPageComponent } from './pages/how-create-acc-page/how-create-acc-page.component';
 import { MeetupsPageComponent } from './pages/meetups-page/meetups-page.component';
 import { MyMeetupsPageComponent } from './pages/my-meetups-page/my-meetups-page.component';
@@ -20,6 +21,8 @@ const routes: Routes = [
   {path: 'createMeetup', component: CreateMeetupPageComponent, canActivate: [AuthGuard]},
   {path: 'userList', component: UserListPageComponent, canActivate: [AuthGuard, AdminGuard]},
   {path: 'createUser', component: CreateNewUserComponent, canActivate: [AuthGuard, AdminGuard]},
+  {path: 'editMeetup', component: EditMeetupPageComponent, canActivate: [AuthGuard]},
+
 ];
 
 @NgModule({

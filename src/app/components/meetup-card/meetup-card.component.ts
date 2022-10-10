@@ -43,6 +43,8 @@ export class MeetupCardComponent implements OnInit {
     return false;
   }
 
+  //если пользователь создал, нужно и можно ли ему подписать 
+
   get isAdmin() {
     return this.authService.isAdmin;
   }
