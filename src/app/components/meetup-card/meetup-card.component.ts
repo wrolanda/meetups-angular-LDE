@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Meetup } from 'src/app/entities/meetup';
 import { AuthService } from 'src/app/services/auth.service';
+import { getDateString, getEndTime, getTimeString } from 'src/app/shared/formateDate/formatDate';
+import { EditMeetupComponent } from '../edit-meetup/edit-meetup.component';
 
 @Component({
   selector: 'app-meetup-card',
@@ -22,12 +25,36 @@ export class MeetupCardComponent implements OnInit {
   @Output()
   public addEventDel = new EventEmitter();
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    public dialog: MatDialog,
+    ) { }
 
   ngOnInit(): void {}
 
   isMoreToogle() {
     this.isMore = !this.isMore;
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(EditMeetupComponent, {
+      width: '350px',
+      data: {
+        name: this.card.name,
+        description: this.card.description,
+        location: this.card.location,
+        target_audience: this.card.target_audience,
+        need_to_know: this.card.need_to_know,
+        will_happen: this.card.will_happen,
+        reason_to_come: this.card.reason_to_come,
+        startTime: getTimeString(this.card.time),
+        endTime: getEndTime(
+              getTimeString(this.card.time),
+              getDateString(this.card.time),
+              this.card.duration),
+        date: getDateString(this.card.time),
+      }
+    });
   }
 
   get isOwnMeetup() {
@@ -41,9 +68,7 @@ export class MeetupCardComponent implements OnInit {
       }
     }
     return false;
-  }
-
-  //если пользователь создал, нужно и можно ли ему подписать 
+  } 
 
   get isAdmin() {
     return this.authService.isAdmin;
@@ -71,5 +96,9 @@ export class MeetupCardComponent implements OnInit {
 
   delMeetup() {
     this.addEventDel.emit(this.card.id);
+  }
+
+  editMeetup(card: Meetup) {
+
   }
 }

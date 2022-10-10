@@ -1,9 +1,9 @@
-<form [formGroup]="MeetupCreateReactiveForm" (ngSubmit)="onCreateMeetup2()">
+<form [formGroup]="MeetupCreateReactiveForm" (ngSubmit)="onCreateMeetup()">
     <label>Название:</label>
     <input type="text" name="name" autofocus
     formControlName="name" />
     <label>Дата:</label>
-    <input type="date" min="Date.today()" name="date" formControlName="date"/>
+    <input type="date" min="Date.today()" name="date" formControlName="date" />
     <label>Время начала:</label>
     <input type="time" name="startTime" formControlName="startTime"/>
     <label>Время окончания:</label>

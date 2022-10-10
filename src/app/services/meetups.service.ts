@@ -1,13 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, distinctUntilChanged, Observable, tap } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged, Observable, Subject, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Meetup } from '../entities/meetup';
-import { deepEqual } from '../shared/interfaces/mathFuncs/mathFuncs';
+import { deepEqual } from '../shared/mathFuncs/mathFuncs';
 
 @Injectable()
 export class MeetupsService implements OnDestroy {
+
+  public MeetupEdit_Observable = new Subject();
   
   dataMeetups: Array<Meetup> = [];
   interval: any;

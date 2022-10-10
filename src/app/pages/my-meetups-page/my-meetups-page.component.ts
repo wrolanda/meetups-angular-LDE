@@ -3,7 +3,7 @@ import { map, Subject, Subscription, takeUntil } from 'rxjs';
 import { Meetup } from 'src/app/entities/meetup';
 import { AuthService } from 'src/app/services/auth.service';
 import { MeetupsService } from 'src/app/services/meetups.service';
-import { sortList } from 'src/app/shared/interfaces/mathFuncs/mathFuncs';
+import { sortList } from 'src/app/shared/mathFuncs/mathFuncs';
 import { MeetupsPageComponent } from '../meetups-page/meetups-page.component';
 
 @Component({

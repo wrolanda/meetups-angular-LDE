@@ -16,7 +16,7 @@ export interface Meetup {
 
     createdAt: string,
     createdBy: number,
-    updatedAt: string;
+    updatedAt: string,
 
 }
 

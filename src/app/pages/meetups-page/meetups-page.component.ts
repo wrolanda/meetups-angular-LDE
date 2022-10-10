@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, Subscription, takeUntil, tap } from 'rxjs';
 import { Meetup } from 'src/app/entities/meetup';
 import { MeetupsService } from 'src/app/services/meetups.service';
-import { sortList } from 'src/app/shared/interfaces/mathFuncs/mathFuncs';
+import { sortList } from 'src/app/shared/mathFuncs/mathFuncs';
 
 @Component({
   selector: 'app-meetups-page',

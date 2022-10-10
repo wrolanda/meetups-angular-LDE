@@ -18,15 +18,13 @@
     </div>
     <button mat-raised-button *ngIf="!isOwnMeetup && !isSub" (click)="subscribeMeetup()">записаться</button>
     <button mat-raised-button *ngIf="!isOwnMeetup && isSub" (click)="unsubscribeMeetup()">отписаться</button>
-    <a mat-raised-button 
-    *ngIf="isOwnMeetup"
-    routerLink="/editMeetup" routerLinkActive="active"
-    >редактировать</a>
-    <button mat-raised-button *ngIf="isOwnMeetup || isAdmin" (click)="delMeetup()">удалить</button>
+    <button mat-raised-button 
+    *ngIf="isOwnMeetup" 
+    (click)="openDialog()"
+    >редактировать</button>
+    <button mat-raised-button *ngIf="isOwnMeetup" (click)="delMeetup()">удалить</button>
     <button mat-raised-button *ngIf="!isMore" (click) = "isMoreToogle()">Подробнее</button>
     <button mat-raised-button *ngIf="isMore" (click) = "isMoreToogle()">кратко</button>
-   
-
     <br>
     <br>
     <br>

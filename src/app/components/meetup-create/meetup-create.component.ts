@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Meetup } from 'src/app/entities/meetup';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { MeetupsService } from 'src/app/services/meetups.service';
+import { durationCalculation, getISODate } from 'src/app/shared/formateDate/formatDate';
 
 @Component({
   selector: 'app-meetup-create',
@@ -23,19 +23,6 @@ export class MeetupCreateComponent implements OnInit {
     date: FormControl<string | null>;
     duration: FormControl<number | null>;
   }>;
-
-  // public name: string = 'название';
-  // public description: string = 'описание';
-  // public location: string = 'переговорка 20';
-  // public target_audience: string = 'клоуны';
-  // public need_to_know: string = 'нужно знать';
-  // public will_happen: string = 'что-то произойдет';
-  // public reason_to_come: string = 'причина жить';
-  // public startTime: string = '17:00';
-  // public endTime: string = '18:00';
-  // public date: string = "2022-09-30";
-  // public duration: number = 0;
-  // public owner!: User;
 
   constructor(
     private authService: AuthService, 
@@ -65,7 +52,7 @@ export class MeetupCreateComponent implements OnInit {
     });
   }
 
-  onCreateMeetup2() {
+  onCreateMeetup() {
     if (
       this.MeetupCreateReactiveForm.value.name &&
       this.MeetupCreateReactiveForm.value.description &&
@@ -78,13 +65,11 @@ export class MeetupCreateComponent implements OnInit {
       this.MeetupCreateReactiveForm.value.will_happen &&
       this.MeetupCreateReactiveForm.value.reason_to_come
     ) {
-        const duration = this.durationCalculation(
-          this.MeetupCreateReactiveForm.value.date
-          + ' ' 
-          + this.MeetupCreateReactiveForm.value.startTime,
-          this.MeetupCreateReactiveForm.value.date 
-          + ' ' 
-          + this.MeetupCreateReactiveForm.value.endTime)
+        const duration = durationCalculation(
+          this.MeetupCreateReactiveForm.value.date,
+          this.MeetupCreateReactiveForm.value.startTime,
+          this.MeetupCreateReactiveForm.value.endTime)
+          
         const meetupObj = new Meetup(
           Date.now(),
           this.MeetupCreateReactiveForm.value.name,
@@ -93,10 +78,10 @@ export class MeetupCreateComponent implements OnInit {
           this.MeetupCreateReactiveForm.value.target_audience,
           this.MeetupCreateReactiveForm.value.need_to_know,
           this.MeetupCreateReactiveForm.value.will_happen,
-          this.MeetupCreateReactiveForm.value.reason_to_come,
-          this.MeetupCreateReactiveForm.value.date 
-          + ' ' 
-          + this.MeetupCreateReactiveForm.value.startTime,
+          this.MeetupCreateReactiveForm.value.reason_to_come,   
+          getISODate(
+            this.MeetupCreateReactiveForm.value.date,
+            this.MeetupCreateReactiveForm.value.startTime),
           duration,
           this.authService.user!.id,
           this.authService.user!,
@@ -106,9 +91,5 @@ export class MeetupCreateComponent implements OnInit {
     } else {
       alert("заполните все поля");
     }
-  }
-
-  durationCalculation(date1: string, date2: string): number {
-    return (Date.parse(date2) - Date.parse(date1)) / 1000 / 60;
   }
 }

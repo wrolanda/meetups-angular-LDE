@@ -24,7 +24,7 @@ import { AuthService } from './services/auth.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { CreateNewUserComponent } from './components/create-new-user/create-new-user.component';
-import { EditMeetupPageComponent } from './pages/edit-meetup-page/edit-meetup-page.component';
+import { EditMeetupComponent } from './components/edit-meetup/edit-meetup.component';
 
 
 @NgModule({
@@ -44,7 +44,7 @@ import { EditMeetupPageComponent } from './pages/edit-meetup-page/edit-meetup-pa
     UsersListComponent,
     UserCardComponent,
     CreateNewUserComponent,
-    EditMeetupPageComponent,
+    EditMeetupComponent,
   ],
   imports: [
     BrowserModule,

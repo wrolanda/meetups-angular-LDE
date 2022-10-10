@@ -3,7 +3,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, distinctUntilChanged, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { deepEqual } from '../shared/interfaces/mathFuncs/mathFuncs';
+import { deepEqual } from '../shared/mathFuncs/mathFuncs';
 
 @Injectable()
 export class UsersService implements OnDestroy{

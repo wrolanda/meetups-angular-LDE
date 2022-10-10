@@ -1,0 +1,91 @@
+<h1 mat-dialog-title>Edit meetup</h1>
+<div mat-dialog-content>
+  <form [formGroup]="MeetupEditReactiveForm" (ngSubmit)="onEditMeetup()"> 
+      <label>Название:</label>
+      <input 
+              type="text" 
+              name="name"
+              formControlName="name"
+      />
+    
+      <label>Дата:</label>
+      <input type="date" min="Date.today()" name="date" 
+      formControlName="date" />
+    
+      <label>Время начала:</label>
+      <input type="time" name="startTime" 
+      formControlName="startTime"/>
+    
+      <label>Время окончания:</label>
+      <input type="time" name="endTime" 
+      formControlName="endTime"/>
+    
+      <label>Место:</label>
+      <input type="text" name="location" formControlName="location"/>
+    
+      <label>Описание:</label>
+      <input type="text" name="description" formControlName="description"/>
+    
+      <label>Целевая аудитория</label>
+      <input type="text" name="target_audience" formControlName="target_audience"/>
+    
+      <label>need_to_know</label>
+      <input type="text" name="need_to_know" formControlName="need_to_know"/>
+    
+      <label>will_happen</label>
+      <input type="text" name="will_happen" formControlName="will_happen"/>
+    
+      <label>reason_to_come</label>
+      <input type="text" name="reason_to_come" formControlName="reason_to_come" />
+    <div mat-dialog-actions>
+      <button mat-button (click)="onNoClick()">cancel</button>
+      <button mat-button type="submit">edit</button>
+    </div>
+  </form>
+  
+</div>
+
+
+
+<!-- <form [formGroup]="MeetupEditReactiveForm" (ngSubmit)="onEditMeetup()">
+  <label>Название:</label>
+  <input  matInput 
+          type="text" 
+          name="name"
+          autofocus
+          formControlName="name"
+  />
+
+  <label>Дата:</label>
+  <input type="date" min="Date.today()" name="date" 
+  formControlName="date" />
+
+  <label>Время начала:</label>
+  <input type="time" name="startTime" 
+  formControlName="startTime"/>
+
+  <label>Время окончания:</label>
+  <input type="time" name="endTime" 
+  formControlName="endTime"/>
+
+  <label>Место:</label>
+  <input type="text" name="location" formControlName="location"/>
+
+  <label>Описание:</label>
+  <input type="text" name="description" formControlName="description"/>
+
+  <label>Целевая аудитория</label>
+  <input type="text" name="target_audience" formControlName="target_audience"/>
+
+  <label>need_to_know</label>
+  <input type="text" name="need_to_know" formControlName="need_to_know"/>
+
+  <label>will_happen</label>
+  <input type="text" name="will_happen" formControlName="will_happen"/>
+
+  <label>reason_to_come</label>
+  <input type="text" name="reason_to_come" formControlName="reason_to_come" />
+
+  <button mat-button (click)="onNoClick()" type="submit" [disabled]="requredForm">Сохранить</button>
+  <button mat-button type="button">отмена</button>
+</form> -->

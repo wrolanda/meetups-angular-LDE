@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import { User } from 'src/app/entities/user';
 import { UsersService } from 'src/app/services/users.service';
-import { sortList } from 'src/app/shared/interfaces/mathFuncs/mathFuncs';
+import { sortList } from 'src/app/shared/mathFuncs/mathFuncs';
 
 @Component({
   selector: 'app-user-list-page',
