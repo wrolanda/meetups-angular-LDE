@@ -25,7 +25,7 @@ export class MeetupsPageComponent implements OnInit, OnDestroy {
   getMeetups() {
     this.subscription = this.meetupsService.getSubject().pipe(
       takeUntil(this.notifier),
-      tap(() => console.log('aaaaaaaa'))
+      tap(() => console.log('a'))
     ).subscribe((data) => {
       this.arrayMeetups = sortList(data as Array<Meetup>);
     });

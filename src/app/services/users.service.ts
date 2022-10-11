@@ -49,6 +49,18 @@ export class UsersService implements OnDestroy{
     return this.http.delete(`${environment.backendOrigin}/user/${id}`);
   }
 
+  updateUser(
+    id: number,
+    email: string,
+    password: string,
+    fio: string,
+    ) {
+      return this.http
+      .put(`${environment.backendOrigin}/user/${id}`, {
+        email, password, fio
+      });
+  }
+
   ngOnDestroy() {
     clearInterval(this.interval);
   }

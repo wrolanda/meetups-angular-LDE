@@ -1,7 +1,15 @@
 <div class="user-card_wrapper">
-    <input [value]="user.email" disabled/>
-    <input type="password" [value]="user.password" disabled/>
-    <input [value]="user.roles[0] ? user.roles[0].name.toLowerCase() : false" disabled/>
-    <button>change</button>
-    <button (click)="deleteUser()">delete</button>
+    <form [formGroup]="updateUserForm">
+        <input formControlName="email" [value]="user.email"/>
+        <input formControlName="password" type="password" [value]="user.password"/>
+        <select formControlName="role">
+            <option value="USER">user</option>
+            <option value="ADMIN">admin</option>
+        </select>
+        <input formControlName="fio" type="text" [value]="user.fio"/>
+        <button *ngIf="!isChange" (click)="changeable()">change</button>
+        <button *ngIf="isChange" type="submit" (click)="unchangeable(); onUpdateUser()">save</button>
+        <button *ngIf="isChange" (click)="cancel()">cancel</button>
+        <button (click)="deleteUser()">delete</button>
+    </form>
 </div>

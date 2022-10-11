@@ -2,12 +2,11 @@ import {
   Component,
   Inject,
   EventEmitter,
-  Input,
   OnInit,
   Output,
 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Meetup, MeetupCreate } from 'src/app/entities/meetup';
+import { Meetup } from 'src/app/entities/meetup';
 import { MeetupsService } from 'src/app/services/meetups.service';
 import {
   durationCalculation,
@@ -59,18 +58,18 @@ export class EditMeetupComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private meetupService: MeetupsService,
+    private meetupsService: MeetupsService,
     public dialogRef: MatDialogRef<EditMeetupComponent>,
     @Inject(MAT_DIALOG_DATA) public card: Meetup)
   {}
 
   onNoClick(): void {
+    //this.dialogRef.beforeClosed().subscribe
     this.dialogRef.close();
   }
 
   ngOnInit(): void {
     this.initForm();
-
     //   this.MeetupEditReactiveForm.value.name = this.card.name;
     //   this.MeetupEditReactiveForm.value.description = this.card.description;
     //   this.MeetupEditReactiveForm.value.startTime = getTimeString(this.card.time);
@@ -132,7 +131,7 @@ export class EditMeetupComponent implements OnInit {
       this.MeetupEditReactiveForm.value.startTime!,
       this.MeetupEditReactiveForm.value.endTime!)
 
-      this.meetupService.editMeetup(
+      this.meetupsService.editMeetup(
         this.card.id,
         this.MeetupEditReactiveForm.value.name!,
         this.MeetupEditReactiveForm.value.description!,
@@ -147,6 +146,9 @@ export class EditMeetupComponent implements OnInit {
         this.MeetupEditReactiveForm.value.reason_to_come!,
         
   
-        ).subscribe(console.log);
+        ).subscribe((result) => {
+          this.meetupsService.refreshMeetups();
+          console.log(result);
+        });
   }
 }

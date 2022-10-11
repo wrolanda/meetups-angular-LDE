@@ -14,8 +14,10 @@ export class UsersListComponent implements OnInit {
 
   @Output()
   public addEventDel = new EventEmitter();
+  @Output()
+  public addEventUpdUser = new EventEmitter();
 
-  constructor(private userService: UsersService) { }
+  constructor() { }
 
   ngOnInit(): void {}
   

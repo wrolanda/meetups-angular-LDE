@@ -11,6 +11,7 @@ import { sortList } from 'src/app/shared/mathFuncs/mathFuncs';
   providers: [UsersService],
 })
 export class UserListPageComponent implements OnInit {
+
   usersList!: Array<User>;
   subscription!: Subscription;
   notifier = new Subject<void>();
@@ -37,7 +38,20 @@ export class UserListPageComponent implements OnInit {
     });    
   }
 
+  updateUser(userObj: User) {
+    this.usersService.updateUser(
+      userObj.id, userObj.email, userObj.password, userObj.fio
+    ).pipe(
+      takeUntil(this.notifier),
+    ).subscribe((result) => {
+      this.usersService.updateUsers();
+      console.log(result);
+    });
+  }
+
   ngOnDestroy(): void {
+    this.notifier.next();
+    this.notifier.complete();
     this.subscription?.unsubscribe();
   }
 }

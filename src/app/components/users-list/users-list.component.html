@@ -1,3 +1,7 @@
 <div>
-    <app-user-card (addEventDelUser)="this.addEventDel.emit($event)" *ngFor="let user of usersList" [user]="user"></app-user-card>
+    <app-user-card 
+    *ngFor="let user of usersList" [user]="user"
+    (addEventDelUser)="this.addEventDel.emit($event)" 
+    (addEventUpdUser)="this.addEventUpdUser.emit($event)"
+    ></app-user-card>
 </div>

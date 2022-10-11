@@ -65,10 +65,6 @@ export class MeetupCardComponent implements OnInit {
       idMeetup: this.card.id,
       idUser:  this.authService.user?.id,
      }
-    // // метод где мы меняем только ту карту, в которой поменяли данные
-    // this.meetupsService.subscribeMeetup(subscribeMeetupObj.idMeetup, subscribeMeetupObj.idUser).subscribe((data) => {
-    //   this.card.users = data.users;
-    // })
     this.addEventCard.emit(subscribeMeetupObj);
   }
 
@@ -81,7 +77,10 @@ export class MeetupCardComponent implements OnInit {
   }
 
   delMeetup() {
-    this.addEventDel.emit(this.card.id);
+    const result = confirm("вы уверены?");
+    if (result) {
+      this.addEventDel.emit(this.card.id);
+    }
   }
 
   editMeetup(card: Meetup) {
