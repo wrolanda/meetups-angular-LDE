@@ -63,7 +63,7 @@ export class UserCardComponent implements OnInit {
         email: [`${this.user.email}`, [Validators.required, Validators.email]],
         password: [`${this.user.password}`, [Validators.required]],
         fio: [`${this.user.fio}`, [Validators.required]],
-        role: [`${this.user.roles[0].name}`, [Validators.required]],
+        role: [`${this.showRole()}`, [Validators.required]],
       });
     }
 
@@ -72,6 +72,15 @@ export class UserCardComponent implements OnInit {
     if (result) {
       this.addEventDelUser.emit(this.user.id);
     }
+  }
+
+  showRole(): string {
+    let arrayRoles = this.user.roles;
+    for (let i = 0; i < arrayRoles.length; i++) {
+      if (arrayRoles[i].name === "ADMIN")
+        return "ADMIN";
+    }
+    return "USER";
   }
 
   onUpdateUser() {
@@ -84,6 +93,7 @@ export class UserCardComponent implements OnInit {
       email: this.updateUserForm.value.email,
       password: password,
       fio: this.updateUserForm.value.fio,
+      roles: [{name: this.updateUserForm.value.role}],
     }
     console.log(updateUserObj);
     this.addEventUpdUser.emit(updateUserObj);

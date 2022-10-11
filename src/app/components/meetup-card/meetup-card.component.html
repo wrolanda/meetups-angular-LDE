@@ -1,31 +1,30 @@
-<div>
-    <div>Meetup card {{card.id}}</div>
-    <br>
-    <div>name: {{card.name}}</div>
-    <div>subscribers:{{card.users.length}}</div>
-    <div>time: {{card.time | date: 'd.MM.yy, HH:mm'}}</div>
-    <br>
-    <div>description: {{card.description}}</div>
-    <br>
-    <div>createdBy: {{card.owner.fio}}</div>
-    <div>location: {{card.location}}</div>
-    <br>
-    <div *ngIf="isMore">
-        <div>target_audience: {{card.target_audience}}</div>
-        <div>need_to_know: {{card.need_to_know}}</div>
-        <div>will_happen: {{card.will_happen}}</div>
-        <div>duration: {{card.duration}}</div>
+<div class="column">
+    <div class="card">
+        <br>
+        <h1>{{card.name}}</h1>
+        <time>{{card.time | date: 'd.MM.yy, HH:mm'}}</time>
+        
+        <br>
+        <div>{{card.description}}</div>
+        <br>
+        <div>subscribers:{{card.users.length}}</div>
+        <div>createdBy: {{card.owner.fio}}</div>
+        <div>location: {{card.location}}</div>
+        <br>
+        <div *ngIf="isMore">
+            <div>target_audience: {{card.target_audience}}</div>
+            <div>need_to_know: {{card.need_to_know}}</div>
+            <div>will_happen: {{card.will_happen}}</div>
+            <div>duration: {{card.duration}}</div>
+        </div>
+        <button mat-raised-button *ngIf="!isOwnMeetup && !isSub" (click)="subscribeMeetup()">записаться</button>
+        <button mat-raised-button *ngIf="!isOwnMeetup && isSub" (click)="unsubscribeMeetup()">отписаться</button>
+        <button mat-raised-button *ngIf="isOwnMeetup" (click)="openDialog()">редактировать</button>
+        <button mat-raised-button *ngIf="isOwnMeetup" (click)="delMeetup()">удалить</button>
+        <button mat-raised-button *ngIf="!isMore" (click)="isMoreToogle()">Подробнее</button>
+        <button mat-raised-button *ngIf="isMore" (click)="isMoreToogle()">кратко</button>
+        <br>
+        <br>
+        <br>
     </div>
-    <button mat-raised-button *ngIf="!isOwnMeetup && !isSub" (click)="subscribeMeetup()">записаться</button>
-    <button mat-raised-button *ngIf="!isOwnMeetup && isSub" (click)="unsubscribeMeetup()">отписаться</button>
-    <button mat-raised-button 
-    *ngIf="isOwnMeetup" 
-    (click)="openDialog()"
-    >редактировать</button>
-    <button mat-raised-button *ngIf="isOwnMeetup" (click)="delMeetup()">удалить</button>
-    <button mat-raised-button *ngIf="!isMore" (click) = "isMoreToogle()">Подробнее</button>
-    <button mat-raised-button *ngIf="isMore" (click) = "isMoreToogle()">кратко</button>
-    <br>
-    <br>
-    <br>
 </div>

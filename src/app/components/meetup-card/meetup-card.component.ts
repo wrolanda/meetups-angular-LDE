@@ -82,8 +82,4 @@ export class MeetupCardComponent implements OnInit {
       this.addEventDel.emit(this.card.id);
     }
   }
-
-  editMeetup(card: Meetup) {
-
-  }
 }

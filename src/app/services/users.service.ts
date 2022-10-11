@@ -61,6 +61,14 @@ export class UsersService implements OnDestroy{
       });
   }
 
+  updateRoleUser(roleName: string, userId: number) {
+    return this.http
+      .put(`${environment.backendOrigin}/user/role`, {
+        name: roleName, 
+        userId: userId,
+      });
+  }
+
   ngOnDestroy() {
     clearInterval(this.interval);
   }

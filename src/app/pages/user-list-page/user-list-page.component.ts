@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject, Subscription, takeUntil } from 'rxjs';
+import { forkJoin, Subject, Subscription, takeUntil, tap } from 'rxjs';
 import { User } from 'src/app/entities/user';
 import { UsersService } from 'src/app/services/users.service';
 import { sortList } from 'src/app/shared/mathFuncs/mathFuncs';
@@ -39,15 +39,28 @@ export class UserListPageComponent implements OnInit {
   }
 
   updateUser(userObj: User) {
-    this.usersService.updateUser(
-      userObj.id, userObj.email, userObj.password, userObj.fio
-    ).pipe(
-      takeUntil(this.notifier),
+    forkJoin(
+      [
+      this.usersService.updateUser(
+        userObj.id, userObj.email, userObj.password, userObj.fio
+      ).pipe(
+        takeUntil(this.notifier),
+      ),
+      
+      this.usersService.updateRoleUser(
+        userObj.roles[0].name, 
+        userObj.id)
+        .pipe(
+          takeUntil(this.notifier),
+        ),
+      ] 
     ).subscribe((result) => {
       this.usersService.updateUsers();
-      console.log(result);
-    });
+      console.log(result);  
+    }) 
   }
+    
+
 
   ngOnDestroy(): void {
     this.notifier.next();
