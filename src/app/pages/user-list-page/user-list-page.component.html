@@ -1,2 +1,5 @@
 <p>user-list-page works!</p>
-<app-users-list [usersList]="usersList"></app-users-list>
+<app-users-list 
+[usersList]="usersList"
+(addEventDel)="delUser($event)"
+></app-users-list>

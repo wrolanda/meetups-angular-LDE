@@ -16,14 +16,14 @@ export class MeetupsPageComponent implements OnInit, OnDestroy {
   subscription!: Subscription;
   notifier = new Subject<void>();
 
-  constructor(private MeetupsService: MeetupsService) {}
+  constructor(private meetupsService: MeetupsService) {}
 
   ngOnInit(): void {
     this.getMeetups();
   }
 
   getMeetups() {
-    this.subscription = this.MeetupsService.getSubject().pipe(
+    this.subscription = this.meetupsService.getSubject().pipe(
       takeUntil(this.notifier),
       tap(() => console.log('aaaaaaaa'))
     ).subscribe((data) => {
@@ -32,26 +32,33 @@ export class MeetupsPageComponent implements OnInit, OnDestroy {
   }
 
   subscribeMeetup(subscribeMeetupObj: { idMeetup: number; idUser: number }) {
-    this.subscription = this.MeetupsService.subscribeMeetup(
+    this.subscription = this.meetupsService.subscribeMeetup(
       subscribeMeetupObj.idMeetup,
       subscribeMeetupObj.idUser
-    ).subscribe(console.log);
+    ).subscribe((result) => {
+      this.meetupsService.refreshMeetups()
+      console.log(result);  
+    });
   }
 
   unsubscribeMeetup(subscribeMeetupObj: { idMeetup: number; idUser: number }) {
-    this.subscription = this.MeetupsService.unsubscribeMeetup(
+    this.subscription = this.meetupsService.unsubscribeMeetup(
       subscribeMeetupObj.idMeetup,
       subscribeMeetupObj.idUser
-    ).subscribe(console.log);
+    ).subscribe((result) => {
+      this.meetupsService.refreshMeetups()
+      console.log(result);  
+    });
   }
 
   delMeetup(id: number) {
-    this.subscription = this.MeetupsService.delMeetup(id).subscribe(
-      console.log
+    this.subscription = this.meetupsService.delMeetup(id).subscribe(
+      (result) => {
+        this.meetupsService.refreshMeetups();
+        console.log(result);  
+      }
     );
   }
-
-  ngOnChanges() {}
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();

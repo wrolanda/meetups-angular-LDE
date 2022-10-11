@@ -8,12 +8,10 @@ import { deepEqual } from '../shared/mathFuncs/mathFuncs';
 
 @Injectable()
 export class MeetupsService implements OnDestroy {
-
-  public MeetupEdit_Observable = new Subject();
   
   dataMeetups: Array<Meetup> = [];
   interval: any;
-  subject = new BehaviorSubject<any>([]);
+  public subject = new BehaviorSubject<any>([]);
 
   constructor(private http: HttpClient, private router: Router) {
     this.refreshMeetups();

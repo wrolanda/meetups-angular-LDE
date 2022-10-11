@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { User } from 'src/app/entities/user';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -12,11 +12,11 @@ export class UsersListComponent implements OnInit {
   @Input()
   usersList!: Array<User>;
 
+  @Output()
+  public addEventDel = new EventEmitter();
+
   constructor(private userService: UsersService) { }
 
   ngOnInit(): void {}
-
-  delUser(id: number) {
-    this.userService.delUser(id).subscribe(console.log);    
-  }
+  
 }

@@ -39,14 +39,7 @@ export class MyMeetupsPageComponent implements OnInit {
         this.arrayMeetups = sortList(data as Array<Meetup>);
       });
   }
-
-  // this.subscription = this.MeetupsService.getSubject().
-  //   subscribe(data => {
-  //     this.arrayMeetups = this.meetupPage
-  //     .sortMeetups(data as Array<Meetup>)
-  //     .filter((meetup) => meetup.owner.id === this.userId);
-  //   })
-
+  
   public get userId() {
     const token = this.authService.token;
     if (token) {

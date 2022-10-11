@@ -30,6 +30,13 @@ export class UserListPageComponent implements OnInit {
     });
   }
 
+  delUser(id: number) {
+    this.usersService.delUser(id).subscribe((result) => {
+      this.usersService.updateUsers();
+      console.log(result);  
+    });    
+  }
+
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
   }

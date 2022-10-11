@@ -29,7 +29,7 @@ export class CreateMeetupPageComponent implements OnInit {
       meetupForm.need_to_know,
       meetupForm.will_happen,
       meetupForm.reason_to_come
-    ).subscribe(console.log);
+    ).subscribe(() => this.meetupsService.refreshMeetups())
   }
 
   ngOnDestroy() {
