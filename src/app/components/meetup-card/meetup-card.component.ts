@@ -39,23 +39,9 @@ export class MeetupCardComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(EditMeetupComponent, {
       width: '350px',
-      data: {
-        name: this.card.name,
-        description: this.card.description,
-        location: this.card.location,
-        target_audience: this.card.target_audience,
-        need_to_know: this.card.need_to_know,
-        will_happen: this.card.will_happen,
-        reason_to_come: this.card.reason_to_come,
-        startTime: getTimeString(this.card.time),
-        endTime: getEndTime(
-              getTimeString(this.card.time),
-              getDateString(this.card.time),
-              this.card.duration),
-        date: getDateString(this.card.time),
-      }
-    });
-  }
+      data: this.card,
+  })
+};
 
   get isOwnMeetup() {
     return this.authService.user?.id === this.card.owner.id;

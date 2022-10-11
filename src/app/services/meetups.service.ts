@@ -65,6 +65,32 @@ export class MeetupsService implements OnDestroy {
       );
   }
 
+  editMeetup(
+    id: number,
+    name: string,
+    description: string,
+    time: string,
+    duration: number,
+    location: string,
+    target_audience: string,
+    need_to_know: string,
+    will_happen: string,
+    reason_to_come: string
+  ) {
+    return this.http
+      .put(`${environment.backendOrigin}/meetup/${id}`, {
+        name,
+        description,
+        time,
+        duration,
+        location,
+        target_audience,
+        need_to_know,
+        will_happen,
+        reason_to_come,
+      });
+  }
+
   /*nameUniqueValid(newName: string) {
     this.getMeetups().pipe(
       mergeMap((items: any) => items.name),

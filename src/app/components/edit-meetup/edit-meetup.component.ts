@@ -6,13 +6,14 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { Meetup } from 'src/app/entities/meetup';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Meetup, MeetupCreate } from 'src/app/entities/meetup';
 import { MeetupsService } from 'src/app/services/meetups.service';
 import {
   durationCalculation,
   getDateString,
   getEndTime,
+  getISODate,
   getTimeString,
 } from 'src/app/shared/formateDate/formatDate';
 import {
@@ -39,7 +40,6 @@ export class EditMeetupComponent implements OnInit {
     startTime: FormControl<string | null>;
     endTime: FormControl<string | null>;
     date: FormControl<string | null>; // "2022-11-11T00:00:00.000Z"
-    duration: FormControl<number | null>;
   }>;
 
   // name: string = '';
@@ -54,16 +54,14 @@ export class EditMeetupComponent implements OnInit {
   // reason_to_come: string = '';
   // duration: number = 0;
 
-  @Input()
-  card!: Meetup;
-
   @Output()
   edit = new EventEmitter<Meetup>();
 
   constructor(
+    private fb: FormBuilder,
+    private meetupService: MeetupsService,
     public dialogRef: MatDialogRef<EditMeetupComponent>,
-    private fb: FormBuilder, 
-    @Inject(MAT_DIALOG_DATA) public data: Meetup)
+    @Inject(MAT_DIALOG_DATA) public card: Meetup)
   {}
 
   onNoClick(): void {
@@ -92,37 +90,63 @@ export class EditMeetupComponent implements OnInit {
 
   initForm() {
     this.MeetupEditReactiveForm = this.fb.group({
-      name: [``],
-      description: [''],
-      startTime: [''],
-      endTime: [''],
-      date: [''],
-      location: [''],
-      target_audience: [''],
-      need_to_know: [''],
-      will_happen: [''],
-      reason_to_come: [''],
-      duration: [0],
+      name: [this.card.name, Validators.required],
+      description: [this.card.description, Validators.required],
+      startTime: [getTimeString(this.card.time), Validators.required],
+      endTime: [getEndTime(
+            getTimeString(this.card.time),
+            getDateString(this.card.time),
+            this.card.duration), Validators.required],
+      date: [getDateString(this.card.time), Validators.required],
+      location: [this.card.location, Validators.required],
+      target_audience: [this.card.target_audience, Validators.required],
+      need_to_know: [this.card.need_to_know, Validators.required],
+      will_happen: [this.card.will_happen, Validators.required],
+      reason_to_come: [this.card.reason_to_come, Validators.required],
     });
   }
 
-  // get requredForm() {
-  //   if (
-  //     this.name &&
-  //     this.description &&
-  //     this.startTime &&
-  //     this.endTime &&
-  //     this.date &&
-  //     this.location &&
-  //     this.target_audience &&
-  //     this.need_to_know &&
-  //     this.will_happen &&
-  //     this.reason_to_come
-  //   ) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
-  onEditMeetup() {}
+  get requredForm() {
+    if (
+      this.MeetupEditReactiveForm.value.name &&
+      this.MeetupEditReactiveForm.value.description &&
+      this.MeetupEditReactiveForm.value.startTime &&
+      this.MeetupEditReactiveForm.value.endTime &&
+      this.MeetupEditReactiveForm.value.date &&
+      this.MeetupEditReactiveForm.value.location &&
+      this.MeetupEditReactiveForm.value.target_audience &&
+      this.MeetupEditReactiveForm.value.need_to_know &&
+      this.MeetupEditReactiveForm.value.will_happen &&
+      this.MeetupEditReactiveForm.value.reason_to_come
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+
+  onEditMeetup() {
+    const duration = durationCalculation(
+      this.MeetupEditReactiveForm.value.date!,
+      this.MeetupEditReactiveForm.value.startTime!,
+      this.MeetupEditReactiveForm.value.endTime!)
+
+      this.meetupService.editMeetup(
+        this.card.id,
+        this.MeetupEditReactiveForm.value.name!,
+        this.MeetupEditReactiveForm.value.description!,
+        getISODate(
+          this.MeetupEditReactiveForm.value.date!,
+          this.MeetupEditReactiveForm.value.startTime!),
+        duration,
+        this.MeetupEditReactiveForm.value.location!,
+        this.MeetupEditReactiveForm.value.target_audience!,
+        this.MeetupEditReactiveForm.value.need_to_know!,
+        this.MeetupEditReactiveForm.value.will_happen!,
+        this.MeetupEditReactiveForm.value.reason_to_come!,
+        
+  
+        ).subscribe(console.log);
+  }
 }
