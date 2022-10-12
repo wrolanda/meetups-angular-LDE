@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
+  
   public get isAuth() {
     return this.authService.token;
   }
@@ -22,5 +23,4 @@ export class NavbarComponent implements OnInit {
   logout() {
     this.authService.logout();
   }
-
 }

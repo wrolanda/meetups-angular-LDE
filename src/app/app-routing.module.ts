@@ -17,12 +17,11 @@ const routes: Routes = [
   {path: 'auth', component: AuthPageComponent, canActivate: [AuthReverseGuard]},
   {path: 'meetups', component: MeetupsPageComponent, canActivate: [AuthGuard]},
   {path: 'myMeetups', component: MyMeetupsPageComponent, canActivate: [AuthGuard]},
-  {path: 'howCreateAcc', component: HowCreateAccPageComponent, canActivate: [AuthGuard]},
+  {path: 'howCreateAcc', component: HowCreateAccPageComponent},
   {path: 'createMeetup', component: CreateMeetupPageComponent, canActivate: [AuthGuard]},
   {path: 'userList', component: UserListPageComponent, canActivate: [AuthGuard, AdminGuard]},
   {path: 'createUser', component: CreateNewUserComponent, canActivate: [AuthGuard, AdminGuard]},
   {path: 'editMeetup', component: EditMeetupComponent, canActivate: [AuthGuard]},
-
 ];
 
 @NgModule({

@@ -9,22 +9,19 @@ import { LogPas } from 'src/app/shared/interfaces/LogPas';
   styleUrls: ['./auth-page.component.scss'],
 })
 export class AuthPageComponent implements OnInit {
-
   subscription?: Subscription;
 
-  constructor(
-    private authService: AuthService,
-  ) { }
+  constructor(private authService: AuthService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   login(LogPas: LogPas) {
-    this.subscription = this.authService.login(LogPas.email, LogPas.password).subscribe(console.log);
+    this.subscription = this.authService
+      .login(LogPas.email, LogPas.password)
+      .subscribe(console.log);
   }
 
   ngOnDestroy() {
     this.subscription?.remove;
   }
-
 }

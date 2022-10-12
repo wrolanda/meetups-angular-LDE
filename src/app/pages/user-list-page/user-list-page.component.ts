@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { forkJoin, Subject, Subscription, takeUntil, tap } from 'rxjs';
+import { Role } from 'src/app/entities/role';
 import { User } from 'src/app/entities/user';
 import { UsersService } from 'src/app/services/users.service';
 import { sortList } from 'src/app/shared/mathFuncs/mathFuncs';
@@ -11,56 +12,54 @@ import { sortList } from 'src/app/shared/mathFuncs/mathFuncs';
   providers: [UsersService],
 })
 export class UserListPageComponent implements OnInit {
-
+  notifier = new Subject<void>();
   usersList!: Array<User>;
   subscription!: Subscription;
-  notifier = new Subject<void>();
-
 
   constructor(private usersService: UsersService) {}
 
   ngOnInit(): void {
-   this.getUsers();
+    this.getUsers();
   }
 
   getUsers() {
-    this.subscription = this.usersService.getSubject().pipe(
-      takeUntil(this.notifier),
-    ).subscribe((data) => {
-      this.usersList = sortList(data as Array<User>);
-    });
+    this.subscription = this.usersService
+      .getSubject()
+      .pipe(takeUntil(this.notifier))
+      .subscribe((data) => {
+        this.usersList = sortList(data as Array<User>);
+      });
   }
 
   delUser(id: number) {
     this.usersService.delUser(id).subscribe((result) => {
       this.usersService.updateUsers();
-      console.log(result);  
-    });    
+      console.log(result);
+    });
   }
 
   updateUser(userObj: User) {
-    forkJoin(
-      [
-      this.usersService.updateUser(
-        userObj.id, userObj.email, userObj.password, userObj.fio
-      ).pipe(
-        takeUntil(this.notifier),
-      ),
-      
-      this.usersService.updateRoleUser(
-        userObj.roles[0].name, 
-        userObj.id)
-        .pipe(
-          takeUntil(this.notifier),
-        ),
-      ] 
-    ).subscribe((result) => {
-      this.usersService.updateUsers();
-      console.log(result);  
-    }) 
-  }
-    
+    forkJoin([
+      this.usersService
+        .updateUser(userObj.id, userObj.email, userObj.password, userObj.fio)
+        .pipe(takeUntil(this.notifier)),
 
+      this.usersService
+        .updateRoleUser(this.arrayNamesRoles(userObj.roles), userObj.id)
+        .pipe(takeUntil(this.notifier)),
+    ]).subscribe((result) => {
+      this.usersService.updateUsers();
+      console.log(result);
+    });
+  }
+
+  arrayNamesRoles(arrayObjRole: Array<Role>): Array<string> {
+    let arrayNameRoles = [];
+    for (let i = 0; i < arrayObjRole.length; i++) {
+      arrayNameRoles.push(arrayObjRole[i].name);
+    }
+    return arrayNameRoles;
+  }
 
   ngOnDestroy(): void {
     this.notifier.next();

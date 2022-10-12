@@ -9,11 +9,11 @@ import { AuthService } from './services/auth.service';
 export class AppComponent {
  title = 'meetups-angular-LDE';
 
- constructor (
-  private authService: AuthService
- ) {}
-
  public get isAdmin() {
   return this.authService.isAdmin;
 }
+
+ constructor (
+  private authService: AuthService
+ ) {}
 }

@@ -10,6 +10,8 @@ import { User } from 'src/app/entities/user';
 export class UserCardComponent implements OnInit {
   updateUserForm!: FormGroup;
 
+  isChange = false;
+
   @Input()
   user!: User;
 
@@ -17,14 +19,20 @@ export class UserCardComponent implements OnInit {
   public addEventDelUser = new EventEmitter();
   @Output()
   public addEventUpdUser = new EventEmitter();
-  
-  isChange = false;
+
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.initUpdateUserForm();
+    this.unchangeable();
+  }
+
   changeable() {
     this.updateUserForm.controls['email'].enable();
     this.updateUserForm.controls['password'].enable();
     this.updateUserForm.controls['fio'].enable();
     this.updateUserForm.controls['role'].enable();
-    
+
     this.isChange = true;
   }
 
@@ -34,7 +42,7 @@ export class UserCardComponent implements OnInit {
       email: this.user.email,
       password: this.user.password,
       fio: this.user.fio,
-      role: this.user.roles[0].name,
+      role: this.showRole(),
     });
   }
 
@@ -46,29 +54,17 @@ export class UserCardComponent implements OnInit {
     this.isChange = false;
   }
 
-  constructor(
-    private fb: FormBuilder
-  ) { }
-
-
-
-  ngOnInit(): void {
-    this.initUpdateUserForm();  
-    this.unchangeable();
+  initUpdateUserForm() {
+    this.updateUserForm = this.fb.group({
+      email: [`${this.user.email}`, [Validators.required, Validators.email]],
+      password: [`${this.user.password}`, [Validators.required]],
+      fio: [`${this.user.fio}`, [Validators.required]],
+      role: [`${this.showRole()}`, [Validators.required]],
+    });
   }
 
- 
-  initUpdateUserForm() {
-      this.updateUserForm = this.fb.group({
-        email: [`${this.user.email}`, [Validators.required, Validators.email]],
-        password: [`${this.user.password}`, [Validators.required]],
-        fio: [`${this.user.fio}`, [Validators.required]],
-        role: [`${this.showRole()}`, [Validators.required]],
-      });
-    }
-
   deleteUser() {
-    const result = confirm("вы уверены?");
+    const result = confirm('вы уверены?');
     if (result) {
       this.addEventDelUser.emit(this.user.id);
     }
@@ -77,10 +73,9 @@ export class UserCardComponent implements OnInit {
   showRole(): string {
     let arrayRoles = this.user.roles;
     for (let i = 0; i < arrayRoles.length; i++) {
-      if (arrayRoles[i].name === "ADMIN")
-        return "ADMIN";
+      if (arrayRoles[i].name === 'ADMIN') return 'ADMIN';
     }
-    return "USER";
+    return 'USER';
   }
 
   onUpdateUser() {
@@ -93,10 +88,9 @@ export class UserCardComponent implements OnInit {
       email: this.updateUserForm.value.email,
       password: password,
       fio: this.updateUserForm.value.fio,
-      roles: [{name: this.updateUserForm.value.role}],
-    }
+      roles: [{ name: this.updateUserForm.value.role }],
+    };
     console.log(updateUserObj);
     this.addEventUpdUser.emit(updateUserObj);
   }
-
 }

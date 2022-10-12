@@ -32,13 +32,13 @@ export class CreateNewUserComponent implements OnInit {
   }
 
   onCreateUser() {
-    console.log("крутилка");
+    console.log('крутилка');
     if (
       this.createUserForm.value.email &&
       this.createUserForm.value.password &&
       this.createUserForm.value.fio
     ) {
-        const userData = new UserCreate(
+      const userData = new UserCreate(
         this.createUserForm.value.email,
         this.createUserForm.value.password,
         this.createUserForm.value.fio
@@ -50,7 +50,7 @@ export class CreateNewUserComponent implements OnInit {
           return (data: UserCreate) => console.log(data);
         });
     } else {
-      alert('заполни!');
+      alert('заполни все поля!');
     }
   }
 

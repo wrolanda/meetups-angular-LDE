@@ -7,8 +7,9 @@ import { BehaviorSubject } from 'rxjs';
 export class SearchService {
   private messageSource = new BehaviorSubject<string>('');
   currentMessage = this.messageSource.asObservable();
-  constructor(){ }
   
+  constructor(){ }
+
   changeMessage(message: string){
     this.messageSource.next(message);
   }

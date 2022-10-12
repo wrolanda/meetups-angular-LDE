@@ -61,10 +61,12 @@ export class UsersService implements OnDestroy{
       });
   }
 
-  updateRoleUser(roleName: string, userId: number) {
+  updateRoleUser(roleName: Array<string>, userId: number) {
+    // if (roleName[0] === "ADMIN")
+    // roleName = ["USER", "ADMIN"];
     return this.http
-      .put(`${environment.backendOrigin}/user/role`, {
-        name: roleName, 
+      .post(`${environment.backendOrigin}/user/role`, {
+        names: roleName, 
         userId: userId,
       });
   }

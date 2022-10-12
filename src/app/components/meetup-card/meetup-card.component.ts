@@ -8,42 +8,9 @@ import { EditMeetupComponent } from '../edit-meetup/edit-meetup.component';
 @Component({
   selector: 'app-meetup-card',
   templateUrl: './meetup-card.component.html',
-  styleUrls: ['./meetup-card.component.scss']
+  styleUrls: ['./meetup-card.component.scss'],
 })
 export class MeetupCardComponent implements OnInit {
-
-  @Input()
-  isMore = false;
-
-  @Input()
-  card!: Meetup;
-
-  @Output()
-  public addEventCard = new EventEmitter();
-  @Output()
-  public addEventUnsub = new EventEmitter();
-  @Output()
-  public addEventDel = new EventEmitter();
-
-  constructor(
-    private authService: AuthService,
-    public dialog: MatDialog,
-    private meetupService: MeetupsService,
-    ) { }
-
-  ngOnInit(): void {}
-
-  isMoreToogle() {
-    this.isMore = !this.isMore;
-  }
-
-  openDialog(): void {
-    const dialogRef = this.dialog.open(EditMeetupComponent, {
-      width: '350px',
-      data: this.card,
-  }).afterClosed().subscribe(() => this.meetupService.refreshMeetups());
-};
-
   get isOwnMeetup() {
     return this.authService.user?.id === this.card.owner.id;
   }
@@ -55,30 +22,62 @@ export class MeetupCardComponent implements OnInit {
       }
     }
     return false;
-  } 
+  }
 
   get isAdmin() {
     return this.authService.isAdmin;
   }
 
-  subscribeMeetup() { 
+  @Input() isMore = false;
+  @Input() card!: Meetup;
+
+  @Output()
+  public addEventCard = new EventEmitter();
+  @Output()
+  public addEventUnsub = new EventEmitter();
+  @Output()
+  public addEventDel = new EventEmitter();
+
+  constructor(
+    private authService: AuthService,
+    public dialog: MatDialog,
+    private meetupService: MeetupsService
+  ) {}
+
+  ngOnInit(): void {}
+
+  isMoreToogle() {
+    this.isMore = !this.isMore;
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog
+      .open(EditMeetupComponent, {
+        width: '350px',
+        data: this.card,
+      })
+      .afterClosed()
+      .subscribe(() => this.meetupService.refreshMeetups());
+  }
+
+  subscribeMeetup() {
     const subscribeMeetupObj = {
       idMeetup: this.card.id,
-      idUser:  this.authService.user?.id,
-     }
+      idUser: this.authService.user?.id,
+    };
     this.addEventCard.emit(subscribeMeetupObj);
   }
 
-  unsubscribeMeetup() { 
+  unsubscribeMeetup() {
     const subscribeMeetupObj = {
       idMeetup: this.card.id,
-      idUser:  this.authService.user?.id,
-     }
+      idUser: this.authService.user?.id,
+    };
     this.addEventUnsub.emit(subscribeMeetupObj);
   }
 
   delMeetup() {
-    const result = confirm("вы уверены?");
+    const result = confirm('вы уверены?');
     if (result) {
       this.addEventDel.emit(this.card.id);
     }

@@ -1,11 +1,10 @@
+import { Component, Inject, EventEmitter, OnInit, Output } from '@angular/core';
 import {
-  Component,
-  Inject,
-  EventEmitter,
-  OnInit,
-  Output,
-} from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Meetup } from 'src/app/entities/meetup';
 import { MeetupsService } from 'src/app/services/meetups.service';
 import {
@@ -15,11 +14,7 @@ import {
   getISODate,
   getTimeString,
 } from 'src/app/shared/formateDate/formatDate';
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-edit-meetup',
@@ -48,13 +43,14 @@ export class EditMeetupComponent implements OnInit {
     private fb: FormBuilder,
     private meetupsService: MeetupsService,
     public dialogRef: MatDialogRef<EditMeetupComponent>,
-    @Inject(MAT_DIALOG_DATA) public card: Meetup)
-  {}
+    @Inject(MAT_DIALOG_DATA) public card: Meetup
+  ) {}
 
   onNoClick(): void {
     this.dialogRef.close();
-    this.dialogRef.afterClosed().subscribe(() => this.meetupsService.refreshMeetups());
-
+    this.dialogRef
+      .afterClosed()
+      .subscribe(() => this.meetupsService.refreshMeetups());
   }
 
   ngOnInit(): void {
@@ -66,10 +62,14 @@ export class EditMeetupComponent implements OnInit {
       name: [this.card.name, Validators.required],
       description: [this.card.description, Validators.required],
       startTime: [getTimeString(this.card.time), Validators.required],
-      endTime: [getEndTime(
-            getTimeString(this.card.time),
-            getDateString(this.card.time),
-            this.card.duration), Validators.required],
+      endTime: [
+        getEndTime(
+          getTimeString(this.card.time),
+          getDateString(this.card.time),
+          this.card.duration
+        ),
+        Validators.required,
+      ],
       date: [getDateString(this.card.time), Validators.required],
       location: [this.card.location, Validators.required],
       target_audience: [this.card.target_audience, Validators.required],
@@ -102,26 +102,28 @@ export class EditMeetupComponent implements OnInit {
     const duration = durationCalculation(
       this.MeetupEditReactiveForm.value.date!,
       this.MeetupEditReactiveForm.value.startTime!,
-      this.MeetupEditReactiveForm.value.endTime!)
+      this.MeetupEditReactiveForm.value.endTime!
+    );
 
-      this.meetupsService.editMeetup(
+    this.meetupsService
+      .editMeetup(
         this.card.id,
         this.MeetupEditReactiveForm.value.name!,
         this.MeetupEditReactiveForm.value.description!,
         getISODate(
           this.MeetupEditReactiveForm.value.date!,
-          this.MeetupEditReactiveForm.value.startTime!),
+          this.MeetupEditReactiveForm.value.startTime!
+        ),
         duration,
         this.MeetupEditReactiveForm.value.location!,
         this.MeetupEditReactiveForm.value.target_audience!,
         this.MeetupEditReactiveForm.value.need_to_know!,
         this.MeetupEditReactiveForm.value.will_happen!,
-        this.MeetupEditReactiveForm.value.reason_to_come!,
-        
-  
-        ).subscribe((result) => {
-          this.meetupsService.refreshMeetups();
-          console.log(result);
-        });
+        this.MeetupEditReactiveForm.value.reason_to_come!
+      )
+      .subscribe((result) => {
+        this.meetupsService.refreshMeetups();
+        console.log(result);
+      });
   }
 }

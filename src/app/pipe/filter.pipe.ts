@@ -10,7 +10,7 @@ export class FilterPipe implements PipeTransform {
 
     if (!searchValue) return value;
     return value.filter((card: Meetup) => 
-    card.name.indexOf(searchValue.toLowerCase()) > -1 || 
+    card.name.toLowerCase().indexOf(searchValue.toLowerCase()) > -1 || 
     card.description.toLowerCase().indexOf(searchValue.toLowerCase()) > -1 ||
     card.owner.fio.toLowerCase().indexOf(searchValue.toLowerCase()) > -1)
 

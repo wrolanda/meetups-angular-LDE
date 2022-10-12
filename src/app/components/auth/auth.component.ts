@@ -1,5 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { LogPas } from 'src/app/shared/interfaces/LogPas';
 
 @Component({
@@ -8,17 +13,15 @@ import { LogPas } from 'src/app/shared/interfaces/LogPas';
   styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent implements OnInit {
-  authReactiveForm!: FormGroup <{
-    login: FormControl<string | null>,
-    password: FormControl<string | null>,
-  }>
+  authReactiveForm!: FormGroup<{
+    login: FormControl<string | null>;
+    password: FormControl<string | null>;
+  }>;
 
   @Output()
   public addEvent = new EventEmitter();
 
-  constructor(
-    private fb: FormBuilder,
-    ) {}
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.initAuthForm();
@@ -27,18 +30,20 @@ export class AuthComponent implements OnInit {
   initAuthForm() {
     this.authReactiveForm = this.fb.group({
       login: ['', [Validators.email, Validators.required]],
-	    password: ['', [Validators.required]],
-    })
-    
+      password: ['', [Validators.required]],
+    });
   }
 
   onLogin() {
-    if (this.authReactiveForm.value.login && 
-      this.authReactiveForm.value.password) {
-        const logPas = new LogPas(
-          this.authReactiveForm.value.login,
-          this.authReactiveForm.value.password);
-        this.addEvent.emit(logPas);
+    if (
+      this.authReactiveForm.value.login &&
+      this.authReactiveForm.value.password
+    ) {
+      const logPas = new LogPas(
+        this.authReactiveForm.value.login,
+        this.authReactiveForm.value.password
+      );
+      this.addEvent.emit(logPas);
     }
   }
 }

@@ -10,26 +10,26 @@ import { MeetupsService } from 'src/app/services/meetups.service';
   providers: [MeetupsService],
 })
 export class CreateMeetupPageComponent implements OnInit {
-
   subscription!: Subscription;
 
-  constructor(private meetupsService: MeetupsService) { }
+  constructor(private meetupsService: MeetupsService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   createMeetup(meetupForm: Meetup) {
-    this.subscription = this.meetupsService.createMeetup(
-      meetupForm.name, 
-      meetupForm.description,
-      meetupForm.time,
-      meetupForm.duration,
-      meetupForm.location,
-      meetupForm.target_audience,
-      meetupForm.need_to_know,
-      meetupForm.will_happen,
-      meetupForm.reason_to_come
-    ).subscribe(() => this.meetupsService.refreshMeetups())
+    this.subscription = this.meetupsService
+      .createMeetup(
+        meetupForm.name,
+        meetupForm.description,
+        meetupForm.time,
+        meetupForm.duration,
+        meetupForm.location,
+        meetupForm.target_audience,
+        meetupForm.need_to_know,
+        meetupForm.will_happen,
+        meetupForm.reason_to_come
+      )
+      .subscribe(() => this.meetupsService.refreshMeetups());
   }
 
   ngOnDestroy() {

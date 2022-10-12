@@ -17,6 +17,15 @@ export class MyMeetupsPageComponent implements OnInit {
   arrayMeetups: Array<Meetup> = [];
   notifier = new Subject<void>();
 
+  public get userId() {
+    const token = this.authService.token;
+    if (token) {
+      const jwtObj = this.authService.parseJwt(token);
+      return jwtObj.id;
+    }
+    return false;
+  }
+
   constructor(
     private MeetupsService: MeetupsService,
     private authService: AuthService,
@@ -38,15 +47,6 @@ export class MyMeetupsPageComponent implements OnInit {
       .subscribe((data) => {
         this.arrayMeetups = sortList(data as Array<Meetup>);
       });
-  }
-  
-  public get userId() {
-    const token = this.authService.token;
-    if (token) {
-      const jwtObj = this.authService.parseJwt(token);
-      return jwtObj.id;
-    }
-    return false;
   }
 
   delMeetup(id: number) {

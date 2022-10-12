@@ -1,17 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, distinctUntilChanged, Observable, Subject, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  distinctUntilChanged,
+  Observable,
+  tap,
+} from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Meetup } from '../entities/meetup';
 import { deepEqual } from '../shared/mathFuncs/mathFuncs';
 
 @Injectable()
 export class MeetupsService implements OnDestroy {
-  
   dataMeetups: Array<Meetup> = [];
   interval: any;
-  
+
   public subject = new BehaviorSubject<any>([]);
 
   constructor(private http: HttpClient, private router: Router) {
@@ -20,18 +24,18 @@ export class MeetupsService implements OnDestroy {
   }
 
   getMeetups(): Observable<any> {
-    return this.http.get(
-      `${environment.backendOrigin}/meetup`
-    );
-  } 
+    return this.http.get(`${environment.backendOrigin}/meetup`);
+  }
 
   refreshMeetups() {
     this.getMeetups().subscribe((res) => this.subject.next(res));
   }
 
   getSubject() {
-    return this.subject.pipe(distinctUntilChanged((a, b) => deepEqual(a,b)),
-    tap((res) => console.log(res)));
+    return this.subject.pipe(
+      distinctUntilChanged((a, b) => deepEqual(a, b)),
+      tap((res) => console.log(res))
+    );
   }
 
   createMeetup(
@@ -76,29 +80,18 @@ export class MeetupsService implements OnDestroy {
     will_happen: string,
     reason_to_come: string
   ) {
-    return this.http
-      .put(`${environment.backendOrigin}/meetup/${id}`, {
-        name,
-        description,
-        time,
-        duration,
-        location,
-        target_audience,
-        need_to_know,
-        will_happen,
-        reason_to_come,
-      });
+    return this.http.put(`${environment.backendOrigin}/meetup/${id}`, {
+      name,
+      description,
+      time,
+      duration,
+      location,
+      target_audience,
+      need_to_know,
+      will_happen,
+      reason_to_come,
+    });
   }
-
-  /*nameUniqueValid(newName: string) {
-    this.getMeetups().pipe(
-      mergeMap((items: any) => items.name),
-      filter((names: any) => names.includes(newName)),
-      tap((resName) => {
-        console.log (resName ? false : true);
-      })
-    )
-  }*/
 
   subscribeMeetup(idMeetup: number, idUser: number): Observable<object> {
     return this.http.put(`${environment.backendOrigin}/meetup`, {
@@ -109,15 +102,13 @@ export class MeetupsService implements OnDestroy {
 
   unsubscribeMeetup(idMeetup: number, idUser: number) {
     const option = {
-      body: { idMeetup, idUser }
-    }
-    return this.http
-    .delete(`${environment.backendOrigin}/meetup`, option);
+      body: { idMeetup, idUser },
+    };
+    return this.http.delete(`${environment.backendOrigin}/meetup`, option);
   }
 
   delMeetup(id: number) {
-    return this.http
-    .delete(`${environment.backendOrigin}/meetup/${id}`);
+    return this.http.delete(`${environment.backendOrigin}/meetup/${id}`);
   }
 
   ngOnDestroy() {

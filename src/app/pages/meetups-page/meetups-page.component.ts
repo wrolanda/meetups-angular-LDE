@@ -11,10 +11,9 @@ import { sortList } from 'src/app/shared/mathFuncs/mathFuncs';
   providers: [MeetupsService],
 })
 export class MeetupsPageComponent implements OnInit, OnDestroy {
-  
+  notifier = new Subject<void>();
   arrayMeetups: Array<Meetup> = [];
   subscription!: Subscription;
-  notifier = new Subject<void>();
 
   constructor(private meetupsService: MeetupsService) {}
 
@@ -23,41 +22,41 @@ export class MeetupsPageComponent implements OnInit, OnDestroy {
   }
 
   getMeetups() {
-    this.subscription = this.meetupsService.getSubject().pipe(
-      takeUntil(this.notifier),
-      tap(() => console.log('a'))
-    ).subscribe((data) => {
-      this.arrayMeetups = sortList(data as Array<Meetup>);
-    });
+    this.subscription = this.meetupsService
+      .getSubject()
+      .pipe(
+        takeUntil(this.notifier),
+      )
+      .subscribe((data) => {
+        this.arrayMeetups = sortList(data as Array<Meetup>);
+      });
   }
 
   subscribeMeetup(subscribeMeetupObj: { idMeetup: number; idUser: number }) {
-    this.subscription = this.meetupsService.subscribeMeetup(
-      subscribeMeetupObj.idMeetup,
-      subscribeMeetupObj.idUser
-    ).subscribe((result) => {
-      this.meetupsService.refreshMeetups()
-      console.log(result);  
-    });
+    this.subscription = this.meetupsService
+      .subscribeMeetup(subscribeMeetupObj.idMeetup, subscribeMeetupObj.idUser)
+      .subscribe((result) => {
+        this.meetupsService.refreshMeetups();
+        console.log(result);
+      });
   }
 
   unsubscribeMeetup(subscribeMeetupObj: { idMeetup: number; idUser: number }) {
-    this.subscription = this.meetupsService.unsubscribeMeetup(
-      subscribeMeetupObj.idMeetup,
-      subscribeMeetupObj.idUser
-    ).subscribe((result) => {
-      this.meetupsService.refreshMeetups()
-      console.log(result);  
-    });
+    this.subscription = this.meetupsService
+      .unsubscribeMeetup(subscribeMeetupObj.idMeetup, subscribeMeetupObj.idUser)
+      .subscribe((result) => {
+        this.meetupsService.refreshMeetups();
+        console.log(result);
+      });
   }
 
   delMeetup(id: number) {
-    this.subscription = this.meetupsService.delMeetup(id).subscribe(
-      (result) => {
+    this.subscription = this.meetupsService
+      .delMeetup(id)
+      .subscribe((result) => {
         this.meetupsService.refreshMeetups();
-        console.log(result);  
-      }
-    );
+        console.log(result);
+      });
   }
 
   ngOnDestroy(): void {

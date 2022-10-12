@@ -5,13 +5,38 @@ import { tap } from 'rxjs';
 import { User } from '../entities/user';
 import { Router } from '@angular/router';
 
-const ADMIN = "ADMIN";
+const ADMIN = 'ADMIN';
 
 @Injectable()
 export class AuthService {
+  public get isAdmin() {
+    const token = this.token;
+    if (token) {
+      const jwtObj = this.parseJwt(token);
+      for (let i = 0; i < jwtObj.roles.length; i++) {
+        if (jwtObj.roles[i].id === 1 && jwtObj.roles[i].name === ADMIN) {
+          return true;
+        }
+        return false;
+      }
+    }
+    return false;
+  }
 
-  constructor(private http: HttpClient,
-    private router: Router) { }
+  public get user(): User | null {
+    const token = localStorage.getItem('del_meetups_auth_token');
+    if (token) {
+      const user: User = this.parseJwt(token);
+      return user;
+    }
+    return null;
+  }
+
+  public get token(): string | null {
+    return localStorage.getItem('del_meetups_auth_token');
+  }
+
+  constructor(private http: HttpClient, private router: Router) {}
 
   login(email: string, password: string) {
     return this.http
@@ -34,20 +59,6 @@ export class AuthService {
     this.router.navigate(['auth']);
   }
 
-  public get isAdmin() {
-    const token = this.token;
-    if (token) {
-      const jwtObj = this.parseJwt(token);
-      for (let i = 0; i < jwtObj.roles.length; i++) {
-        if (jwtObj.roles[i].id === 1 && jwtObj.roles[i].name === ADMIN) {
-          return true;
-        }
-      return false;
-      }
-    }
-    return false;
-  }
-
   parseJwt(token: string) {
     var base64Url = token.split('.')[1];
     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -62,19 +73,4 @@ export class AuthService {
     );
     return JSON.parse(jsonPayload);
   }
-
-  public get user(): User | null {
-    const token = localStorage.getItem('del_meetups_auth_token');
-    if (token) {
-      const user: User = this.parseJwt(token);
-      return user;
-    }
-    return null;
-  }
-
-  public get token(): string | null {
-    return localStorage.getItem('del_meetups_auth_token');
-  }
-
-
 }
