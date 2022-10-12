@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Meetup } from 'src/app/entities/meetup';
 import { AuthService } from 'src/app/services/auth.service';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { durationCalculation, getISODate } from 'src/app/shared/formateDate/formatDate';
 
 @Component({
@@ -38,16 +38,16 @@ export class MeetupCreateComponent implements OnInit {
 
   InitCreateMeetupForm() {
     this.MeetupCreateReactiveForm = this.fb.group({
-      name: ['название'],
-      description: ['описание'],
-      location: ['переговорка 20'],
-      target_audience: ['клоуны'],
-      need_to_know: ['нужно знать'],
-      will_happen: ['что-то произойдет'],
-      reason_to_come: ['причина жить'],
-      startTime: ['17:00'],
-      endTime: ['18:00'],
-      date: ['2022-10-05'],
+      name: ['название', Validators.required],
+      description: ['описание', Validators.required],
+      location: ['переговорка 20', Validators.required],
+      target_audience: ['клоуны', Validators.required],
+      need_to_know: ['нужно знать', Validators.required],
+      will_happen: ['что-то произойдет', Validators.required],
+      reason_to_come: ['причина жить', Validators.required],
+      startTime: ['17:00', Validators.required],
+      endTime: ['18:00', Validators.required],
+      date: ['2022-10-05', Validators.required],
       duration: [0],
     });
   }

@@ -1,9 +1,18 @@
+<div class="search">
+    <!-- <app-search (searchTerm2)="searchTerm2"></app-search> -->
+    <input [(ngModel)]="searchTerm1" placeholder="Search simple"/>
+</div>
+<br>
 <div class="row">
     <app-meetup-card 
-    *ngFor="let card of arrayMeetups"
+    *ngFor="let card of (arrayMeetups | filter:searchTerm1)"
     [card]="card"
     (addEventCard)="this.addEvent.emit($event)"
     (addEventUnsub)="this.addEventUnsub.emit($event)"
     (addEventDel)="this.addEventDel.emit($event)"
     ></app-meetup-card>
+
+    <div *ngIf="(arrayMeetups | filter:searchTerm1).length <1">
+        Not Found
+    </div>
 </div>

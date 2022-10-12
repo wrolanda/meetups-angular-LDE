@@ -10,11 +10,11 @@
         <a *ngIf="isAuth" routerLink="/myMeetups" routerLinkActive="active">my meetups</a>
         </div>
         <a *ngIf="isAdmin" routerLink="/userList" routerLinkActive="active">users</a>
-    </div>
-    <div class="navbar_buttons">
-        <button mat-button *ngIf="isAuth" (click)="logout()">logout</button>
-    </div>
-    <div>
-       
-    </div>
+        <!-- <div class="search-button">
+            <button mat-button>search</button>
+        </div> -->
+        <div class="logout-button">
+            <button mat-button *ngIf="isAuth" (click)="logout()">logout</button>
+        </div>
+    </div> 
 </div>
