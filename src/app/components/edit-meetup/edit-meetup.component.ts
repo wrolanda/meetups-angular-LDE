@@ -41,18 +41,6 @@ export class EditMeetupComponent implements OnInit {
     date: FormControl<string | null>; // "2022-11-11T00:00:00.000Z"
   }>;
 
-  // name: string = '';
-  // description: string = '';
-  // startTime: string = '';
-  // endTime: string = '';
-  // date: string = '';
-  // location: string = '';
-  // target_audience: string = '';
-  // need_to_know: string = '';
-  // will_happen: string = '';
-  // reason_to_come: string = '';
-  // duration: number = 0;
-
   @Output()
   edit = new EventEmitter<Meetup>();
 
@@ -64,27 +52,13 @@ export class EditMeetupComponent implements OnInit {
   {}
 
   onNoClick(): void {
-    //this.dialogRef.beforeClosed().subscribe
     this.dialogRef.close();
+    this.dialogRef.afterClosed().subscribe(() => this.meetupsService.refreshMeetups());
+
   }
 
   ngOnInit(): void {
     this.initForm();
-    //   this.MeetupEditReactiveForm.value.name = this.card.name;
-    //   this.MeetupEditReactiveForm.value.description = this.card.description;
-    //   this.MeetupEditReactiveForm.value.startTime = getTimeString(this.card.time);
-    //   this.MeetupEditReactiveForm.value.endTime = getEndTime(
-    //     getTimeString(this.card.time),
-    //     getDateString(this.card.time),
-    //     this.MeetupEditReactiveForm.value.duration);
-    //   this.date = getDateString(this.card.time);
-    //   this.description = this.card.description;
-    //   this.target_audience = this.card.target_audience;
-    //   this.need_to_know = this.card.need_to_know;
-    //   this.will_happen = this.card.will_happen;
-    //   this.reason_to_come = this.card.reason_to_come;
-    //   this.duration = durationCalculation(this.startTime, this.endTime);
-    // }
   }
 
   initForm() {
@@ -123,7 +97,6 @@ export class EditMeetupComponent implements OnInit {
       return false;
     }
   }
-
 
   onEditMeetup() {
     const duration = durationCalculation(

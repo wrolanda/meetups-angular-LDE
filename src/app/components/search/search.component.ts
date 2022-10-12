@@ -1,22 +1,27 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { BehaviorSubject, debounceTime, distinctUntilChanged, filter, fromEvent, map, Subject, takeUntil } from 'rxjs';
+import { SearchService } from 'src/app/services/search.service';
+
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, AfterViewInit {
   private notifier: Subject<void> = new Subject();
   
+  message: string = '';
+  searchField!: string;
+
   @ViewChild('searchInput') searchInput!: ElementRef;
   
-  @Output() 
-  searchTerm2: string = '';
-
-  constructor() { }
+  constructor(
+    private searchService: SearchService,
+  ) { }
 
   ngOnInit(): void {
+    this.searchService.currentMessage.subscribe(message => this.message = message);
   }
 
   ngAfterViewInit() {
@@ -24,16 +29,17 @@ export class SearchComponent implements OnInit {
       fromEvent(searchInput, "keyup")
     .pipe(
       map((event: any) => {
-        console.log(event.target.value);
         return event.target.value;
       }),
-      debounceTime(500),
+      filter((val) => {
+        return val.length >= 0;
+      }),
+      debounceTime(300),
       distinctUntilChanged(),
       takeUntil(this.notifier),
     )
-    .subscribe((val) => {
-      console.log("Запрос к бэкенду:", val);
-      //BehaviorSubject.next(val);
+    .subscribe((value) => {
+      this.searchService.changeMessage(value);
     });
   }
 

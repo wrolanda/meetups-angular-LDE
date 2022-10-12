@@ -11,6 +11,7 @@ export class MeetupsService implements OnDestroy {
   
   dataMeetups: Array<Meetup> = [];
   interval: any;
+  
   public subject = new BehaviorSubject<any>([]);
 
   constructor(private http: HttpClient, private router: Router) {

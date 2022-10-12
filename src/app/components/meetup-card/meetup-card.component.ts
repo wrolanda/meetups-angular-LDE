@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Meetup } from 'src/app/entities/meetup';
 import { AuthService } from 'src/app/services/auth.service';
-import { getDateString, getEndTime, getTimeString } from 'src/app/shared/formateDate/formatDate';
+import { MeetupsService } from 'src/app/services/meetups.service';
 import { EditMeetupComponent } from '../edit-meetup/edit-meetup.component';
 
 @Component({
@@ -28,6 +28,7 @@ export class MeetupCardComponent implements OnInit {
   constructor(
     private authService: AuthService,
     public dialog: MatDialog,
+    private meetupService: MeetupsService,
     ) { }
 
   ngOnInit(): void {}
@@ -40,7 +41,7 @@ export class MeetupCardComponent implements OnInit {
     const dialogRef = this.dialog.open(EditMeetupComponent, {
       width: '350px',
       data: this.card,
-  })
+  }).afterClosed().subscribe(() => this.meetupService.refreshMeetups());
 };
 
   get isOwnMeetup() {

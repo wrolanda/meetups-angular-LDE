@@ -5,14 +5,14 @@
 <br>
 <div class="row">
     <app-meetup-card 
-    *ngFor="let card of (arrayMeetups | filter:searchTerm1)"
+    *ngFor="let card of (meetups | filter:searchTerm1)"
     [card]="card"
     (addEventCard)="this.addEvent.emit($event)"
     (addEventUnsub)="this.addEventUnsub.emit($event)"
     (addEventDel)="this.addEventDel.emit($event)"
     ></app-meetup-card>
 
-    <div *ngIf="(arrayMeetups | filter:searchTerm1).length <1">
+    <div class="notFound" *ngIf="(meetups | filter:searchTerm1).length <1">
         Not Found
     </div>
 </div>
