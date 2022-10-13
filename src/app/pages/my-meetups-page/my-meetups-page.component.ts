@@ -27,9 +27,9 @@ export class MyMeetupsPageComponent implements OnInit {
   }
 
   constructor(
-    private MeetupsService: MeetupsService,
     private authService: AuthService,
-    private meetupsPage: MeetupsPageComponent
+    private meetupsService: MeetupsService,
+    private meetupsPage: MeetupsPageComponent,
   ) {}
 
   ngOnInit(): void {
@@ -37,7 +37,7 @@ export class MyMeetupsPageComponent implements OnInit {
   }
 
   getMyMeetups() {
-    this.MeetupsService.getSubject()
+    this.meetupsService.getSubject()
       .pipe(
         map((data) =>
           data.filter((meetup: Meetup) => meetup.owner.id === this.userId)
@@ -50,7 +50,13 @@ export class MyMeetupsPageComponent implements OnInit {
   }
 
   delMeetup(id: number) {
-    this.meetupsPage.delMeetup(id);
+    // this.meetupsPage.delMeetup(id);
+    this.subscription = this.meetupsService
+    .delMeetup(id)
+    .subscribe((result) => {
+      this.meetupsService.refreshMeetups();
+      console.log(result);
+    });
   }
 
   ngOnDestroy(): void {

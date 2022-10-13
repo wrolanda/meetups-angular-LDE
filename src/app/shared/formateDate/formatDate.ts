@@ -1,6 +1,7 @@
 export function getDateString (time: string): string { // '2022-11-11'
   let meetupDate = new Date(time);
-  let meetupDateString = meetupDate.getFullYear()+'-'+(meetupDate.getMonth()+1)+'-'+meetupDate.getDate();
+  let meetupDateString = meetupDate.getFullYear()+'-'+(meetupDate.getMonth()+1)+'-'+
+  (meetupDate.getDate() < 10 ? '0' + meetupDate.getDate() : meetupDate.getDate());
   return meetupDateString;
 }
 

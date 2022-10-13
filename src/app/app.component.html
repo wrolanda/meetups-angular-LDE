@@ -2,6 +2,7 @@
   <div class="navbar">
     <app-navbar></app-navbar>
   </div>
+  <mat-progress-spinner [mode]="'indeterminate'" *ngIf="loading$ | async"></mat-progress-spinner>
   <div class="dynamicComp">
     <router-outlet></router-outlet>
   </div>

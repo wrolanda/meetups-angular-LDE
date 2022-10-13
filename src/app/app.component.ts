@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from './services/auth.service';
+import { LoadingService } from './services/loading.service';
 
 @Component({
   selector: 'app-root',
@@ -8,12 +9,15 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent {
  title = 'meetups-angular-LDE';
+ 
+ loading$ = this.loadingService.loading$; 
 
  public get isAdmin() {
   return this.authService.isAdmin;
 }
 
  constructor (
-  private authService: AuthService
+  private authService: AuthService,
+  public loadingService: LoadingService,
  ) {}
 }

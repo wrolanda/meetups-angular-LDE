@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { forkJoin, Subject, Subscription, takeUntil, tap } from 'rxjs';
 import { Role } from 'src/app/entities/role';
 import { User } from 'src/app/entities/user';
+import { LoadingService } from 'src/app/services/loading.service';
 import { UsersService } from 'src/app/services/users.service';
 import { sortList } from 'src/app/shared/mathFuncs/mathFuncs';
 
@@ -13,10 +14,13 @@ import { sortList } from 'src/app/shared/mathFuncs/mathFuncs';
 })
 export class UserListPageComponent implements OnInit {
   notifier = new Subject<void>();
+
   usersList!: Array<User>;
   subscription!: Subscription;
 
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    public loadingService: LoadingService) {}
 
   ngOnInit(): void {
     this.getUsers();

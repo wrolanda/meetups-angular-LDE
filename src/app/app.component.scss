@@ -34,3 +34,11 @@
     padding-bottom: 60px;
     padding-top: 60px;    
 }
+
+mat-progress-spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+}

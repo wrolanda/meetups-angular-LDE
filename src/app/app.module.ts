@@ -28,6 +28,7 @@ import { EditMeetupComponent } from './components/edit-meetup/edit-meetup.compon
 import { SearchComponent } from './components/search/search.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { FilterPipe } from './pipe/filter.pipe';
+import { NetworkRequestsInterceptor } from './interceptors/network-requests.interceptor';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,15 @@ import { FilterPipe } from './pipe/filter.pipe';
   providers: [
     AuthService,
     MeetupsPageComponent,
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, 
+      useClass: JwtInterceptor, 
+      multi: true 
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: NetworkRequestsInterceptor,
+      multi: true,
+    }
   ],
   bootstrap: [AppComponent],
 })

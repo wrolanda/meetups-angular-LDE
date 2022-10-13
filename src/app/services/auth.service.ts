@@ -17,8 +17,8 @@ export class AuthService {
         if (jwtObj.roles[i].id === 1 && jwtObj.roles[i].name === ADMIN) {
           return true;
         }
-        return false;
       }
+      return false;
     }
     return false;
   }
