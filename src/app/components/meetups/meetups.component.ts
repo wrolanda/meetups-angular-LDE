@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { Meetup } from 'src/app/entities/meetup';
+import { LoadingService } from 'src/app/services/loading.service';
 import { SearchService } from 'src/app/services/search.service';
 
 @Component({
@@ -17,6 +18,7 @@ import { SearchService } from 'src/app/services/search.service';
 })
 export class MeetupsComponent implements OnInit, OnDestroy {
   private notifier = new Subject<void>();
+  loading$ = this.loadingService.loading$; 
 
   searchTerm1: string = '';
   message: string = '';
@@ -48,7 +50,8 @@ export class MeetupsComponent implements OnInit, OnDestroy {
   @Output()
   public addEventDel = new EventEmitter();
 
-  constructor(private searchService: SearchService) {}
+  constructor(private searchService: SearchService,
+    private loadingService: LoadingService) {}
 
   ngOnInit(): void {
     this.searchService.currentMessage

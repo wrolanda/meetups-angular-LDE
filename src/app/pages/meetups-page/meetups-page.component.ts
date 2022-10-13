@@ -15,7 +15,7 @@ export class MeetupsPageComponent implements OnInit, OnDestroy {
   arrayMeetups: Array<Meetup> = [];
   subscription!: Subscription;
 
-  constructor(private meetupsService: MeetupsService) {}
+  constructor(public meetupsService: MeetupsService) {}
 
   ngOnInit(): void {
     this.getMeetups();
