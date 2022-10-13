@@ -9,7 +9,10 @@ import {
 } from '@angular/forms';
 import {
   durationCalculation,
+  getDateString,
+  getEndTime,
   getISODate,
+  getTimeString,
 } from 'src/app/shared/formateDate/formatDate';
 
 @Component({
@@ -53,9 +56,9 @@ export class MeetupCreateComponent implements OnInit {
       need_to_know: ['нужно знать', Validators.required],
       will_happen: ['что-то произойдет', Validators.required],
       reason_to_come: ['причина жить', Validators.required],
-      startTime: ['17:00', Validators.required],
-      endTime: ['18:00', Validators.required],
-      date: ['2022-10-05', Validators.required],
+      startTime: [`${getTimeString('')}`, Validators.required],
+      endTime: [`${getEndTime(getTimeString(''), getDateString(''), 60)}`, Validators.required],
+      date: [`${getDateString('')}`, Validators.required],
       duration: [0],
     });
   }

@@ -11,6 +11,13 @@ import { EditMeetupComponent } from '../edit-meetup/edit-meetup.component';
   styleUrls: ['./meetup-card.component.scss'],
 })
 export class MeetupCardComponent implements OnInit {
+
+  get actualMeetups() {
+    if (new Date(this.card.time) < new Date())
+    {return false}
+    else return true;
+  }
+
   get isOwnMeetup() {
     return this.authService.user?.id === this.card.owner.id;
   }

@@ -3,6 +3,7 @@
         <br>
         <h1>{{card.name}}</h1>
         <time>{{card.time | date: 'd.MM.yy, HH:mm'}}</time>
+        <div *ngIf="!actualMeetups">не актуальная карта</div>
         
         <br>
         <div>{{card.description}}</div>

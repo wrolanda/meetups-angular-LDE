@@ -1,12 +1,22 @@
 export function getDateString (time: string): string { // '2022-11-11'
-  let meetupDate = new Date(time);
+  let meetupDate;
+  if (!time) {
+    meetupDate = new Date();
+  } else {
+    meetupDate = new Date(time);
+  }
   let meetupDateString = meetupDate.getFullYear()+'-'+(meetupDate.getMonth()+1)+'-'+
   (meetupDate.getDate() < 10 ? '0' + meetupDate.getDate() : meetupDate.getDate());
   return meetupDateString;
 }
 
 export function getTimeString (time: string | number): string { // "16:08"
-  let meetupDate = new Date(time);
+  let meetupDate;
+  if (!time) {
+    meetupDate = new Date();
+  } else {
+    meetupDate = new Date(time);
+  }
   let meetupTimeString = ((meetupDate.getHours() < 10) ? "0" : "") + meetupDate.getHours() + ":" 
   + ((meetupDate.getMinutes() < 10) ? "0" : "") + meetupDate.getMinutes();
   return meetupTimeString;
