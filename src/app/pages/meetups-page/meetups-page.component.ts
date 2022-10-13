@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, Subscription, takeUntil, tap } from 'rxjs';
 import { Meetup } from 'src/app/entities/meetup';
 import { MeetupsService } from 'src/app/services/meetups.service';
+import { indicate } from 'src/app/shared/loadingFunctions/loading';
 import { sortList } from 'src/app/shared/mathFuncs/mathFuncs';
 
 @Component({
@@ -12,6 +13,8 @@ import { sortList } from 'src/app/shared/mathFuncs/mathFuncs';
 })
 export class MeetupsPageComponent implements OnInit, OnDestroy {
   notifier = new Subject<void>();
+  loading2$ = new Subject<boolean>();
+
   arrayMeetups: Array<Meetup> = [];
   subscription!: Subscription;
 
@@ -25,6 +28,7 @@ export class MeetupsPageComponent implements OnInit, OnDestroy {
     this.subscription = this.meetupsService
       .getSubject()
       .pipe(
+        indicate(this.loading2$),
         takeUntil(this.notifier),
       )
       .subscribe((data) => {

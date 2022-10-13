@@ -27,6 +27,7 @@ export class UsersService implements OnDestroy{
   getSubject() {
     return this.subject.pipe(
       distinctUntilChanged((a, b) => deepEqual(a, b)),
+
       tap((res) => console.log(res))
     );
   }

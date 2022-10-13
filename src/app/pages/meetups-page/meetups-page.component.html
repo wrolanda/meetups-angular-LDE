@@ -1,10 +1,9 @@
 <app-search></app-search>
 <br><br>
-<div>
-    <app-meetups 
-    [arrayMeetups]="arrayMeetups"
-    (addEvent)="subscribeMeetup($event)"
-    (addEventUnsub)="unsubscribeMeetup($event)"
-    (addEventDel)="delMeetup($event)"
-     ></app-meetups>
-</div>
+<!-- <mat-progress-spinner [mode]="'indeterminate'" 
+*ngIf="loading2$ | async"></mat-progress-spinner> -->
+<app-meetups [arrayMeetups]="arrayMeetups" 
+             (addEvent)="subscribeMeetup($event)"
+             (addEventUnsub)="unsubscribeMeetup($event)" 
+             (addEventDel)="delMeetup($event)">
+</app-meetups>
