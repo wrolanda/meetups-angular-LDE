@@ -19,6 +19,7 @@ import { SearchService } from 'src/app/services/search.service';
 export class MeetupsComponent implements OnInit, OnDestroy {
   private notifier = new Subject<void>();
   loading$ = this.loadingService.loading$; 
+  bool = false;
 
   searchTerm1: string = '';
   message: string = '';
@@ -38,6 +39,16 @@ export class MeetupsComponent implements OnInit, OnDestroy {
         return;
       });
     }
+  }
+
+  get loadingBool() {
+    this.loading$.pipe(
+      takeUntil(this.notifier)
+    ).subscribe((data: boolean) => {this.bool = data})
+    if (this.bool) {
+      return true;    
+    }
+    return false;
   }
 
   @Input()

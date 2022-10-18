@@ -52,7 +52,7 @@ export class MeetupCreateComponent implements OnInit {
       name: ['название', Validators.required],
       description: ['описание', Validators.required],
       location: ['переговорка 20', Validators.required],
-      target_audience: ['клоуны', Validators.required],
+      target_audience: ['хорошие ребята а так же их родители', Validators.required],
       need_to_know: ['нужно знать', Validators.required],
       will_happen: ['что-то произойдет', Validators.required],
       reason_to_come: ['причина жить', Validators.required],

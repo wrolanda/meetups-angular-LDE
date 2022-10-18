@@ -65,7 +65,8 @@ import { NetworkRequestsInterceptor } from './interceptors/network-requests.inte
   providers: [
     AuthService,
     MeetupsPageComponent,
-    { provide: HTTP_INTERCEPTORS, 
+    { 
+      provide: HTTP_INTERCEPTORS, 
       useClass: JwtInterceptor, 
       multi: true 
     },
