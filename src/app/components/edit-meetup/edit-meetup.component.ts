@@ -1,4 +1,4 @@
-import { Component, Inject, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, Inject, EventEmitter, OnInit, Output, Optional } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -35,19 +35,19 @@ export class EditMeetupComponent implements OnInit {
   }>;
 
   @Output()
-  editMeetupEvent = new EventEmitter();
+  public editMeetupEvent = new EventEmitter();
 
   @Output()
   public addMeetupEvent = new EventEmitter();
 
   constructor(
     private fb: FormBuilder,
-    public EditMeetupdialogRef: MatDialogRef<EditMeetupComponent>,
-    @Inject(MAT_DIALOG_DATA) public card: Meetup
+    public EditMeetupDialogRef: MatDialogRef<EditMeetupComponent>,
+    @Optional() @Inject(MAT_DIALOG_DATA) public card: Meetup
   ) {}
 
   onNoClick(): void {
-    this.EditMeetupdialogRef.close();
+    this.EditMeetupDialogRef.close();
   }
 
   ngOnInit(): void {
@@ -57,28 +57,29 @@ export class EditMeetupComponent implements OnInit {
   initForm() {
     this.MeetupEditReactiveForm = this.fb.group({
       name: [this.card ? this.card.name : 'название', Validators.required],
-      description: [this.card.description || 'описание1', Validators.required],
+      description: [this.card?.description || 'описание1', Validators.required],
       startTime: [
-        getTimeString(this.card.time) || getTimeString(''),
+        getTimeString(this.card?.time) || getTimeString(''),
         Validators.required,
       ],
       endTime: [
-        getEndTime(
-          getTimeString(this.card.time),
-          getDateString(this.card.time),
-          this.card.duration
-        ) || getEndTime(getTimeString(''), getDateString(''), 60),
+        this.card 
+        ? getEndTime(
+          getTimeString(this.card?.time),
+          getDateString(this.card?.time),
+          this.card?.duration)
+        :  getEndTime(getTimeString(''), getDateString(''), 60),
         Validators.required,
       ],
       date: [
-        getDateString(this.card.time) || getDateString(''),
+        getDateString(this.card?.time) || getDateString(''),
         Validators.required,
       ],
-      location: [this.card.location || 'переговорка 20', Validators.required],
-      target_audience: [this.card.target_audience || '', Validators.required],
-      need_to_know: [this.card.need_to_know || '', Validators.required],
-      will_happen: [this.card.will_happen || '', Validators.required],
-      reason_to_come: [this.card.reason_to_come || '', Validators.required],
+      location: [this.card?.location || 'переговорка 20', Validators.required],
+      target_audience: [this.card?.target_audience || 'хорошие ребята а так же их родители', Validators.required],
+      need_to_know: [this.card?.need_to_know || 'нужно знать', Validators.required],
+      will_happen: [this.card?.will_happen || 'что-то произойдет', Validators.required],
+      reason_to_come: [this.card?.reason_to_come || 'причина жить', Validators.required],
     });
   }
 
@@ -109,11 +110,11 @@ export class EditMeetupComponent implements OnInit {
     );
 
     const meetupObj = {
-      id: this.card.id,
+      id: this.card?.id,
       name: this.MeetupEditReactiveForm.value.name!,
       description: this.MeetupEditReactiveForm.value.description!,
       location: this.MeetupEditReactiveForm.value.location!,
-      date: getISODate(
+      time: getISODate(
         this.MeetupEditReactiveForm.value.date!,
         this.MeetupEditReactiveForm.value.startTime!
       ),

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Meetup } from 'src/app/entities/meetup';
 import { MeetupsService } from 'src/app/services/meetups.service';
@@ -9,7 +9,7 @@ import { MeetupsService } from 'src/app/services/meetups.service';
   styleUrls: ['./create-meetup-page.component.scss'],
   providers: [MeetupsService],
 })
-export class CreateMeetupPageComponent implements OnInit {
+export class CreateMeetupPageComponent implements OnInit, OnDestroy {
   subscription!: Subscription;
 
   constructor(private meetupsService: MeetupsService) {}
@@ -17,18 +17,7 @@ export class CreateMeetupPageComponent implements OnInit {
   ngOnInit(): void {}
 
   createMeetup(meetupForm: Meetup) {
-    this.subscription = this.meetupsService
-      .createMeetup(
-        meetupForm.name,
-        meetupForm.description,
-        meetupForm.time,
-        meetupForm.duration,
-        meetupForm.location,
-        meetupForm.target_audience,
-        meetupForm.need_to_know,
-        meetupForm.will_happen,
-        meetupForm.reason_to_come
-      )
+    this.subscription = this.meetupsService.createMeetup(meetupForm)
       .subscribe(() => this.meetupsService.refreshMeetups());
   }
 

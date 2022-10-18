@@ -47,7 +47,7 @@ export class MeetupCardComponent implements OnInit {
   constructor(
     private authService: AuthService,
     public dialog: MatDialog,
-    private meetupService: MeetupsService
+    private meetupsService: MeetupsService
   ) {}
 
   ngOnInit(): void {}
@@ -63,7 +63,7 @@ export class MeetupCardComponent implements OnInit {
         data: this.card,
       })
       .afterClosed()
-      .subscribe(() => this.meetupService.refreshMeetups());
+      .subscribe(() => this.meetupsService.refreshMeetups());
   }
 
   subscribeMeetup() {

@@ -8,7 +8,7 @@ import {
   tap,
 } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Meetup, MeetupEdit } from '../entities/meetup';
+import { Meetup, MeetupCreate, MeetupEdit } from '../entities/meetup';
 import { deepEqual } from '../shared/mathFuncs/mathFuncs';
 
 @Injectable()
@@ -38,29 +38,9 @@ export class MeetupsService implements OnDestroy {
     );
   }
 
-  createMeetup(
-    name: string,
-    description: string,
-    time: string,
-    duration: number,
-    location: string,
-    target_audience: string,
-    need_to_know: string,
-    will_happen: string,
-    reason_to_come: string
-  ) {
+  createMeetup(meetup: MeetupCreate) {
     return this.http
-      .post(`${environment.backendOrigin}/meetup`, {
-        name,
-        description,
-        time,
-        duration,
-        location,
-        target_audience,
-        need_to_know,
-        will_happen,
-        reason_to_come,
-      })
+      .post(`${environment.backendOrigin}/meetup`, meetup)
       .pipe(
         tap(() => {
           this.router.navigate(['meetups']);
