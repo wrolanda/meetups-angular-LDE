@@ -8,7 +8,7 @@ import {
   tap,
 } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Meetup } from '../entities/meetup';
+import { Meetup, MeetupEdit } from '../entities/meetup';
 import { deepEqual } from '../shared/mathFuncs/mathFuncs';
 
 @Injectable()
@@ -68,29 +68,8 @@ export class MeetupsService implements OnDestroy {
       );
   }
 
-  editMeetup(
-    id: number,
-    name: string,
-    description: string,
-    time: string,
-    duration: number,
-    location: string,
-    target_audience: string,
-    need_to_know: string,
-    will_happen: string,
-    reason_to_come: string
-  ) {
-    return this.http.put(`${environment.backendOrigin}/meetup/${id}`, {
-      name,
-      description,
-      time,
-      duration,
-      location,
-      target_audience,
-      need_to_know,
-      will_happen,
-      reason_to_come,
-    });
+  editMeetup(meetup: MeetupEdit) {
+    return this.http.put(`${environment.backendOrigin}/meetup/${meetup.id}`, meetup);
   }
 
   subscribeMeetup(idMeetup: number, idUser: number): Observable<object> {

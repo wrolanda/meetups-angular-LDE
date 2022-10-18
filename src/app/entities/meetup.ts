@@ -19,6 +19,19 @@ export interface Meetup {
   updatedAt: string;
 }
 
+export interface MeetupEdit {
+  id: number;
+  name: string;
+  description: string;
+  time: string;
+  duration: number;
+  location: string;
+  target_audience: string;
+  need_to_know: string;
+  will_happen: string;
+  reason_to_come: string;
+}
+
 export class Meetup {
   constructor(
     id: number,
@@ -61,6 +74,7 @@ export class MeetupCreate {
     will_happen: string,
     reason_to_come: string,
     time: string,
-    duration: number,
+    duration: number
   ) {}
 }
+

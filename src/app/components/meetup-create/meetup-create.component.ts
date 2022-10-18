@@ -21,6 +21,10 @@ import {
   styleUrls: ['./meetup-create.component.scss'],
 })
 export class MeetupCreateComponent implements OnInit {
+
+  @Output()
+  public addEvent = new EventEmitter();
+
   MeetupCreateReactiveForm!: FormGroup<{
     name: FormControl<string | null>;
     description: FormControl<string | null>;
@@ -39,9 +43,6 @@ export class MeetupCreateComponent implements OnInit {
     private authService: AuthService, 
     private fb: FormBuilder,
     ) {}
-
-  @Output()
-  public addEvent = new EventEmitter();
 
   ngOnInit(): void {
     this.InitCreateMeetupForm();

@@ -6,7 +6,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { Meetup } from 'src/app/entities/meetup';
-import { MeetupsService } from 'src/app/services/meetups.service';
 import {
   durationCalculation,
   getDateString,
@@ -20,7 +19,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   selector: 'app-edit-meetup',
   templateUrl: './edit-meetup.component.html',
   styleUrls: ['./edit-meetup.component.scss'],
-  providers: [MeetupsService],
 })
 export class EditMeetupComponent implements OnInit {
   MeetupEditReactiveForm!: FormGroup<{
@@ -37,20 +35,19 @@ export class EditMeetupComponent implements OnInit {
   }>;
 
   @Output()
-  edit = new EventEmitter<Meetup>();
+  editMeetupEvent = new EventEmitter();
+
+  @Output()
+  public addMeetupEvent = new EventEmitter();
 
   constructor(
     private fb: FormBuilder,
-    private meetupsService: MeetupsService,
-    public dialogRef: MatDialogRef<EditMeetupComponent>,
+    public EditMeetupdialogRef: MatDialogRef<EditMeetupComponent>,
     @Inject(MAT_DIALOG_DATA) public card: Meetup
   ) {}
 
   onNoClick(): void {
-    this.dialogRef.close();
-    this.dialogRef
-      .afterClosed()
-      .subscribe(() => this.meetupsService.refreshMeetups());
+    this.EditMeetupdialogRef.close();
   }
 
   ngOnInit(): void {
@@ -59,23 +56,29 @@ export class EditMeetupComponent implements OnInit {
 
   initForm() {
     this.MeetupEditReactiveForm = this.fb.group({
-      name: [this.card.name, Validators.required],
-      description: [this.card.description, Validators.required],
-      startTime: [getTimeString(this.card.time), Validators.required],
+      name: [this.card ? this.card.name : 'название', Validators.required],
+      description: [this.card.description || 'описание1', Validators.required],
+      startTime: [
+        getTimeString(this.card.time) || getTimeString(''),
+        Validators.required,
+      ],
       endTime: [
         getEndTime(
           getTimeString(this.card.time),
           getDateString(this.card.time),
           this.card.duration
-        ),
+        ) || getEndTime(getTimeString(''), getDateString(''), 60),
         Validators.required,
       ],
-      date: [getDateString(this.card.time), Validators.required],
-      location: [this.card.location, Validators.required],
-      target_audience: [this.card.target_audience, Validators.required],
-      need_to_know: [this.card.need_to_know, Validators.required],
-      will_happen: [this.card.will_happen, Validators.required],
-      reason_to_come: [this.card.reason_to_come, Validators.required],
+      date: [
+        getDateString(this.card.time) || getDateString(''),
+        Validators.required,
+      ],
+      location: [this.card.location || 'переговорка 20', Validators.required],
+      target_audience: [this.card.target_audience || '', Validators.required],
+      need_to_know: [this.card.need_to_know || '', Validators.required],
+      will_happen: [this.card.will_happen || '', Validators.required],
+      reason_to_come: [this.card.reason_to_come || '', Validators.required],
     });
   }
 
@@ -98,32 +101,36 @@ export class EditMeetupComponent implements OnInit {
     }
   }
 
-  onEditMeetup() {
+  createObj() {
     const duration = durationCalculation(
       this.MeetupEditReactiveForm.value.date!,
       this.MeetupEditReactiveForm.value.startTime!,
       this.MeetupEditReactiveForm.value.endTime!
     );
 
-    this.meetupsService
-      .editMeetup(
-        this.card.id,
-        this.MeetupEditReactiveForm.value.name!,
-        this.MeetupEditReactiveForm.value.description!,
-        getISODate(
-          this.MeetupEditReactiveForm.value.date!,
-          this.MeetupEditReactiveForm.value.startTime!
-        ),
-        duration,
-        this.MeetupEditReactiveForm.value.location!,
-        this.MeetupEditReactiveForm.value.target_audience!,
-        this.MeetupEditReactiveForm.value.need_to_know!,
-        this.MeetupEditReactiveForm.value.will_happen!,
-        this.MeetupEditReactiveForm.value.reason_to_come!
-      )
-      .subscribe((result) => {
-        this.meetupsService.refreshMeetups();
-        console.log(result);
-      });
+    const meetupObj = {
+      id: this.card.id,
+      name: this.MeetupEditReactiveForm.value.name!,
+      description: this.MeetupEditReactiveForm.value.description!,
+      location: this.MeetupEditReactiveForm.value.location!,
+      date: getISODate(
+        this.MeetupEditReactiveForm.value.date!,
+        this.MeetupEditReactiveForm.value.startTime!
+      ),
+      duration: duration,
+      target_audience: this.MeetupEditReactiveForm.value.target_audience!,
+      need_to_know: this.MeetupEditReactiveForm.value.need_to_know!,
+      will_happen: this.MeetupEditReactiveForm.value.will_happen!,
+      reason_to_come: this.MeetupEditReactiveForm.value.reason_to_come!,
+    };
+    return meetupObj;
+  }
+
+  onCreateMeetup() {
+    this.addMeetupEvent.emit(this.createObj());
+  }
+
+  onEditMeetup() {
+    this.editMeetupEvent.emit(this.createObj());
   }
 }

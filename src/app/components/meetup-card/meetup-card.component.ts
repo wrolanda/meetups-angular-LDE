@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Meetup } from 'src/app/entities/meetup';
+import { EditMeetupPageComponent } from 'src/app/pages/edit-meetup-page/edit-meetup-page.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { MeetupsService } from 'src/app/services/meetups.service';
-import { EditMeetupComponent } from '../edit-meetup/edit-meetup.component';
 
 @Component({
   selector: 'app-meetup-card',
@@ -11,11 +11,10 @@ import { EditMeetupComponent } from '../edit-meetup/edit-meetup.component';
   styleUrls: ['./meetup-card.component.scss'],
 })
 export class MeetupCardComponent implements OnInit {
-
   get actualMeetups() {
-    if (new Date(this.card.time) < new Date())
-    {return false}
-    else return true;
+    if (new Date(this.card.time) < new Date()) {
+      return false;
+    } else return true;
   }
 
   get isOwnMeetup() {
@@ -58,8 +57,8 @@ export class MeetupCardComponent implements OnInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog
-      .open(EditMeetupComponent, {
+    const editMeetupdialogRef = this.dialog
+      .open(EditMeetupPageComponent, {
         width: '350px',
         data: this.card,
       })

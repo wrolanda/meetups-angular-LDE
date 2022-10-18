@@ -2,12 +2,14 @@
   <div class="navbar">
     <app-navbar></app-navbar>
   </div>
+
   <mat-progress-spinner [mode]="'indeterminate'" *ngIf="loading$ | async"></mat-progress-spinner>
+  
   <div class="dynamicComp">
     <router-outlet></router-outlet>
   </div>
-  <div class="foobar">
-    <a routerLink="/createMeetup" routerLinkActive="active">create meetup</a>
-    <a *ngIf="isAdmin" routerLink="/createUser" routerLinkActive="active">create user</a>
+
+  <div class="footer">
+    <app-footer></app-footer>
   </div>
 </div>

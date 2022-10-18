@@ -29,6 +29,8 @@ import { SearchComponent } from './components/search/search.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { FilterPipe } from './pipe/filter.pipe';
 import { NetworkRequestsInterceptor } from './interceptors/network-requests.interceptor';
+import { EditMeetupPageComponent } from './pages/edit-meetup-page/edit-meetup-page.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +52,8 @@ import { NetworkRequestsInterceptor } from './interceptors/network-requests.inte
     EditMeetupComponent,
     SearchComponent,
     FilterPipe,
+    EditMeetupPageComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
