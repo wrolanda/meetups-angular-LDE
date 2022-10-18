@@ -6,7 +6,7 @@ import { AdminGuard } from './guards/admin.guard';
 import { AuthReverseGuard } from './guards/auth-reverse.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { AuthPageComponent } from './pages/auth-page/auth-page.component';
-import { CreateMeetupPageComponent } from './pages/create-meetup-page/create-meetup-page.component';
+import { CreateMeetupPage2Component } from './pages/create-meetup-page2/create-meetup-page2.component';
 import { HowCreateAccPageComponent } from './pages/how-create-acc-page/how-create-acc-page.component';
 import { MeetupsPageComponent } from './pages/meetups-page/meetups-page.component';
 import { MyMeetupsPageComponent } from './pages/my-meetups-page/my-meetups-page.component';
@@ -18,7 +18,7 @@ const routes: Routes = [
   {path: 'meetups', component: MeetupsPageComponent, canActivate: [AuthGuard]},
   {path: 'myMeetups', component: MyMeetupsPageComponent, canActivate: [AuthGuard]},
   {path: 'howCreateAcc', component: HowCreateAccPageComponent},
-  {path: 'createMeetup', component: CreateMeetupPageComponent, canActivate: [AuthGuard]},
+  {path: 'createMeetup', component: CreateMeetupPage2Component, canActivate: [AuthGuard]},
   {path: 'userList', component: UserListPageComponent, canActivate: [AuthGuard, AdminGuard]},
   {path: 'createUser', component: CreateNewUserComponent, canActivate: [AuthGuard, AdminGuard]},
   {path: 'editMeetup', component: EditMeetupComponent, canActivate: [AuthGuard]},

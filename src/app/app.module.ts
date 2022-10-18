@@ -31,6 +31,8 @@ import { FilterPipe } from './pipe/filter.pipe';
 import { NetworkRequestsInterceptor } from './interceptors/network-requests.interceptor';
 import { EditMeetupPageComponent } from './pages/edit-meetup-page/edit-meetup-page.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { CreateMeetupPage2Component } from './pages/create-meetup-page2/create-meetup-page2.component';
+import { EditMeetupPage2Component } from './pages/edit-meetup-page2/edit-meetup-page2.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,8 @@ import { FooterComponent } from './components/footer/footer.component';
     FilterPipe,
     EditMeetupPageComponent,
     FooterComponent,
+    CreateMeetupPage2Component,
+    EditMeetupPage2Component,
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-<form [formGroup]="MeetupCreateReactiveForm" (ngSubmit)="onCreateMeetup()">
+<form [formGroup]="MeetupCreateReactiveForm">
     <label>Название:</label>
     <input type="text" name="name" autofocus
     formControlName="name" />
@@ -21,5 +21,6 @@
     <label>reason_to_come</label>
     <input type="text" name="reason_to_come" formControlName="reason_to_come" />
 
-    <button type="submit">Создать</button>
+    <button type="submit" (click)="onCreateMeetup()">Создать</button>
+    <button type="submit" (click)="onEditMeetup()">редактировать</button>
 </form>

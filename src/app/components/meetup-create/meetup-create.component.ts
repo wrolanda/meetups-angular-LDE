@@ -1,6 +1,4 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Meetup } from 'src/app/entities/meetup';
-import { AuthService } from 'src/app/services/auth.service';
 import {
   FormGroup,
   FormBuilder,
@@ -23,7 +21,9 @@ import {
 export class MeetupCreateComponent implements OnInit {
 
   @Output()
-  public addEvent = new EventEmitter();
+  public editMeetupEvent = new EventEmitter();
+  @Output()
+  public addMeetupEvent = new EventEmitter();
 
   MeetupCreateReactiveForm!: FormGroup<{
     name: FormControl<string | null>;
@@ -36,11 +36,9 @@ export class MeetupCreateComponent implements OnInit {
     startTime: FormControl<string | null>;
     endTime: FormControl<string | null>;
     date: FormControl<string | null>;
-    duration: FormControl<number | null>;
   }>;
 
-  constructor(
-    private authService: AuthService, 
+  constructor( 
     private fb: FormBuilder,
     ) {}
 
@@ -60,11 +58,10 @@ export class MeetupCreateComponent implements OnInit {
       startTime: [`${getTimeString('')}`, Validators.required],
       endTime: [`${getEndTime(getTimeString(''), getDateString(''), 60)}`, Validators.required],
       date: [`${getDateString('')}`, Validators.required],
-      duration: [0],
     });
   }
 
-  onCreateMeetup() {
+  get requredForm() {
     if (
       this.MeetupCreateReactiveForm.value.name &&
       this.MeetupCreateReactiveForm.value.description &&
@@ -77,33 +74,42 @@ export class MeetupCreateComponent implements OnInit {
       this.MeetupCreateReactiveForm.value.will_happen &&
       this.MeetupCreateReactiveForm.value.reason_to_come
     ) {
-      const duration = durationCalculation(
-        this.MeetupCreateReactiveForm.value.date,
-        this.MeetupCreateReactiveForm.value.startTime,
-        this.MeetupCreateReactiveForm.value.endTime
-      );
-
-      const meetupObj = new Meetup(
-        Date.now(),
-        this.MeetupCreateReactiveForm.value.name,
-        this.MeetupCreateReactiveForm.value.description,
-        this.MeetupCreateReactiveForm.value.location,
-        this.MeetupCreateReactiveForm.value.target_audience,
-        this.MeetupCreateReactiveForm.value.need_to_know,
-        this.MeetupCreateReactiveForm.value.will_happen,
-        this.MeetupCreateReactiveForm.value.reason_to_come,
-        getISODate(
-          this.MeetupCreateReactiveForm.value.date,
-          this.MeetupCreateReactiveForm.value.startTime
-        ),
-        duration,
-        this.authService.user!.id,
-        this.authService.user!,
-        []
-      );
-      this.addEvent.emit(meetupObj);
+      return true;
     } else {
-      alert('заполните все поля');
+      return false;
     }
+  }
+
+  createObj() {
+    const duration = durationCalculation(
+      this.MeetupCreateReactiveForm.value.date!,
+      this.MeetupCreateReactiveForm.value.startTime!,
+      this.MeetupCreateReactiveForm.value.endTime!
+    );
+
+    const meetupObj = {
+      //id: this.card?.id,
+      name: this.MeetupCreateReactiveForm.value.name!,
+      description: this.MeetupCreateReactiveForm.value.description!,
+      location: this.MeetupCreateReactiveForm.value.location!,
+      time: getISODate(
+        this.MeetupCreateReactiveForm.value.date!,
+        this.MeetupCreateReactiveForm.value.startTime!
+      ),
+      duration: duration,
+      target_audience: this.MeetupCreateReactiveForm.value.target_audience!,
+      need_to_know: this.MeetupCreateReactiveForm.value.need_to_know!,
+      will_happen: this.MeetupCreateReactiveForm.value.will_happen!,
+      reason_to_come: this.MeetupCreateReactiveForm.value.reason_to_come!,
+    };
+    return meetupObj;
+  }
+
+  onCreateMeetup() {
+    this.addMeetupEvent.emit(this.createObj());
+  }
+
+  onEditMeetup() {
+    this.editMeetupEvent.emit(this.createObj());
   }
 }
