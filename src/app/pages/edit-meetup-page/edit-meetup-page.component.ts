@@ -21,10 +21,7 @@ export class EditMeetupPageComponent implements OnInit, OnDestroy {
   onEditMeetup(meetup: MeetupEdit) {
     this.meetupsService.editMeetup(meetup).pipe(
       takeUntil(this.notifier),
-    ).subscribe((result) => {
-            this.meetupsService.refreshMeetups();
-            console.log(result);
-          });
+    ).subscribe(() => {this.meetupsService.refreshMeetups()});
   }
 
   ngOnDestroy() {

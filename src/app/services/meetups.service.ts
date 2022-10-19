@@ -49,7 +49,8 @@ export class MeetupsService implements OnDestroy {
   }
 
   editMeetup(meetup: MeetupEdit) {
-    return this.http.put(`${environment.backendOrigin}/meetup/${meetup.id}`, meetup);
+    return this.http
+    .put(`${environment.backendOrigin}/meetup/${meetup.id}`, meetup);
   }
 
   subscribeMeetup(idMeetup: number, idUser: number): Observable<object> {

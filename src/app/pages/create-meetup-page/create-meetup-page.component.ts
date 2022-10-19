@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { Meetup } from 'src/app/entities/meetup';
+import { Subject, takeUntil } from 'rxjs';
+import { MeetupCreate } from 'src/app/entities/meetup';
 import { MeetupsService } from 'src/app/services/meetups.service';
 
 @Component({
@@ -10,18 +10,21 @@ import { MeetupsService } from 'src/app/services/meetups.service';
   providers: [MeetupsService],
 })
 export class CreateMeetupPageComponent implements OnInit, OnDestroy {
-  subscription!: Subscription;
 
+  private notifier = new Subject<void>;
+  
   constructor(private meetupsService: MeetupsService) {}
 
   ngOnInit(): void {}
 
-  createMeetup(meetupForm: Meetup) {
-    this.subscription = this.meetupsService.createMeetup(meetupForm)
-      .subscribe(() => this.meetupsService.refreshMeetups());
+  createMeetup(meetupForm: MeetupCreate) {
+    this.meetupsService.createMeetup(meetupForm).pipe(
+      takeUntil(this.notifier),
+      ).subscribe(() => {this.meetupsService.refreshMeetups()});
   }
 
   ngOnDestroy() {
-    this.subscription?.remove;
+    this.notifier.next();
+    this.notifier.complete();
   }
 }
