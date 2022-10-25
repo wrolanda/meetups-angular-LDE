@@ -18,7 +18,7 @@ import { SearchService } from 'src/app/services/search.service';
 })
 export class MeetupsComponent implements OnInit, OnDestroy {
   private notifier = new Subject<void>();
-  loading$ = this.loadingService.loading$; 
+  loading$ = this.loadingService.loading$;
   bool = false;
 
   searchTerm1: string = '';
@@ -41,12 +41,12 @@ export class MeetupsComponent implements OnInit, OnDestroy {
     }
   }
 
-  get loadingBool() {
-    this.loading$.pipe(
-      takeUntil(this.notifier)
-    ).subscribe((data: boolean) => {this.bool = data})
+  get isLoading() {
+    this.loading$.pipe(takeUntil(this.notifier)).subscribe((data: boolean) => {
+      this.bool = data;
+    });
     if (this.bool) {
-      return true;    
+      return true;
     }
     return false;
   }
@@ -61,8 +61,10 @@ export class MeetupsComponent implements OnInit, OnDestroy {
   @Output()
   public addEventDel = new EventEmitter();
 
-  constructor(private searchService: SearchService,
-    private loadingService: LoadingService) {}
+  constructor(
+    private searchService: SearchService,
+    private loadingService: LoadingService
+  ) {}
 
   ngOnInit(): void {
     this.searchService.currentMessage

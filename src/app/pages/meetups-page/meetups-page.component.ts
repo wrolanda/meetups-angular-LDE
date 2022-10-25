@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, Subscription, takeUntil, tap } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import { Meetup } from 'src/app/entities/meetup';
 import { MeetupsService } from 'src/app/services/meetups.service';
 import { indicate } from 'src/app/shared/loadingFunctions/loading';
-import { sortList } from 'src/app/shared/mathFuncs/mathFuncs';
+import { sortListCompareFn } from 'src/app/shared/mathFuncs/mathFuncs';
 
 @Component({
   selector: 'app-meetups-page',
@@ -27,12 +27,9 @@ export class MeetupsPageComponent implements OnInit, OnDestroy {
   getMeetups() {
     this.subscription = this.meetupsService
       .getSubject()
-      .pipe(
-        indicate(this.loading2$),
-        takeUntil(this.notifier),
-      )
-      .subscribe((data) => {
-        this.arrayMeetups = sortList(data as Array<Meetup>);
+      .pipe(indicate(this.loading2$), takeUntil(this.notifier))
+      .subscribe((data: Array<Meetup>) => {
+        this.arrayMeetups = data.sort(sortListCompareFn);
       });
   }
 

@@ -1,5 +1,5 @@
 <div class="footer">
-  <a (click)="openDialog()">create meetup dialog</a>
+  <a *ngIf="isAuth" (click)="openDialog()">create meetup dialog</a>
   <a *ngIf="isAuth" routerLink="/createMeetup" routerLinkActive="active">create meetup page</a>
   <a *ngIf="isAdmin" routerLink="/createUser" routerLinkActive="active">create user</a>
 </div>

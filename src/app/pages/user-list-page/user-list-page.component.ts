@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { forkJoin, Subject, Subscription, takeUntil, tap } from 'rxjs';
+import { forkJoin, Subject, Subscription, takeUntil } from 'rxjs';
 import { Role } from 'src/app/entities/role';
 import { User } from 'src/app/entities/user';
 import { LoadingService } from 'src/app/services/loading.service';
 import { UsersService } from 'src/app/services/users.service';
-import { sortList } from 'src/app/shared/mathFuncs/mathFuncs';
+import { sortListCompareFn } from 'src/app/shared/mathFuncs/mathFuncs';
 
 @Component({
   selector: 'app-user-list-page',
@@ -20,7 +20,8 @@ export class UserListPageComponent implements OnInit {
 
   constructor(
     private usersService: UsersService,
-    public loadingService: LoadingService) {}
+    public loadingService: LoadingService
+  ) {}
 
   ngOnInit(): void {
     this.getUsers();
@@ -30,8 +31,8 @@ export class UserListPageComponent implements OnInit {
     this.subscription = this.usersService
       .getSubject()
       .pipe(takeUntil(this.notifier))
-      .subscribe((data) => {
-        this.usersList = sortList(data as Array<User>);
+      .subscribe((data: Array<User>) => {
+        this.usersList = data.sort(sortListCompareFn);
       });
   }
 

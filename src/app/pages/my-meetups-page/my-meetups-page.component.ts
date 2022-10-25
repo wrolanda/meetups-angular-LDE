@@ -3,7 +3,7 @@ import { map, Subject, Subscription, takeUntil } from 'rxjs';
 import { Meetup } from 'src/app/entities/meetup';
 import { AuthService } from 'src/app/services/auth.service';
 import { MeetupsService } from 'src/app/services/meetups.service';
-import { sortList } from 'src/app/shared/mathFuncs/mathFuncs';
+import { sortListCompareFn } from 'src/app/shared/mathFuncs/mathFuncs';
 import { MeetupsPageComponent } from '../meetups-page/meetups-page.component';
 
 @Component({
@@ -29,7 +29,7 @@ export class MyMeetupsPageComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private meetupsService: MeetupsService,
-    private meetupsPage: MeetupsPageComponent,
+    private meetupsPage: MeetupsPageComponent
   ) {}
 
   ngOnInit(): void {
@@ -37,7 +37,8 @@ export class MyMeetupsPageComponent implements OnInit {
   }
 
   getMyMeetups() {
-    this.meetupsService.getSubject()
+    this.meetupsService
+      .getSubject()
       .pipe(
         map((data) =>
           data.filter((meetup: Meetup) => meetup.owner.id === this.userId)
@@ -45,18 +46,18 @@ export class MyMeetupsPageComponent implements OnInit {
         takeUntil(this.notifier)
       )
       .subscribe((data) => {
-        this.arrayMeetups = sortList(data as Array<Meetup>);
+        this.arrayMeetups = data.sort(sortListCompareFn);
       });
   }
 
   delMeetup(id: number) {
     // this.meetupsPage.delMeetup(id);
     this.subscription = this.meetupsService
-    .delMeetup(id)
-    .subscribe((result) => {
-      this.meetupsService.refreshMeetups();
-      console.log(result);
-    });
+      .delMeetup(id)
+      .subscribe((result) => {
+        this.meetupsService.refreshMeetups();
+        console.log(result);
+      });
   }
 
   ngOnDestroy(): void {

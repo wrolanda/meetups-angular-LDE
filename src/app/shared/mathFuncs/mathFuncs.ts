@@ -1,8 +1,15 @@
+import { Meetup } from 'src/app/entities/meetup';
+
 export function deepEqual(a: any, b: any) {
   if (a === b) {
     return true;
   }
-  if (a === null || b === null ||typeof a !== 'object' || typeof b !== 'object') {
+  if (
+    a === null ||
+    b === null ||
+    typeof a !== 'object' ||
+    typeof b !== 'object'
+  ) {
     return false;
   }
   const aKeys = Object.keys(a);
@@ -17,12 +24,8 @@ export function deepEqual(a: any, b: any) {
     }
   }
   return true;
-};
-
-export function sortList(data: Array<any>) {
-  return [...data].sort(
-    (item1, item2) =>
-      Date.parse(item2.createdAt) - Date.parse(item1.createdAt)
-  );
 }
 
+export function sortListCompareFn(item1: any, item2: any) {
+  return Date.parse(item2.createdAt) - Date.parse(item1.createdAt);
+}
