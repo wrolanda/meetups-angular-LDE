@@ -8,13 +8,9 @@ import { MeetupsService } from 'src/app/services/meetups.service';
   selector: 'app-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],
-  providers: [MeetupsService],
 })
 export class FooterComponent implements OnInit {
-
-  constructor(private authService: AuthService,
-    private meetupsService: MeetupsService,
-    public dialog: MatDialog) { }
+  constructor(private authService: AuthService, public dialog: MatDialog) {}
 
   public get isAuth() {
     return this.authService.token;
@@ -27,11 +23,8 @@ export class FooterComponent implements OnInit {
   ngOnInit(): void {}
 
   openDialog(): void {
-    const editMeetupdialogRef = this.dialog
-      .open(CreateMeetupPageComponent, {
-        width: '350px',
-      })
-      .afterClosed()
-      .subscribe(() => this.meetupsService.refreshMeetups());
+    const editMeetupdialogRef = this.dialog.open(CreateMeetupPageComponent, {
+      width: '350px',
+    });
   }
 }
