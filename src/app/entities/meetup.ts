@@ -1,6 +1,25 @@
 import { User } from './user';
 
-export interface Meetup {
+export interface IMeetup {
+  id?: number;
+  name: string;
+  description: string;
+  location: string;
+  target_audience: string;
+  need_to_know: string;
+  will_happen: string;
+  reason_to_come: string;
+  time: string;
+  duration: number;
+  owner?: User;
+  users?: Array<User>;
+
+  createdAt?: string;
+  createdBy?: number;
+  updatedAt?: string;
+}
+
+export class Meetup implements IMeetup {
   id: number;
   name: string;
   description: string;
@@ -13,26 +32,6 @@ export interface Meetup {
   duration: number;
   owner: User;
   users: Array<User>;
-
-  createdAt: string;
-  createdBy: number;
-  updatedAt: string;
-}
-
-export interface MeetupEdit {
-  id: number;
-  name: string;
-  description: string;
-  time: string;
-  duration: number;
-  location: string;
-  target_audience: string;
-  need_to_know: string;
-  will_happen: string;
-  reason_to_come: string;
-}
-
-export class Meetup {
   constructor(
     id: number,
     name: string,
@@ -44,7 +43,6 @@ export class Meetup {
     reason_to_come: string,
     time: string,
     duration: number,
-    createdBy: number,
     owner: User,
     users: Array<User>
   ) {
@@ -58,10 +56,22 @@ export class Meetup {
     this.reason_to_come = reason_to_come;
     this.time = time;
     this.duration = duration;
-    this.createdBy = createdBy;
     this.owner = owner;
     this.users = users;
   }
+}
+
+export interface MeetupEdit {
+  id: number;
+  name: string;
+  description: string;
+  time: string;
+  duration: number;
+  location: string;
+  target_audience: string;
+  need_to_know: string;
+  will_happen: string;
+  reason_to_come: string;
 }
 
 export interface MeetupCreate {
