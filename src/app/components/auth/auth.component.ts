@@ -5,7 +5,6 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { LogPas } from 'src/app/shared/interfaces/LogPas';
 
 @Component({
   selector: 'app-auth',
@@ -39,11 +38,13 @@ export class AuthComponent implements OnInit {
       this.authReactiveForm.value.login &&
       this.authReactiveForm.value.password
     ) {
-      const logPas = new LogPas(
-        this.authReactiveForm.value.login,
-        this.authReactiveForm.value.password
-      );
+      const logPas = {
+        email: this.authReactiveForm.value.login,
+        password: this.authReactiveForm.value.password,
+      };
       this.addEvent.emit(logPas);
+    } else {
+      alert('заполните все поля');
     }
   }
 }

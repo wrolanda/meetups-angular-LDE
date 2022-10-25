@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
-import { LogPas } from 'src/app/shared/interfaces/LogPas';
 
 @Component({
   selector: 'app-auth-page',
@@ -15,7 +14,7 @@ export class AuthPageComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  login(LogPas: LogPas) {
+  login(LogPas: { email: string; password: string }) {
     this.subscription = this.authService
       .login(LogPas.email, LogPas.password)
       .subscribe(console.log);
