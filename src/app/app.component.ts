@@ -5,19 +5,19 @@ import { LoadingService } from './services/loading.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
- title = 'meetups-angular-LDE';
- 
- loading$ = this.loadingService.loading$; 
+  title = 'meetups-angular-LDE';
 
- public get isAdmin() {
-  return this.authService.isAdmin;
-}
+  loading$ = this.loadingService.loading$;
 
- constructor (
-  private authService: AuthService,
-  public loadingService: LoadingService,
- ) {}
+  public get isAdmin() {
+    return this.authService.isAdmin;
+  }
+
+  constructor(
+    private authService: AuthService,
+    public loadingService: LoadingService
+  ) {}
 }

@@ -1,16 +1,13 @@
 <p>create-new-user page</p>
 <form [formGroup]="createUserForm" (ngSubmit)="onCreateUser()">
-    <div>username (email)</div>
-    <input  type="email" 
-            placeholder="jim@dundermifflin.com"
-            formControlName="email" />
-    <br><br>
-    <div>password</div>
-    <input  placeholder="password"
-            formControlName="password" />
-    <br><br>
-    <div>fio</div>
-    <input formControlName="fio"/>
-    <br><br>
-    <button type="submit">создать</button>
+        <div>username (email)</div>
+        <input type="email" placeholder="jim@dundermifflin.com" formControlName="email" />
+        <br><br>
+        <div>password</div>
+        <input placeholder="password" formControlName="password" />
+        <br><br>
+        <div>fio</div>
+        <input formControlName="fio" />
+        <br><br>
+        <button type="submit">создать</button>
 </form>

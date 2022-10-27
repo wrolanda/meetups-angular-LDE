@@ -42,6 +42,7 @@ export class MeetupsComponent implements OnInit, OnDestroy {
   }
 
   get isLoading() {
+    console.log('isLoading');
     this.loading$.pipe(takeUntil(this.notifier)).subscribe((data: boolean) => {
       this.bool = data;
     });

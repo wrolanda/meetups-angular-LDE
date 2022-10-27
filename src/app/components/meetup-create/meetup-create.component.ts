@@ -19,7 +19,6 @@ import {
   styleUrls: ['./meetup-create.component.scss'],
 })
 export class MeetupCreateComponent implements OnInit {
-
   @Output()
   public editMeetupEvent = new EventEmitter();
   @Output()
@@ -38,9 +37,7 @@ export class MeetupCreateComponent implements OnInit {
     date: FormControl<string | null>;
   }>;
 
-  constructor( 
-    private fb: FormBuilder,
-    ) {}
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.InitCreateMeetupForm();
@@ -51,12 +48,18 @@ export class MeetupCreateComponent implements OnInit {
       name: ['название', Validators.required],
       description: ['описание', Validators.required],
       location: ['переговорка 20', Validators.required],
-      target_audience: ['хорошие ребята а так же их родители', Validators.required],
+      target_audience: [
+        'хорошие ребята а так же их родители',
+        Validators.required,
+      ],
       need_to_know: ['нужно знать', Validators.required],
       will_happen: ['что-то произойдет', Validators.required],
       reason_to_come: ['причина жить', Validators.required],
       startTime: [`${getTimeString('')}`, Validators.required],
-      endTime: [`${getEndTime(getTimeString(''), getDateString(''), 60)}`, Validators.required],
+      endTime: [
+        `${getEndTime(getTimeString(''), getDateString(''), 60)}`,
+        Validators.required,
+      ],
       date: [`${getDateString('')}`, Validators.required],
     });
   }

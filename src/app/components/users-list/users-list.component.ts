@@ -4,10 +4,9 @@ import { User } from 'src/app/entities/user';
 @Component({
   selector: 'app-users-list',
   templateUrl: './users-list.component.html',
-  styleUrls: ['./users-list.component.scss']
+  styleUrls: ['./users-list.component.scss'],
 })
 export class UsersListComponent implements OnInit {
-
   @Input()
   usersList!: Array<User>;
 
@@ -16,8 +15,7 @@ export class UsersListComponent implements OnInit {
   @Output()
   public addEventUpdUser = new EventEmitter();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {}
-  
 }

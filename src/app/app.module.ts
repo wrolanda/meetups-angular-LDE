@@ -73,16 +73,16 @@ import { EditMeetupPage2Component } from './pages/edit-meetup-page2/edit-meetup-
   providers: [
     AuthService,
     MeetupsPageComponent,
-    { 
-      provide: HTTP_INTERCEPTORS, 
-      useClass: JwtInterceptor, 
-      multi: true 
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true,
     },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: NetworkRequestsInterceptor,
       multi: true,
-    }
+    },
   ],
   bootstrap: [AppComponent],
 })

@@ -1,12 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  BehaviorSubject,
-  distinctUntilChanged,
-  Observable,
-  tap,
-} from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Meetup, MeetupCreate, MeetupEdit } from '../entities/meetup';
 import { deepEqual } from '../shared/mathFuncs/mathFuncs';
@@ -28,7 +23,9 @@ export class MeetupsService implements OnDestroy {
   }
 
   refreshMeetups() {
-    this.getMeetups().subscribe((res) => {this.subject.next(res)});
+    this.getMeetups().subscribe((res) => {
+      this.subject.next(res);
+    });
   }
 
   getSubject() {
@@ -39,18 +36,18 @@ export class MeetupsService implements OnDestroy {
   }
 
   createMeetup(meetup: MeetupCreate) {
-    return this.http
-      .post(`${environment.backendOrigin}/meetup`, meetup)
-      .pipe(
-        tap(() => {
-          this.router.navigate(['meetups']);
-        })
-      );
+    return this.http.post(`${environment.backendOrigin}/meetup`, meetup).pipe(
+      tap(() => {
+        this.router.navigate(['meetups']);
+      })
+    );
   }
 
   editMeetup(meetup: MeetupEdit) {
-    return this.http
-    .put(`${environment.backendOrigin}/meetup/${meetup.id}`, meetup);
+    return this.http.put(
+      `${environment.backendOrigin}/meetup/${meetup.id}`,
+      meetup
+    );
   }
 
   subscribeMeetup(idMeetup: number, idUser: number): Observable<object> {

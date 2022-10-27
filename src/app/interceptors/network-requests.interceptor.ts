@@ -19,13 +19,11 @@ export class NetworkRequestsInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-
     this.loadingService.show();
     this.totalRequests++;
 
     return next.handle(request).pipe(
       finalize(() => {
-        
         this.completedRequests++;
 
         if (this.completedRequests === this.totalRequests) {

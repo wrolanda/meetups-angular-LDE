@@ -10,18 +10,19 @@ import { MeetupsService } from 'src/app/services/meetups.service';
   providers: [MeetupsService],
 })
 export class EditMeetupPageComponent implements OnInit, OnDestroy {
+  private notifier = new Subject<void>();
 
-  private notifier = new Subject<void>;
+  constructor(private meetupsService: MeetupsService) {}
 
-  constructor(private meetupsService: MeetupsService) { }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onEditMeetup(meetup: MeetupEdit) {
-    this.meetupsService.editMeetup(meetup).pipe(
-      takeUntil(this.notifier),
-    ).subscribe(() => {this.meetupsService.refreshMeetups()});
+    this.meetupsService
+      .editMeetup(meetup)
+      .pipe(takeUntil(this.notifier))
+      .subscribe(() => {
+        this.meetupsService.refreshMeetups();
+      });
   }
 
   ngOnDestroy() {

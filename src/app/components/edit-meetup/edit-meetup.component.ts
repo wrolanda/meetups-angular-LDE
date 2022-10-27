@@ -1,4 +1,11 @@
-import { Component, Inject, EventEmitter, OnInit, Output, Optional } from '@angular/core';
+import {
+  Component,
+  Inject,
+  EventEmitter,
+  OnInit,
+  Output,
+  Optional,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -63,12 +70,13 @@ export class EditMeetupComponent implements OnInit {
         Validators.required,
       ],
       endTime: [
-        this.card 
-        ? getEndTime(
-          getTimeString(this.card?.time),
-          getDateString(this.card?.time),
-          this.card?.duration)
-        :  getEndTime(getTimeString(''), getDateString(''), 60),
+        this.card
+          ? getEndTime(
+              getTimeString(this.card?.time),
+              getDateString(this.card?.time),
+              this.card?.duration
+            )
+          : getEndTime(getTimeString(''), getDateString(''), 60),
         Validators.required,
       ],
       date: [
@@ -76,10 +84,22 @@ export class EditMeetupComponent implements OnInit {
         Validators.required,
       ],
       location: [this.card?.location || 'переговорка 20', Validators.required],
-      target_audience: [this.card?.target_audience || 'хорошие ребята а так же их родители', Validators.required],
-      need_to_know: [this.card?.need_to_know || 'нужно знать', Validators.required],
-      will_happen: [this.card?.will_happen || 'что-то произойдет', Validators.required],
-      reason_to_come: [this.card?.reason_to_come || 'причина жить', Validators.required],
+      target_audience: [
+        this.card?.target_audience || 'хорошие ребята а так же их родители',
+        Validators.required,
+      ],
+      need_to_know: [
+        this.card?.need_to_know || 'нужно знать',
+        Validators.required,
+      ],
+      will_happen: [
+        this.card?.will_happen || 'что-то произойдет',
+        Validators.required,
+      ],
+      reason_to_come: [
+        this.card?.reason_to_come || 'причина жить',
+        Validators.required,
+      ],
     });
   }
 

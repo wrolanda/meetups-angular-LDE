@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { deepEqual } from '../shared/mathFuncs/mathFuncs';
 
 @Injectable()
-export class UsersService implements OnDestroy{
+export class UsersService implements OnDestroy {
   interval: any;
 
   subject = new BehaviorSubject<any>([]);
@@ -50,26 +50,21 @@ export class UsersService implements OnDestroy{
     return this.http.delete(`${environment.backendOrigin}/user/${id}`);
   }
 
-  updateUser(
-    id: number,
-    email: string,
-    password: string,
-    fio: string,
-    ) {
-      return this.http
-      .put(`${environment.backendOrigin}/user/${id}`, {
-        email, password, fio
-      });
+  updateUser(id: number, email: string, password: string, fio: string) {
+    return this.http.put(`${environment.backendOrigin}/user/${id}`, {
+      email,
+      password,
+      fio,
+    });
   }
 
   updateRoleUser(roleName: Array<string>, userId: number) {
     // if (roleName[0] === "ADMIN")
     // roleName = ["USER", "ADMIN"];
-    return this.http
-      .post(`${environment.backendOrigin}/user/role`, {
-        names: roleName, 
-        userId: userId,
-      });
+    return this.http.post(`${environment.backendOrigin}/user/role`, {
+      names: roleName,
+      userId: userId,
+    });
   }
 
   ngOnDestroy() {
