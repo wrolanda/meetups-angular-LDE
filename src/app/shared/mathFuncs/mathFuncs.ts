@@ -20,9 +20,11 @@ export function deepEqual(a: any, b: any) {
   for (let i = 0; i < aKeys.length; i += 1) {
     const key = aKeys[i];
     if (!bKeys.includes(key) || !deepEqual(a[key], b[key])) {
+      console.log(false);
       return false;
     }
   }
+  console.log(true);
   return true;
 }
 

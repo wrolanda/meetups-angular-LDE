@@ -23,9 +23,11 @@ export class MeetupsService implements OnDestroy {
   }
 
   refreshMeetups() {
-    this.getMeetups().subscribe((res) => {
-      this.subject.next(res);
-    });
+    this.getMeetups()
+      .pipe(distinctUntilChanged((a, b) => deepEqual(a, b)))
+      .subscribe((res) => {
+        this.subject.next(res);
+      });
   }
 
   getSubject() {
