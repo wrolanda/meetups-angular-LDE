@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { forkJoin, Subject, Subscription, takeUntil } from 'rxjs';
 import { Role } from 'src/app/entities/role';
-import { User } from 'src/app/entities/user';
+import { IUser } from 'src/app/entities/user';
 import { LoadingService } from 'src/app/services/loading.service';
 import { UsersService } from 'src/app/services/users.service';
 import { sortListCompareFn } from 'src/app/shared/mathFuncs/mathFuncs';
@@ -15,7 +15,7 @@ import { sortListCompareFn } from 'src/app/shared/mathFuncs/mathFuncs';
 export class UserListPageComponent implements OnInit {
   notifier = new Subject<void>();
 
-  usersList!: Array<User>;
+  usersList!: Array<IUser>;
   subscription!: Subscription;
 
   constructor(
@@ -31,7 +31,7 @@ export class UserListPageComponent implements OnInit {
     this.subscription = this.usersService
       .getSubject()
       .pipe(takeUntil(this.notifier))
-      .subscribe((data: Array<User>) => {
+      .subscribe((data: Array<IUser>) => {
         this.usersList = data.sort(sortListCompareFn);
       });
   }
@@ -43,14 +43,12 @@ export class UserListPageComponent implements OnInit {
     });
   }
 
-  updateUser(userObj: User) {
+  updateUser(user: IUser) {
     forkJoin([
-      this.usersService
-        .updateUser(userObj.id, userObj.email, userObj.password, userObj.fio)
-        .pipe(takeUntil(this.notifier)),
+      this.usersService.updateUser(user).pipe(takeUntil(this.notifier)),
 
       this.usersService
-        .updateRoleUser(this.arrayNamesRoles(userObj.roles), userObj.id)
+        .updateRoleUser(this.arrayNamesRoles(user.roles!), user.id!)
         .pipe(takeUntil(this.notifier)),
     ]).subscribe((result) => {
       this.usersService.updateUsers();

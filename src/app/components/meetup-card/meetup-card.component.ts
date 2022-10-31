@@ -18,12 +18,12 @@ export class MeetupCardComponent implements OnInit {
   }
 
   get isOwnMeetup() {
-    return this.authService.user?.id === this.card.owner.id;
+    return this.authService.user?.id === this.card.owner!.id;
   }
 
   get isSub() {
-    for (let i = 0; i < this.card.users.length; i++) {
-      if (this.card.users[i].id === this.authService.user?.id) {
+    for (let i = 0; i < this.card.users!.length; i++) {
+      if (this.card.users![i].id === this.authService.user?.id) {
         return true;
       }
     }

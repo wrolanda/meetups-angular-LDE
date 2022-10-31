@@ -3,12 +3,12 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, distinctUntilChanged, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Meetup, MeetupCreate, MeetupEdit } from '../entities/meetup';
+import { IMeetup } from '../entities/meetup';
 import { deepEqual } from '../shared/mathFuncs/mathFuncs';
 
 @Injectable()
 export class MeetupsService implements OnDestroy {
-  dataMeetups: Array<Meetup> = [];
+  dataMeetups: Array<IMeetup> = [];
   interval: any;
 
   public subject = new BehaviorSubject<any>([]);
@@ -18,7 +18,7 @@ export class MeetupsService implements OnDestroy {
     this.interval = setInterval(() => this.refreshMeetups(), 10000);
   }
 
-  getMeetups(): Observable<any> {
+  getMeetups(): Observable<object> {
     return this.http.get(`${environment.backendOrigin}/meetup`);
   }
 
@@ -35,7 +35,7 @@ export class MeetupsService implements OnDestroy {
     );
   }
 
-  createMeetup(meetup: MeetupCreate) {
+  createMeetup(meetup: IMeetup) {
     return this.http.post(`${environment.backendOrigin}/meetup`, meetup).pipe(
       tap(() => {
         this.router.navigate(['meetups']);
@@ -43,7 +43,7 @@ export class MeetupsService implements OnDestroy {
     );
   }
 
-  editMeetup(meetup: MeetupEdit) {
+  editMeetup(meetup: IMeetup) {
     return this.http.put(
       `${environment.backendOrigin}/meetup/${meetup.id}`,
       meetup

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { MeetupEdit } from 'src/app/entities/meetup';
+import { IMeetup } from 'src/app/entities/meetup';
 import { MeetupsService } from 'src/app/services/meetups.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class EditMeetupPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {}
 
-  onEditMeetup(meetup: MeetupEdit) {
+  onEditMeetup(meetup: IMeetup) {
     this.meetupsService
       .editMeetup(meetup)
       .pipe(takeUntil(this.notifier))

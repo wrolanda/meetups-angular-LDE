@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { MeetupCreate } from 'src/app/entities/meetup';
+import { IMeetup } from 'src/app/entities/meetup';
 import { MeetupsService } from 'src/app/services/meetups.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class CreateMeetupPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {}
 
-  createMeetup(meetupForm: MeetupCreate) {
+  createMeetup(meetupForm: IMeetup) {
     this.meetupsService
       .createMeetup(meetupForm)
       .pipe(takeUntil(this.notifier))

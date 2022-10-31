@@ -1,49 +1,37 @@
 import { Role } from './role';
 
-export interface User {
-  createdAt: string;
+export interface IUser {
+  id?: number;
+
   email: string;
   fio: string;
-  id: number;
   password: string;
-  roles: Array<Role>;
-  updatedAt: string;
+
+  roles?: Array<Role>;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export class User {
-  constructor(
-    createdAt: string,
-    email: string,
-    fio: string,
-    id: number,
-    password: string,
-    roles: Array<Role>,
-    updatedAt: string
-  ) {
-    this.createdAt = createdAt;
-    this.email = email;
-    this.fio = fio;
-    this.id = id;
-    this.password = password;
-    this.roles = roles;
-    this.updatedAt = updatedAt;
+  id?: number;
+
+  email: string;
+  fio: string;
+  password: string;
+
+  roles?: Array<Role>;
+  createdAt?: string;
+  updatedAt?: string;
+
+  constructor(user: IUser) {
+    this.id = user.id;
+
+    this.email = user.email;
+    this.fio = user.fio;
+    this.password = user.password;
+
+    this.roles = user.roles;
+    this.createdAt = user.createdAt;
+    this.updatedAt = user.updatedAt;
   }
-}
-
-export interface UserCreate {
-  email: string, 
-  password: string, 
-  fio: string,
-}
-
-export class UserCreate {
-  constructor(
-    email: string, 
-    password: string, 
-    fio: string
-  ) {
-    this.email = email;
-    this.password = password;
-    this.fio = fio;
-    }
 }

@@ -72,8 +72,8 @@ export class UserCardComponent implements OnInit {
 
   showRole(): string {
     let arrayRoles = this.user.roles;
-    for (let i = 0; i < arrayRoles.length; i++) {
-      if (arrayRoles[i].name === 'ADMIN') return 'ADMIN';
+    for (let i = 0; i < arrayRoles!.length; i++) {
+      if (arrayRoles![i].name === 'ADMIN') return 'ADMIN';
     }
     return 'USER';
   }

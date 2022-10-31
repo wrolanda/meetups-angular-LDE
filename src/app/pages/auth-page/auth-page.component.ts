@@ -21,6 +21,6 @@ export class AuthPageComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.subscription?.remove;
+    this.subscription?.unsubscribe();
   }
 }

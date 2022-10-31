@@ -13,20 +13,48 @@ import { MyMeetupsPageComponent } from './pages/my-meetups-page/my-meetups-page.
 import { UserListPageComponent } from './pages/user-list-page/user-list-page.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: "auth", pathMatch: 'full'},
-  {path: 'auth', component: AuthPageComponent, canActivate: [AuthReverseGuard]},
-  {path: 'meetups', component: MeetupsPageComponent, canActivate: [AuthGuard]},
-  {path: 'myMeetups', component: MyMeetupsPageComponent, canActivate: [AuthGuard]},
-  {path: 'howCreateAcc', component: HowCreateAccPageComponent},
-  {path: 'createMeetup', component: CreateMeetupPage2Component, canActivate: [AuthGuard]},
-  {path: 'userList', component: UserListPageComponent, canActivate: [AuthGuard, AdminGuard]},
-  {path: 'createUser', component: CreateNewUserComponent, canActivate: [AuthGuard, AdminGuard]},
-  {path: 'editMeetup', component: EditMeetupComponent, canActivate: [AuthGuard]},
+  { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  {
+    path: 'auth',
+    component: AuthPageComponent,
+    canActivate: [AuthReverseGuard],
+  },
+  {
+    path: 'meetups',
+    component: MeetupsPageComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'myMeetups',
+    component: MyMeetupsPageComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: 'howCreateAcc', component: HowCreateAccPageComponent },
+  {
+    path: 'createMeetup',
+    component: CreateMeetupPage2Component,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'userList',
+    component: UserListPageComponent,
+    canActivate: [AuthGuard, AdminGuard],
+  },
+  {
+    path: 'createUser',
+    component: CreateNewUserComponent,
+    canActivate: [AuthGuard, AdminGuard],
+  },
+  {
+    path: 'editMeetup',
+    component: EditMeetupComponent,
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule], 
-  providers: [AuthGuard, AdminGuard, AuthReverseGuard]
+  exports: [RouterModule],
+  providers: [AuthGuard, AdminGuard, AuthReverseGuard],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

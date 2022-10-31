@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { UserCreate } from 'src/app/entities/user';
+import { IUser } from 'src/app/entities/user';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -38,23 +38,21 @@ export class CreateNewUserComponent implements OnInit {
       this.createUserForm.value.password &&
       this.createUserForm.value.fio
     ) {
-      const userData = new UserCreate(
-        this.createUserForm.value.email,
-        this.createUserForm.value.password,
-        this.createUserForm.value.fio
-      );
-      this.sub = this.userService
-        .createUser(userData.email, userData.password, userData.fio)
-        .subscribe(() => {
-          console.log('крутилка кончилась');
-          return (data: UserCreate) => console.log(data);
-        });
+      const userData: IUser = {
+        email: this.createUserForm.value.email,
+        password: this.createUserForm.value.password,
+        fio: this.createUserForm.value.fio,
+      };
+      this.sub = this.userService.createUser(userData).subscribe(() => {
+        console.log('крутилка кончилась');
+        return (data: IUser) => console.log(data);
+      });
     } else {
       alert('заполни все поля!');
     }
   }
 
   ngOnDestroy() {
-    this.sub?.remove;
+    this.sub?.unsubscribe();
   }
 }

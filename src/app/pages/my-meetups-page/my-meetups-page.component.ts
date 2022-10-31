@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { map, Subject, Subscription, takeUntil } from 'rxjs';
-import { Meetup } from 'src/app/entities/meetup';
+import { IMeetup } from 'src/app/entities/meetup';
 import { AuthService } from 'src/app/services/auth.service';
 import { MeetupsService } from 'src/app/services/meetups.service';
 import { sortListCompareFn } from 'src/app/shared/mathFuncs/mathFuncs';
@@ -14,7 +14,7 @@ import { MeetupsPageComponent } from '../meetups-page/meetups-page.component';
 })
 export class MyMeetupsPageComponent implements OnInit {
   subscription!: Subscription;
-  arrayMeetups: Array<Meetup> = [];
+  arrayMeetups: Array<IMeetup> = [];
   notifier = new Subject<void>();
 
   public get userId() {
@@ -41,7 +41,7 @@ export class MyMeetupsPageComponent implements OnInit {
       .getSubject()
       .pipe(
         map((data) =>
-          data.filter((meetup: Meetup) => meetup.owner.id === this.userId)
+          data.filter((meetup: IMeetup) => meetup.owner!.id === this.userId)
         ),
         takeUntil(this.notifier)
       )

@@ -32,7 +32,7 @@ export class MeetupsComponent implements OnInit, OnDestroy {
         if (
           meetup.name.includes(this.message) ||
           meetup.description.includes(this.message) ||
-          meetup.owner.fio.includes(this.message)
+          meetup.owner!.fio.includes(this.message)
         ) {
           return meetup;
         }
@@ -42,10 +42,6 @@ export class MeetupsComponent implements OnInit, OnDestroy {
   }
 
   get isLoading() {
-    console.log('isLoading');
-    this.loading$.pipe(takeUntil(this.notifier)).subscribe((data: boolean) => {
-      this.bool = data;
-    });
     if (this.bool) {
       return true;
     }
@@ -73,6 +69,11 @@ export class MeetupsComponent implements OnInit, OnDestroy {
       .subscribe((message) => {
         this.message = message;
       });
+
+    this.loading$.pipe(takeUntil(this.notifier)).subscribe((data: boolean) => {
+      console.log('sub');
+      this.bool = data;
+    });
   }
 
   ngOnDestroy() {

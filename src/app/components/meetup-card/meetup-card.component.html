@@ -8,8 +8,8 @@
         <br>
         <div>{{card.description}}</div>
         <br>
-        <div>subscribers:{{card.users.length}}</div>
-        <div>createdBy: {{card.owner.fio}}</div>
+        <div>subscribers:{{card.users!.length}}</div>
+        <div>createdBy: {{card.owner!.fio}}</div>
         <div>location: {{card.location}}</div>
         <br>
         <div *ngIf="isMore">
